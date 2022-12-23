@@ -4,7 +4,7 @@ export const expertSignup=async(values)=>{
     values.verified=false
     values.blocked=false
     const config={
-        Headers:{
+        headers:{
             'Content-Type':'application/json'
         }
     }
@@ -18,7 +18,7 @@ export const expertSignup=async(values)=>{
 
 export const expertLogin=async(values)=>{
     const config={
-        Headers:{
+        headers:{
             'Content-Type':'application/json'
         }
     }

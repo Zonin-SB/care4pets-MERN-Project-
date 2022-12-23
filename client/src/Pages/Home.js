@@ -1,5 +1,5 @@
 import React from 'react'
-import { HomePage,  UserNav } from '../Components'
+import { HomeFooterPage, HomePage,  HomePage2,  HomePage3,  HomePage4,  HomePage5,  UserNav } from '../Components'
 
 function Home() {
  
@@ -8,6 +8,11 @@ function Home() {
        
         <UserNav/>
         <HomePage/>
+        <HomePage2/>
+        <HomePage3/>
+        <HomePage4/>
+        <HomePage5/>
+        <HomeFooterPage/>
     </div>
   )
 }

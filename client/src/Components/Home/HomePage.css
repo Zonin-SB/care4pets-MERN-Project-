@@ -1,0 +1,16 @@
+.plan-card{
+height: 150px;
+}
+
+.home-background{
+    background-color:#E3F2FD;
+    
+}
+.comments::-webkit-scrollbar{
+    display: none;
+}
+.comment{
+    
+    /* width: 1000px;
+    height: 400px; */
+}

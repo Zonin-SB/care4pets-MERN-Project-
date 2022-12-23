@@ -21,7 +21,7 @@ function UserNav() {
         <div className="flex items-center">
           <div className="flex-shrink-0">
             
-            <div><Link to='/'><span className='logo1'>care</span><span className='logo2'>4</span><span className='logo1'>pets</span></Link></div>
+            <div><Link to='/userHome'><span className='logo1'>care</span><span className='logo2'>4</span><span className='logo1'>pets</span></Link></div>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">

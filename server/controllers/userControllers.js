@@ -20,16 +20,21 @@ const userSignup=(req,res)=>{
 const userLogin=(req,res)=>{
     const data=req.body
     userUtilities.doUserLogin(data).then((response)=>{
-        if(response.status){
-            const token = jwt.sign(
-                {
-                    userId:response.user._id,
-                    name:response.user.name,
-                    email:response.user.email
-                }, process.env.JWT_SECRET_KEY);
-                return res.json({ status: 'ok', user: token });
+        if(response.blocked){
+            return res.json({blocked:true,user:false})
+        }else{
+            if(response.status){
+                const token = jwt.sign(
+                    {
+                        userId:response.user._id,
+                        name:response.user.name,
+                        email:response.user.email
+                    }, process.env.JWT_SECRET_KEY);
+                    return res.json({ status: 'ok', user: token });
+            }
+            return res.json({ status: "error", user: false });
         }
-        return res.json({ status: "error", user: false });
+       
     })
     
 }

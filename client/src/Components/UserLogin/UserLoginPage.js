@@ -17,7 +17,9 @@ function UserLoginPage() {
   const onSubmit = async (values, action) => {
 	const response = await userLogin(values);
 	console.log(response);
-	console.log(response.user);
+if(response.blocked){
+  setError('This account is blocked !')
+}else{
 	if (response.user) {
 		localStorage.setItem('userToken', response.user);
 		const user = jwt(response.user);
@@ -28,6 +30,8 @@ function UserLoginPage() {
 	  }else{
 		  setError('Incorrect email or password')
 	  }
+}
+
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -58,6 +62,7 @@ function UserLoginPage() {
                   onSubmit={handleSubmit}
                 >
                   <div className="mb-4">
+                  {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Email
                     </label>
@@ -95,7 +100,7 @@ function UserLoginPage() {
                   </div>
                   <div className="mb-4">
                     <br />
-					{error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+					
                   </div>
                   <div className="mb-6 text-center">
                     <button

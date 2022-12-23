@@ -5,7 +5,7 @@ export const userSignup=async (values)=>{
     values.blocked=false
    
     const config={
-        Headers:{
+        headers:{
             'Content-Type':'application/json'
         }
     }
@@ -19,13 +19,13 @@ export const userSignup=async (values)=>{
 
 export const userLogin=async(values)=>{
     const config={
-        Headers:{
+        headers:{
             'Content-Type':'application/json'
         }
     }
  
     const {data}=await axiosUserInstance.post('/userLogin',values,config)
-  
+ 
    if(data){
     return data
    }
