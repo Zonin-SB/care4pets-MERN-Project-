@@ -16,16 +16,22 @@ function ExpertLoginPage() {
 
   const onSubmit = async (values, action) => {
     const response = await expertLogin(values);
-    console.log(response);
-    if (response.expert) {
-      localStorage.setItem('expertToken', response.expert);
-      const expert = jwt(response.expert);
-
-      localStorage.setItem('expertDetails', expert.name);
-      navigate('/expertHome')
-    }else{
-        setError('Incorrect email or password')
-    }
+      if(response.blocked){
+        setError('This account is blocked !')
+      }else{
+        if (response.expert) {
+          localStorage.setItem('expertToken', response.expert);
+          const expert = jwt(response.expert);
+    
+          localStorage.setItem('expertDetails', expert.name);
+          navigate('/expertHome')
+        }else{
+            setError('Incorrect email or password')
+        }
+      }
+    
+   
+  
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -36,15 +42,18 @@ function ExpertLoginPage() {
     });
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl shadow-slate-600/40 ring-2 ring-black-400 sm:max-w-xl">
           <h1 className="text-3xl font-semibold text-center text-cyan-800 underline uppercase decoration-wavy">
             Expert Login
           </h1>
+         
           <form className="mt-6" onSubmit={handleSubmit}>
             <div className="mb-2">
+            {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
               <label className="block text-sm font-semibold text-gray-800">
+             
                 Email
               </label>
               <input
@@ -80,7 +89,7 @@ function ExpertLoginPage() {
             <p className="text-xs text-cyan-800 cursor-pointer">
               Forget Password?
             </p>
-            {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+            
             <div className="mt-6">
            
               <button

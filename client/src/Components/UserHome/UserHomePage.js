@@ -3,7 +3,7 @@ import React from 'react'
 
 function UserHomePage() {
   return (
-    <div>UserHome Page</div>
+    <div className='max-w-screen-2xl mx-auto'>UserHome Page</div>
   )
 }
 

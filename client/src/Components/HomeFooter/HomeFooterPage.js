@@ -2,7 +2,7 @@ import React from 'react'
 import './HomeFooterPage.css'
 function HomeFooterPage() {
   return (
-    <div className='home-background pt-20'>
+    <div className='home-background pt-20 max-w-screen-2xl mx-auto'>
        
 <footer class="p-4 pt- sm:p-6 bg-gray-900">
     <div class="md:flex md:justify-between lg:justify-evenly">

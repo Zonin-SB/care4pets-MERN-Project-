@@ -16,7 +16,7 @@ function UserLoginPage() {
 	const navigate=useNavigate()
   const onSubmit = async (values, action) => {
 	const response = await userLogin(values);
-	console.log(response);
+	
 if(response.blocked){
   setError('This account is blocked !')
 }else{
@@ -42,7 +42,7 @@ if(response.blocked){
     });
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <body className="font-mono bg-gray-400 h-full">
         <div className="container mx-auto">
         {/* my-12 */}

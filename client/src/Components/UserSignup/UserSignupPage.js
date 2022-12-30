@@ -37,7 +37,7 @@ function UserSignupPage() {
 	
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
         <body className="font-mono bg-gray-400">
 		
 		<div className="container mx-auto">

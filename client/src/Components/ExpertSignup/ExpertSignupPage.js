@@ -39,7 +39,7 @@ function ExpertSignupPage() {
     })
     // console.log(errors);
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
         <section className="max-w-4xl p-6 mx-auto bg-teal-900 rounded-md shadow-md dark:bg-gray-800 mt-20">
     <h1 className="text-4xl font-bold text-white capitalize dark:text-white flex justify-center">Expert Signup</h1>
     <form onSubmit={handleSubmit}>

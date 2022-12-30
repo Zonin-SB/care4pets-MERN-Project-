@@ -9,7 +9,7 @@ function UserLogin() {
     const token=localStorage.getItem('userToken')
     if(token){
       const user=jwt(token)
-      
+     
       if(user){
         navigate('/userHome')
       }else{

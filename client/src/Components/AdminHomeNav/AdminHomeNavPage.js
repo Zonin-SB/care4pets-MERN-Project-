@@ -1,20 +1,24 @@
 import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import { Transition } from "@headlessui/react";
+import { useDispatch } from 'react-redux';
 import './AdminHomeNavPage.css'
+import { clearAdminLoginDetails } from '../../redux/adminReducer';
 
 
 function AdminHomeNavPage() {
+  const dispatch=useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const navigate=useNavigate()
     const logout=()=>{
         localStorage.removeItem('adminToken')
         localStorage.removeItem('adminDetails')
+        dispatch(clearAdminLoginDetails())
         navigate('/admin')
     }
   return (
     <div>
-        <div className="min-h-full">
+        <div className="min-h-full max-w-screen-2xl mx-auto">
   <nav className="nav-color">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex h-16 items-center justify-between">
@@ -28,7 +32,7 @@ function AdminHomeNavPage() {
                {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
               <button className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</button>
 
-              <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Experts</button>
+             <Link to='/expertinfo'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Experts</button></Link>
 
              <Link to='/userinfo'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Users</button></Link>
 
@@ -93,9 +97,9 @@ function AdminHomeNavPage() {
          {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
         <button  className=" text-gray-300 block hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</button>
 
-        <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experts</button>
+        <Link to='/expertinfo'> <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experts</button></Link>
 
-        <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Users</button>
+        <Link to='/userinfo'>  <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Users</button></Link>
 
         <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Videos</button>
 

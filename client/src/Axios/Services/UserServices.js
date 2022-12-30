@@ -11,7 +11,7 @@ export const userSignup=async (values)=>{
     }
 
     const {data}=await axiosUserInstance.post('/userSignup',values,config)
-    console.log(data);
+    
     if(data.status){
         return data
     }
@@ -30,3 +30,19 @@ export const userLogin=async(values)=>{
     return data
    }
 }
+
+export const getUserDetails = async (token, id) => {
+   
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(`/getUserDetails/${id}`, config);
+   console.log(data,'in u serv');
+    if(data.status){
+        return data;
+    }
+  };

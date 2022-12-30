@@ -41,3 +41,9 @@ export const adminLoginSchema=Yup.object({
     email:Yup.string().email('Enter a valid email').required('This field is required'),
     password:Yup.string().required('This field is required')
 })
+
+export const expertApplyFormSchema=Yup.object({
+    profilepic:Yup.mixed().required('Required'),
+    // idproof:Yup.mixed().required('Required'),
+    // licensepic:Yup.mixed().required('Required')
+})

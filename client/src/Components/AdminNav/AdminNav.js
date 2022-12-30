@@ -7,7 +7,7 @@ function AdminNav() {
   return (
     <div>
          <div>
-        <div class="min-h-full">
+        <div className="min-h-full max-w-screen-2xl mx-auto">
   <nav className="nav-color">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex h-16 items-center justify-between">

@@ -10,7 +10,7 @@ export const expertSignup=async(values)=>{
     }
   
     const {data}=await axiosExpertInstance.post('/expertSignup',values,config)
-    console.log(data);
+   
     if(data.status){
         return data;
     }

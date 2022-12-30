@@ -2,7 +2,7 @@ import React from 'react';
 import './HomePage.css';
 function HomePage5() {
   return (
-    <div className="home-background">
+    <div className="home-background max-w-screen-2xl mx-auto">
       <div>
         <h1 className="pt-9 text-3xl font-sans text-center font-black text-slate-700 ">
           FROM OUR SUBSCRIBERS

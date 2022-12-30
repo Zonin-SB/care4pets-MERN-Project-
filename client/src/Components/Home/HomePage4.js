@@ -6,7 +6,7 @@ import './HomePage.css';
 
 function HomePage4() {
   return (
-    <div className='home-background'>
+    <div className='home-background max-w-screen-2xl mx-auto'>
       <div className="flex justify-around pt-9">
         <div>
           <img src={png1} className="w-24 h-24" alt="png not found" />

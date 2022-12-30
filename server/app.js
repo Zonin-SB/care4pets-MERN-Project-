@@ -2,6 +2,10 @@ const express = require('express');
 const createError = require('http-errors');
 const dotenv=require('dotenv')
 const db=require('./config/connection')
+const multer  = require('multer')
+const path = require('path');
+const upload = require('./middlewares/fileUpload')
+const fileURLToPath=require('url')
 
 const cors = require('cors');
 
@@ -11,6 +15,10 @@ dotenv.config()
 
 app.use(cors());
 app.use(express.json())
+
+
+
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 const userRouter=require('./routes/user')
 const expertRouter=require('./routes/expert')

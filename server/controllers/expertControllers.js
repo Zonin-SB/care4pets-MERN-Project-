@@ -22,17 +22,38 @@ const expertSignup=(req,res)=>{
 const expertLogin=(req,res)=>{
     const data=req.body
     expertUtilities.doExpertLogin(data).then((response)=>{
-        if(response.status){
-            const token = jwt.sign(
-                {
-                    expertId:response.expert._id,
-                    name:response.expert.name,
-                    email:response.expert.email
-                }, process.env.JWT_SECRET_KEY);
-                return res.json({ status: 'ok', expert: token });
+        if(response.blocked){
+            return res.json({blocked:true,expert:false})
+        }else{
+            if(response.status){
+                const token = jwt.sign(
+                    {
+                        expertId:response.expert._id,
+                        name:response.expert.name,
+                        email:response.expert.email
+                    }, process.env.JWT_SECRET_KEY);
+                    return res.json({ status: 'ok', expert: token });
+            }
+            return res.json({ status: "error", expert: false });
         }
-        return res.json({ status: "error", expert: false });
+       
     })
+}
+
+const multipleFileUpload=(req,res)=>{
+    try {
+        let filesArray=[]
+        req.files.forEach(element => {
+            const files={
+                fileName:element.originalname,
+                filePath:element.path,
+            }
+            filesArray.push(files)
+        });
+        res.status(201).send('File uploaded succesfully')
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
 }
 
 
@@ -41,5 +62,6 @@ const expertLogin=(req,res)=>{
 
 module.exports={
     expertSignup,
-    expertLogin
+    expertLogin,
+    multipleFileUpload
 }

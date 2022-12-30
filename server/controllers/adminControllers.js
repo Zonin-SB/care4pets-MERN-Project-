@@ -25,7 +25,7 @@ const getAllUsers = (req, res) => {
   adminUtilities
     .userDetails()
     .then((details) => {
-      // console.log(details);
+     
       res.json({ status: 'ok', userDetails: details });
     })
     .catch((err) => {
@@ -38,7 +38,7 @@ const blockUser = (req, res) => {
   adminUtilities
     .blockUser(id)
     .then((details) => {
-      console.log(details);
+     
       res.json({status:'ok',blocked:true,userDetails:details})
     })
     .catch((err) => {
@@ -49,8 +49,35 @@ const blockUser = (req, res) => {
 const unblockUser=(req,res)=>{
   const id=req.params.id
   adminUtilities.unblockUser(id).then((details)=>{
-    console.log(details);
     res.json({status:'ok',unblocked:true,userDetails:details})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
+const getAllExperts=(req,res)=>{
+  adminUtilities.expertDetails().then((details)=>{
+    res.json({status:'ok',expertDetails:details})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
+const blockExpert=(req,res)=>{
+const id=req.params.id
+adminUtilities.blockExpert(id).then((details)=>{
+  
+  res.json({status:'ok',blocked:true,expertDetails:details})
+  
+}).catch((err)=>{
+  console.log(err);
+})
+}
+
+const unblockExpert=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.unblockExpert(id).then((details)=>{
+    res.json({status:'ok',unblocked:true,expertDetails:details})
   }).catch((err)=>{
     console.log(err);
   })
@@ -60,5 +87,8 @@ module.exports = {
   adminLogin,
   getAllUsers,
   blockUser,
-  unblockUser
+  unblockUser,
+  getAllExperts,
+  blockExpert,
+  unblockExpert
 };

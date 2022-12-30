@@ -24,6 +24,7 @@ module.exports = {
     });
   },
   findAdminById: (userId) => {
+    // console.log(userId,'adminid');
     return new Promise(async (resolve, reject) => {
       try {
         const user = await db
@@ -86,6 +87,63 @@ module.exports = {
             const details = await db
               .get()
               .collection(collection.USER_COLLECTION)
+              .find()
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  expertDetails:()=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const details=await db.get().collection(collection.EXPERT_COLLECTION).find().toArray()
+        resolve(details)
+      } catch (error) {
+        reject()
+      }
+    })
+  },
+
+  blockExpert: (userId) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne({ _id: ObjectId(userId) }, { $set: { blocked: true } })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.EXPERT_COLLECTION)
+              .find()
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  unblockExpert: (userId) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne({ _id: ObjectId(userId) }, { $set: { blocked: false } })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.EXPERT_COLLECTION)
               .find()
               .toArray();
             resolve(details);

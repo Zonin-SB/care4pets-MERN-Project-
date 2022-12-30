@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const collection = require('../config/collection');
 const db = require('../config/connection');
+const { ObjectId } = require('mongodb');
 
 module.exports = {
   doUserSignup: (data) => {
@@ -38,7 +39,7 @@ module.exports = {
       if (user) {
         if (user.blocked) {
           response.blocked = true;
-         
+
           resolve(response);
         } else {
           bcrypt.compare(data.password, user.password).then((status) => {
@@ -56,4 +57,21 @@ module.exports = {
       }
     });
   },
+
+  findUserById: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const user = await db
+          .get()
+          .collection(collection.USER_COLLECTION)
+          .findOne({ _id: ObjectId(userId) });
+
+        resolve(user);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+
 };

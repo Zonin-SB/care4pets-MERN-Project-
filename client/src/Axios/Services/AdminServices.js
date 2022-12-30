@@ -29,32 +29,77 @@ export const getUserDetails = async (token) => {
   }
 };
 
-export const blockUser=async(token,id)=>{
-    const config = {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-      };
-      const {data}=await axiosAdminInstance.get(`/blockUser/${id}`,config)
-    //   console.log(data);
-    if(data.status){
-        return data;
-    }
-}
+export const blockUser = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get(`/blockUser/${id}`, config);
+  //   console.log(data);
+  if (data.status) {
+    return data;
+  }
+};
 
-export const unblockUser=async(token,id)=>{
-    const config = {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-      };
-      const {data}=await axiosAdminInstance.get(`/unblockUser/${id}`,config)
-      console.log(data);
-      if(data.status){
-        return data;
-      }
-}
+export const unblockUser = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get(`/unblockUser/${id}`, config);
+  console.log(data);
+  if (data.status) {
+    return data;
+  }
+};
+
+export const getExpertDetails = async (token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get('/expertDetails', config);
+  
+  if (data.status) {
+    return data;
+  }
+};
+
+export const blockExpert = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get(`/blockExpert/${id}`, config);
+ 
+  if(data.status){
+      return data;
+  }
+};
+
+export const unblockExpert = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get(`/unblockExpert/${id}`, config);
+  // console.log(data);
+  if (data.status) {
+    return data;
+  }
+};
