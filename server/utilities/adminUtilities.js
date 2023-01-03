@@ -1,3 +1,4 @@
+const { response } = require('express');
 const { ObjectId } = require('mongodb');
 const collection = require('../config/collection');
 const db = require('../config/connection');
@@ -100,15 +101,19 @@ module.exports = {
     });
   },
 
-  expertDetails:()=>{
-    return new Promise(async(resolve,reject)=>{
+  expertDetails: () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const details=await db.get().collection(collection.EXPERT_COLLECTION).find().toArray()
-        resolve(details)
+        const details = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .find()
+          .toArray();
+        resolve(details);
       } catch (error) {
-        reject()
+        reject();
       }
-    })
+    });
   },
 
   blockExpert: (userId) => {
@@ -156,4 +161,52 @@ module.exports = {
       }
     });
   },
+  addPlan: (planData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .insertOne(planData)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getAllPlan: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const planDetails = await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .find()
+          .toArray();
+        resolve(planDetails);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  deletePlan:(planId)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        await db.get().collection(collection.PLAN_COLLECTION).deleteOne({_id:ObjectId(planId)}).then(async()=>{
+          const planDetails=await db.get().collection(collection.PLAN_COLLECTION).find().toArray()
+          resolve(planDetails)
+        }).catch(()=>{
+          reject()
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
 };

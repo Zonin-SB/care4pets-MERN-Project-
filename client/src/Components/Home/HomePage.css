@@ -1,5 +1,6 @@
 .plan-card{
-height: 150px;
+height: 350px;
+width: 20rem;
 }
 
 .home-background{
@@ -8,9 +9,4 @@ height: 150px;
 }
 .comments::-webkit-scrollbar{
     display: none;
-}
-.comment{
-    
-    /* width: 1000px;
-    height: 400px; */
 }

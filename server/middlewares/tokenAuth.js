@@ -41,7 +41,7 @@ const userAuth=async (req,res,next)=>{
             token=req.headers.authorization.split(' ')[1]
           
             const decoded=jwt.verify(token,process.env.JWT_SECRET_KEY)
-          
+        //   console.log(decoded,'token dec');
             req.user=await userUtilities.findUserById(decoded.userId)
             next()
         } catch (error) {

@@ -3,15 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import './UserHomeNavPage.css';
 import { useDispatch } from 'react-redux';
-import { clearUserLoginDetails } from '../../redux/adminReducer';
+import {
+  clearUserLoginDetails,
+  clearUserAllDetails,
+  clearUserToken,
+} from '../../redux/adminReducer';
 function UserNav() {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem('userToken');
     localStorage.removeItem('userDetails');
-    dispatch(clearUserLoginDetails())
+    dispatch(clearUserToken());
+    dispatch(clearUserLoginDetails());
+    dispatch(clearUserAllDetails());
     navigate('/');
   };
   return (
@@ -48,9 +54,12 @@ function UserNav() {
                       Chat
                     </button>
 
-                   <Link to='/userProfile'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Profile
-                    </button></Link>
+                    <Link to="/userProfile">
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Profile
+                      </button>
+                    </Link>
 
                     {/* <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reports</button> */}
                   </div>

@@ -16,8 +16,9 @@ function AdminUserInfoPage() {
 
     async function getAllUsers() {
       const response = await getUserDetails(token);
-
+    
       setUserDetails(response.userDetails);
+    
       setFilteredUserDetails(response.userDetails);
     }
   }, []);

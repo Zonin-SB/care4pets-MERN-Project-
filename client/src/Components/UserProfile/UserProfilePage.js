@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUserDetails } from '../../Axios/Services/UserServices';
+import {useDispatch} from 'react-redux';
+import { userAllDetails} from '../../redux/adminReducer';
 import userProfile from '../../images/userprofile.jpg'
 // import email from '../../images/email.png'
 // import mobile from '../../images/mobile.png'
 
 function UserProfilePage() {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const userId = useSelector((state) => state.admin.userDetails.userId);
   const [userDetails,setUserDetails]=useState([])
  
   useEffect(() => {
     const token = localStorage.getItem('userToken');
+ 
     fetchData()
 
     async function fetchData() {
       const data=await getUserDetails(token,userId)
       setUserDetails(data.userDetails)
     }
-  }, [userId]);
+  }, [userId,dispatch]);
 
   return (
     <div>
@@ -104,7 +109,7 @@ function UserProfilePage() {
                     </div>
                   </div>
                   <div className="text-center mt-12">
-                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                    <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
                       {userDetails.name}
                     </h3>
                     {/* <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
@@ -125,12 +130,13 @@ function UserProfilePage() {
                   <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                     <div className="flex flex-wrap justify-center">
                       <div className="w-full lg:w-9/12 px-4">
-                       <Link to='/userEditProfile'> <button
+                        <button
+                        onClick={()=>{dispatch(userAllDetails(userDetails));navigate('/userEditProfile')}}
                           className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                           type="button"
                         >
                           Update Profile
-                        </button></Link>
+                        </button>
                       </div>
                     </div>
                   </div>

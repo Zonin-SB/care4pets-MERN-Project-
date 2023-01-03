@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   userDetails: '',
   expertDetails: '',
   adminDetails: '',
+  userAllDetails:'',
+  userToken:'',
 };
 
 const loginSlice = createSlice({
@@ -40,6 +42,27 @@ const loginSlice = createSlice({
       adminDetails = false;
       return { ...state, adminDetails };
     },
+    userAllDetails:(state,action)=>{
+      let { userAllDetails } = state;
+      userAllDetails=action.payload;
+      return {...state,userAllDetails}
+    },
+    clearUserAllDetails: (state, action) => {
+      let { userAllDetails } = state;
+      userAllDetails = false;
+      return { ...state, userAllDetails };
+    },
+    userToken:(state,action)=>{
+      let {userToken}=state;
+      userToken=action.payload
+      return {...state,userToken}
+    },
+    clearUserToken:(state,action)=>{
+      let{userToken}=state;
+      userToken=false;
+      return{...state,userToken}
+    }
+    
   },
 });
 
@@ -51,6 +74,10 @@ export const {
   clearUserLoginDetails,
   clearExpertLoginDetails,
   clearAdminLoginDetails,
+  userAllDetails,
+  clearUserAllDetails,
+  userToken,
+  clearUserToken,
 } = loginSlice.actions;
 
 // this is for configureStore

@@ -22,4 +22,6 @@ export {default as AdminExpertInfoPage} from './AdminExpertInfo/AdminExpertInfoP
 export {default as HomeFooterPage} from './HomeFooter/HomeFooterPage'
 export {default as AdminHomeNavPage} from './AdminHomeNav/AdminHomeNavPage'
 export {default as AdminHomePage} from './AdminHome/AdminHomePage'
+export {default as ViewPlansPage} from './Plans/ViewPlansPage'
+export {default as AdminAddPlansPage} from './AdminAddPlans/AdminAddPlansPage'
 export {default as ErrorPage} from './Error/ErrorPage'

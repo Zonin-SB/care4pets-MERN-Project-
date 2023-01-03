@@ -73,5 +73,39 @@ module.exports = {
     });
   },
 
+  updateUserProfile: (userData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.USER_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(userData.id) },
+            {
+              $set: {
+                name: userData.name,
+                email: userData.email,
+                mobile: userData.mobile,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  },
 
+  viewAllPlan:()=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const planDetails=await db.get().collection(collection.PLAN_COLLECTION).find().toArray()
+        resolve(planDetails)
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
 };

@@ -46,3 +46,31 @@ export const getUserDetails = async (token, id) => {
         return data;
     }
   };
+
+  export const updateUserProfile=async(token,values)=>{
+ 
+    const config = {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json',
+        },
+      };
+      const {data} = await axiosUserInstance.post('/updateUserProfile',values,config)
+      if(data.status){
+        return data;
+      }
+  }
+
+  // fetching datas for home page
+  export const viewAllPlan=async()=>{
+    const config = {
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    const {data}=await axiosUserInstance.get('/viewAllPlan',config)
+    if(data.status){
+      return data;
+    }
+  }

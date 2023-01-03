@@ -1,5 +1,6 @@
 const adminUtilities = require('../utilities/adminUtilities');
 const jwt = require('jsonwebtoken');
+const { response } = require('express');
 
 const adminLogin = (req, res) => {
   const data = req.body;
@@ -83,6 +84,31 @@ const unblockExpert=(req,res)=>{
   })
 }
 
+const addPlan=(req,res)=>{
+  adminUtilities.addPlan(req.body).then(()=>{
+    res.json({status:'ok'})
+  }).catch((err)=>{
+    console.log(err);
+    res.json({status:'error'})
+  })
+}
+
+const getAllPlan=(req,res)=>{
+  adminUtilities.getAllPlan().then((planDetails)=>{
+    res.json({status:'ok',planDetails:planDetails})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
+const deletePlan=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.deletePlan(id).then((planDetails)=>{
+    res.json({status:'ok',planDetails:planDetails})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -90,5 +116,8 @@ module.exports = {
   unblockUser,
   getAllExperts,
   blockExpert,
-  unblockExpert
+  unblockExpert,
+  addPlan,
+  getAllPlan,
+  deletePlan
 };

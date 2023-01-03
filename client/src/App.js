@@ -3,10 +3,12 @@ import './index.css';
 
 import { Routes, Route } from 'react-router-dom';
 import {
+  AdminAddPlans,
   AdminExpertInfo,
   AdminHome,
   AdminLogin,
   AdminUserInfo,
+  AdminViewPlans,
   Error,
   ExpertApplyForm,
   ExpertHome,
@@ -36,6 +38,8 @@ function App() {
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/userinfo" element={<AdminUserInfo />} />
         <Route path="/expertinfo" element={<AdminExpertInfo />} />
+        <Route path="/adminViewPlans" element={<AdminViewPlans />} />
+        <Route path="/adminAddPlans" element={<AdminAddPlans />} />
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />

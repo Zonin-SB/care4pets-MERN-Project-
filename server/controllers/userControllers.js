@@ -57,8 +57,29 @@ const getUserDetails = (req, res) => {
     });
 };
 
+const updateUserProfile = (req, res) => {
+  userUtilities
+    .updateUserProfile(req.body)
+    .then((response) => {
+      return res.json({ status: 'ok' });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const viewAllPlan=(req,res)=>{
+  userUtilities.viewAllPlan().then((details)=>{
+    res.json({status:'ok',planDetails:details})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
 module.exports = {
   userSignup,
   userLogin,
   getUserDetails,
+  updateUserProfile,
+  viewAllPlan,
 };

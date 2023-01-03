@@ -4,7 +4,9 @@ import { useFormik } from 'formik';
 import jwt from 'jwt-decode';
 import { userLoginSchema } from '../../Validation/Validation';
 import { userLogin } from '../../Axios/Services/UserServices';
+import {useDispatch} from 'react-redux';
 import '../UserLogin/UserLoginPage.css';
+import { userToken } from '../../redux/adminReducer';
 
 const initialValues = {
   email: '',
@@ -12,6 +14,7 @@ const initialValues = {
 };
 
 function UserLoginPage() {
+  const dispatch=useDispatch()
 	const [error,setError]=useState('')
 	const navigate=useNavigate()
   const onSubmit = async (values, action) => {
@@ -22,6 +25,8 @@ if(response.blocked){
 }else{
 	if (response.user) {
 		localStorage.setItem('userToken', response.user);
+   
+    dispatch(userToken(response.user))
 		const user = jwt(response.user);
 		console.log(user);
 		localStorage.setItem('userDetails', user.name);
