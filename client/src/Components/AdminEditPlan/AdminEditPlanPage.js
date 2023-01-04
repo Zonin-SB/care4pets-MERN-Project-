@@ -28,27 +28,22 @@ function AdminEditPlanPage() {
     console.log(state.admin,'state admin'); return  state.admin});
   console.log(planDetails,'from redux');
 
-  const token = localStorage.getItem('adminToken');
-  async function fetchPlan() {
-   const data = await getPlanDetails(token, id);
-   dispatch(planData(data.planDetails[0]))
-   setPlan(data.planDetails[0]);
-   
- }
-
-
   useEffect(() => {
-    
+    const token = localStorage.getItem('adminToken');
     fetchPlan();
     
-  console.log(plan,'plan state');
+    async function fetchPlan() {
+      const data = await getPlanDetails(token, id);
+      dispatch(planData(data.planDetails[0]))
+      setPlan(data.planDetails[0]);
+      
+    }
     return  ()=>{dispatch(planData(null))}
        
     
-  }, []);
+  }, [id,dispatch]);
    console.log(plan, 'in ed plan');
 
-  
   
 
   const onSubmit = async (values, action) => {
@@ -58,7 +53,7 @@ function AdminEditPlanPage() {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
-        planName: planDetails?.planName||'name',
+        planName: planDetails?.planName||'',
         validity: planDetails?.validity || '',
         currentPrice: planDetails?.currentPrice || '',
         previousPrice: planDetails?.previousPrice || '',
