@@ -4,109 +4,29 @@ function AdminHomePage() {
   return (
     <div className='max-w-screen-2xl mx-auto'>
       AdminHomePage
-      <>
-  {/* Button trigger modal */}
-  <button
-    type="button"
-    className="px-6
-py-2.5
-bg-blue-600
-text-white
-font-medium
-text-xs
-leading-tight
-uppercase
-rounded
-shadow-md
-hover:bg-blue-700 hover:shadow-lg
-focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-active:bg-blue-800 active:shadow-lg
-transition
-duration-150
-ease-in-out"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
-    Launch demo modal
-  </button>
-  {/* Modal */}
-  <div
-    className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="exampleModal"
-    tabIndex={-1}
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div className="modal-dialog relative w-auto pointer-events-none">
-      <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-        <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-          <h5
-            className="text-xl font-medium leading-normal text-gray-800"
-            id="exampleModalLabel"
-          >
-            Modal title
-          </h5>
-          <button
-            type="button"
-            className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          />
+      <main class="antialiased bg-gray-200 text-gray-900 font-sans overflow-x-hidden">
+  <div class="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
+    <div class="bg-black opacity-25 w-full h-full absolute z-10 inset-0"></div>
+    <div class="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
+      <div class="md:flex items-center">
+        <div class="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
+          <i class="bx bx-error text-3xl"></i>
         </div>
-        <div className="modal-body relative p-4">
-          Modal body text goes here.
+        <div class="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+          <p class="font-bold">Delete your account</p>
+          <p class="text-sm text-gray-700 mt-1">You will lose all of your data by deleting your account. This action cannot be undone.
+          </p>
         </div>
-        <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-          <button
-            type="button"
-            className="px-6
-    py-2.5
-    bg-purple-600
-    text-white
-    font-medium
-    text-xs
-    leading-tight
-    uppercase
-    rounded
-    shadow-md
-    hover:bg-purple-700 hover:shadow-lg
-    focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-    active:bg-purple-800 active:shadow-lg
-    transition
-    duration-150
-    ease-in-out"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            className="px-6
-py-2.5
-bg-blue-600
-text-white
-font-medium
-text-xs
-leading-tight
-uppercase
-rounded
-shadow-md
-hover:bg-blue-700 hover:shadow-lg
-focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-active:bg-blue-800 active:shadow-lg
-transition
-duration-150
-ease-in-out
-ml-1"
-          >
-            Save changes
-          </button>
-        </div>
+      </div>
+      <div class="text-center md:text-right mt-4 md:flex md:justify-end">
+        <button class="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2">Delete
+            Account</button>
+        <button class="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4
+          md:mt-0 md:order-1">Cancel</button>
       </div>
     </div>
   </div>
-</>
-
+</main>
     </div>
   );
 }

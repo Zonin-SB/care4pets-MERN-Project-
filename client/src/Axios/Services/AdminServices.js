@@ -146,3 +146,17 @@ export const deletePlan = async (token, id) => {
     return data;
   }
 };
+
+export const getPlanDetails=async (token,id)=>{
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const {data}=await axiosAdminInstance.get(`/getPlanDetails/${id}`,config)
+  if(data.status){
+    return data;
+  }
+}

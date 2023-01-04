@@ -208,5 +208,16 @@ module.exports = {
         console.log(error);
       }
     })
+  },
+
+  getPlanDetails:(planId)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const details=await db.get().collection(collection.PLAN_COLLECTION).find({_id:ObjectId(planId)}).toArray()
+        resolve(details)
+      } catch (error) {
+        console.log(error);
+      }
+    })
   }
 };

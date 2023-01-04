@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAllPlan, deletePlan } from '../../Axios/Services/AdminServices';
 
+
 function ViewPlansPage() {
+  const navigate=useNavigate();
   const [plan, setPlan] = useState();
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -42,9 +44,11 @@ function ViewPlansPage() {
       name: 'Edit',
       selector: (row) => {
         return (
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <div>
+          <button onClick={()=>{navigate(`/adminEditPlan/${row._id}`)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Edit
           </button>
+          </div>
         );
       },
     },

@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   adminDetails: '',
   userAllDetails:'',
   userToken:'',
+  planDetails:'',
 };
 
 const loginSlice = createSlice({
@@ -61,7 +62,14 @@ const loginSlice = createSlice({
       let{userToken}=state;
       userToken=false;
       return{...state,userToken}
+    },
+    planData:(state,action)=>{
+      console.log(action,'plan details in redx');
+      
+    const  planDetails=action.payload
+      return{...state,planDetails}
     }
+    
     
   },
 });
@@ -78,6 +86,7 @@ export const {
   clearUserAllDetails,
   userToken,
   clearUserToken,
+  planData,
 } = loginSlice.actions;
 
 // this is for configureStore

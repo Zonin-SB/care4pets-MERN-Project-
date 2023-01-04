@@ -109,6 +109,16 @@ const deletePlan=(req,res)=>{
     console.log(err);
   })
 }
+
+const getPlanDetails=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.getPlanDetails(id).then((details)=>{
+    res.json({status:'ok',planDetails:details})
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -119,5 +129,6 @@ module.exports = {
   unblockExpert,
   addPlan,
   getAllPlan,
-  deletePlan
+  deletePlan,
+  getPlanDetails,
 };

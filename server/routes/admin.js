@@ -15,6 +15,7 @@ router.get('/api/unblockExpert/:id',auth.adminAuth,adminController.unblockExpert
 router.post('/api/addPlan',auth.adminAuth,adminController.addPlan)
 router.get('/api/getAllPlan',auth.adminAuth,adminController.getAllPlan)
 router.get('/api/deletePlan/:id',auth.adminAuth,adminController.deletePlan)
+router.get('/api/getPlanDetails/:id',auth.adminAuth,adminController.getPlanDetails)
 
 
 module.exports=router;
