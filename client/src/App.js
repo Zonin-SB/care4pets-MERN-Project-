@@ -18,6 +18,7 @@ import {
   ExpertSignup,
   Home,
   UserEditProfile,
+  UserEditProfilePic,
   UserHome,
   UserLogin,
   UserProfile,
@@ -34,6 +35,7 @@ function App() {
         <Route path="/userSignup" element={<UserSignup />} />
         <Route path="/userProfile" element={<UserProfile/>} />
         <Route path="/userEditProfile" element={<UserEditProfile/>} />
+        <Route path="/userEditProfilePic" element={<UserEditProfilePic/>} />
 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminHome" element={<AdminHome />} />

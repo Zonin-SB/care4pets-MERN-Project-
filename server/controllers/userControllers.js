@@ -1,6 +1,7 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const userUtilities = require('../utilities/userUtilities');
+// const {cloudinary}=require('../middlewares/cloudinary');
 
 const userSignup = (req, res) => {
   const data = req.body;
@@ -68,13 +69,40 @@ const updateUserProfile = (req, res) => {
     });
 };
 
-const viewAllPlan=(req,res)=>{
-  userUtilities.viewAllPlan().then((details)=>{
-    res.json({status:'ok',planDetails:details})
-  }).catch((err)=>{
-    console.log(err);
-  })
-}
+const viewAllPlan = (req, res) => {
+  userUtilities
+    .viewAllPlan()
+    .then((details) => {
+      res.json({ status: 'ok', planDetails: details });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const uploadProfilePic = (req, res) => {
+  const fileStr = req.body.data;
+
+  userUtilities
+    .uploadProfilePic(fileStr)
+    .then((response) => {
+      res.json({ status: 'ok', imageData: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const userProfilePicUpdate = (req, res) => {
+  userUtilities
+    .userProfilePicUpdate(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
 module.exports = {
   userSignup,
@@ -82,4 +110,6 @@ module.exports = {
   getUserDetails,
   updateUserProfile,
   viewAllPlan,
+  uploadProfilePic,
+  userProfilePicUpdate,
 };

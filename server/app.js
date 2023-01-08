@@ -2,10 +2,11 @@ const express = require('express');
 const createError = require('http-errors');
 const dotenv=require('dotenv')
 const db=require('./config/connection')
-const multer  = require('multer')
-const path = require('path');
-const upload = require('./middlewares/fileUpload')
-const fileURLToPath=require('url')
+// const multer  = require('multer')
+// const path = require('path');
+// const upload = require('./middlewares/fileUpload')
+// const fileURLToPath=require('url')
+var bodyParser = require('body-parser')
 
 const cors = require('cors');
 
@@ -14,11 +15,16 @@ const app = express();
 dotenv.config()
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json({limit:'50mb'}))
+app.use(express.urlencoded({limit:'50mb',extended:true}));
 
+app.use(bodyParser.json({ limit: "15mb" })); //Whatever size you feel you require
+app.use(bodyParser.urlencoded({
+  limit: "15mb",
+  extended: true,
+  parameterLimit: 100000, //Amount of parameters you feel is required
+}));
 
-
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 const userRouter=require('./routes/user')
 const expertRouter=require('./routes/expert')

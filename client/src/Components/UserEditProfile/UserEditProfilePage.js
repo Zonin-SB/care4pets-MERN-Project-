@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { userAllDetails } from '../../redux/adminReducer';
 import { userEditProfileSchema } from '../../Validation/Validation';
@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 function UserEditProfilePage() {
   const navigate=useNavigate()
+  const [error,setError]=useState('')
+ 
   const { userAllDetails } = useSelector((state) => state.admin);
   const token = useSelector((state) => state.admin.userToken);
 
@@ -16,7 +18,9 @@ function UserEditProfilePage() {
     name: userAllDetails.name,
     email: userAllDetails.email,
     mobile: userAllDetails.mobile,
+    
   };
+
 
 
   const onSubmit = async (values, action) => {
@@ -24,7 +28,7 @@ function UserEditProfilePage() {
    if(data.status==='ok'){
     navigate('/userProfile')
    }else{
-    alert('error')
+    setError('Update Failed,try again after some time.')
    }
    
   };
@@ -50,6 +54,7 @@ function UserEditProfilePage() {
               <p className="text-sm font-normal text-gray-600 mb-7">
                 Welcome Back
               </p>
+              {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -134,6 +139,8 @@ function UserEditProfilePage() {
                 <p className="red-error">{errors.email}</p>
               )}
 
+
+             
               <button
                 type="submit"
                 className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"

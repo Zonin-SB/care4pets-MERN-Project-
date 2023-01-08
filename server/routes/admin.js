@@ -16,6 +16,7 @@ router.post('/api/addPlan',auth.adminAuth,adminController.addPlan)
 router.get('/api/getAllPlan',auth.adminAuth,adminController.getAllPlan)
 router.get('/api/deletePlan/:id',auth.adminAuth,adminController.deletePlan)
 router.get('/api/getPlanDetails/:id',auth.adminAuth,adminController.getPlanDetails)
+router.post('/api/editPlan',auth.adminAuth,adminController.editPlan)
 
 
 module.exports=router;

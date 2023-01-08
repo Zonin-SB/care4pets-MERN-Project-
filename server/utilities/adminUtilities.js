@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 const collection = require('../config/collection');
 const db = require('../config/connection');
 
+
 module.exports = {
   doAdminLogin: (adminData) => {
     return new Promise(async (resolve, reject) => {
@@ -217,6 +218,31 @@ module.exports = {
         resolve(details)
       } catch (error) {
         console.log(error);
+      }
+    })
+  },
+
+  editPlan:(planData)=>{
+    
+    return new Promise((resolve,reject)=>{
+      try {
+        db.get().collection(collection.PLAN_COLLECTION).updateOne({_id:ObjectId(planData.planId)},{
+          $set:{
+            planName:planData.planName,
+            validity:planData.validity,
+            currentPrice:planData.currentPrice,
+            previousPrice:planData.previousPrice,
+            dietPlan:planData.dietPlan,
+            expertAvailability:planData.expertAvailability,
+            numberOfCheckup:planData.numberOfCheckup,
+            tipAvailabilty:planData.tipAvailabilty
+          }
+        }).then((response)=>{
+      
+          resolve(response)
+        })
+      } catch (error) {
+        reject()
       }
     })
   }

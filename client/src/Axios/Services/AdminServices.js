@@ -160,3 +160,18 @@ export const getPlanDetails=async (token,id)=>{
     return data;
   }
 }
+
+export const editPlan=async(token,values)=>{
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const {data}=await axiosAdminInstance.post('/editPlan',values,config)
+  if(data.status){
+    return data;
+  }
+}

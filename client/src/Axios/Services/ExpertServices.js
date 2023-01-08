@@ -28,3 +28,15 @@ export const expertLogin=async(values)=>{
     return data
    }
 }
+
+export const uploadDocuments=async(values)=>{
+    // console.log(values,'in exp ser');
+    const { data } = await axiosExpertInstance.post('/uploadDocuments', {
+        data: values,
+        headers: { 'Content-type': 'application.json' },
+      });
+      console.log(data,'in axios');
+      if (data.status) {
+        return data;
+      }
+}

@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const collection = require('../config/collection');
 const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
+const { cloudinary } = require('../middlewares/cloudinary');
+const { response } = require('express');
 
 module.exports = {
   doUserSignup: (data) => {
@@ -98,14 +100,57 @@ module.exports = {
     });
   },
 
-  viewAllPlan:()=>{
-    return new Promise(async(resolve,reject)=>{
+  viewAllPlan: () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const planDetails=await db.get().collection(collection.PLAN_COLLECTION).find().toArray()
-        resolve(planDetails)
+        const planDetails = await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .find()
+          .toArray();
+        resolve(planDetails);
       } catch (error) {
         console.log(error);
       }
-    })
-  }
+    });
+  },
+
+  uploadProfilePic: (fileStr) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+          upload_preset: 'care4pets',
+        });
+        resolve(uploadedResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  userProfilePicUpdate: (userData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.USER_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(userData.id) },
+            {
+              $set: {
+                profileImage: userData.profileImage,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
 };

@@ -119,6 +119,14 @@ const getPlanDetails=(req,res)=>{
   })
 }
 
+const editPlan=(req,res)=>{
+  adminUtilities.editPlan(req.body).then(()=>{
+    return res.json({ status: 'ok' });
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -131,4 +139,5 @@ module.exports = {
   getAllPlan,
   deletePlan,
   getPlanDetails,
+  editPlan,
 };

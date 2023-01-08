@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addPlanSchema } from '../../Validation/Validation';
-import { getPlanDetails } from '../../Axios/Services/AdminServices';
-import {useDispatch} from 'react-redux';
-import { planData} from '../../redux/adminReducer';
-import { useSelector } from 'react-redux';
+import { editPlan, getPlanDetails } from '../../Axios/Services/AdminServices';
 
-// const initialValues = {
-//   planName: '',
-//   validity: '',
-//   currentPrice: '',
-//   previousPrice: '',
-//   dietPlan: '',
-//   expertAvailability: '',
-//   numberOfCheckup: '',
-//   tipAvailabilty: '',
-// };
 
 function AdminEditPlanPage() {
   const { id } = useParams();
   const [error, setError] = useState('');
   const [plan, setPlan] = useState([]);
-  const dispatch=useDispatch();
+  const navigate=useNavigate();
 
-  const { planDetails } = useSelector((state) => {
-    console.log(state.admin,'state admin'); return  state.admin});
-  console.log(planDetails,'from redux');
+  // const { planDetails } = useSelector((state) => {
+  //   console.log(state.admin,'state admin'); return  state.admin});
+
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -34,38 +21,46 @@ function AdminEditPlanPage() {
     
     async function fetchPlan() {
       const data = await getPlanDetails(token, id);
-      dispatch(planData(data.planDetails[0]))
+      // dispatch(planData(data.planDetails[0]))
       setPlan(data.planDetails[0]);
       
     }
-    return  ()=>{dispatch(planData(null))}
+    // return  ()=>{dispatch(planData(null))}
        
     
-  }, [id,dispatch]);
-   console.log(plan, 'in ed plan');
+  }, [id]);
+
 
   
 
   const onSubmit = async (values, action) => {
-    // const token = localStorage.getItem('adminToken');
+    const token = localStorage.getItem('adminToken');
+    const data=await editPlan(token,values)
+    if(data.status==='ok'){
+      navigate('/adminViewPlans')
+     }else{
+      setError('Update Failed,try again after some time.')
+     }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
-        planName: planDetails?.planName||'',
-        validity: planDetails?.validity || '',
-        currentPrice: planDetails?.currentPrice || '',
-        previousPrice: planDetails?.previousPrice || '',
-        dietPlan: planDetails?.dietPlan || '',
-        expertAvailability: planDetails?.expertAvailability || '',
-        numberOfCheckup: planDetails?.numberOfCheckup || '',
-        tipAvailabilty: planDetails?.tipAvailabilty || '',
+        planId:id,
+        planName: plan?.planName||'',
+        validity: plan?.validity || '',
+        currentPrice: plan?.currentPrice || '',
+        previousPrice: plan?.previousPrice || '',
+        dietPlan: plan?.dietPlan || '',
+        expertAvailability: plan?.expertAvailability || '',
+        numberOfCheckup: plan?.numberOfCheckup || '',
+        tipAvailabilty: plan?.tipAvailabilty || '',
       },
       validationSchema: addPlanSchema,
       onSubmit,
+      enableReinitialize:true,
     });
-    console.log(values,'formik values');
+ 
 
   return (
     <div>
@@ -109,7 +104,7 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  <option>Select plan validity</option>
+              
                   <option value="1">1</option>
                   <option value="3">3</option>
                   <option value="6">6</option>
@@ -184,7 +179,7 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  <option>Available Time</option>
+                  
                   <option value="30">30</option>
                   <option value="60">60</option>
                   <option value="120">120</option>
@@ -207,7 +202,7 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  <option>Select No. of checkup's</option>
+                  
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -229,7 +224,7 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  <option>Tips availability</option>
+                  
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>

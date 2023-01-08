@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const collection = require('../config/collection');
 const db = require('../config/connection');
+const { ObjectId } = require('mongodb');
+const { cloudinary } = require('../middlewares/cloudinary');
 
 module.exports = {
   doExpertSignup: (data) => {
@@ -53,6 +55,34 @@ module.exports = {
         }
       } else {
         resolve({ status: false });
+      }
+    });
+  },
+
+  findExpertById:(expertId)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const user = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .findOne({ $and:[{_id: ObjectId(expertId)},{verified:true}] });
+
+        resolve(user);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  uploadDocuments: (fileStr) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+          upload_preset: 'care4pets',
+        });
+        resolve(uploadedResponse);
+      } catch (error) {
+        console.log(error);
       }
     });
   },

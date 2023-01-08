@@ -8,6 +8,8 @@ router.post('/api/userSignup',userController.userSignup)
 router.post('/api/userLogin',userController.userLogin)
 router.get('/api/getUserDetails/:id',auth.userAuth,userController.getUserDetails)
 router.post('/api/updateUserProfile',auth.userAuth,userController.updateUserProfile)
+router.post('/api/uploadUserProfilePic',userController.uploadProfilePic)
+router.post('/api/userProfilePicUpdate',auth.userAuth,userController.userProfilePicUpdate)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
 

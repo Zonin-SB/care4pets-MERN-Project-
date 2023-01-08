@@ -5,7 +5,7 @@ const {upload}=require('../middlewares/fileUpload')
 
 router.post('/api/expertSignup',expertController.expertSignup)
 router.post('/api/expertLogin',expertController.expertLogin)
-router.post('/api/applyToVerify',upload.array('files'),expertController.multipleFileUpload)
+router.post('/api/uploadDocuments',expertController.uploadDocuments)
 
 
 module.exports=router;
