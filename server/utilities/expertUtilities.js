@@ -3,6 +3,7 @@ const collection = require('../config/collection');
 const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
 const { cloudinary } = require('../middlewares/cloudinary');
+const { response } = require('express');
 
 module.exports = {
   doExpertSignup: (data) => {
@@ -59,13 +60,28 @@ module.exports = {
     });
   },
 
-  findExpertById:(expertId)=>{
+  findVerifiedExpertById: (expertId) => {
     return new Promise(async (resolve, reject) => {
       try {
         const user = await db
           .get()
           .collection(collection.EXPERT_COLLECTION)
-          .findOne({ $and:[{_id: ObjectId(expertId)},{verified:true}] });
+          .findOne({ $and: [{ _id: ObjectId(expertId) }, { verified: true }] });
+
+        resolve(user);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  findExpertById: (expertId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const user = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .findOne({ _id: ObjectId(expertId) });
 
         resolve(user);
       } catch (error) {
@@ -81,6 +97,34 @@ module.exports = {
           upload_preset: 'care4pets',
         });
         resolve(uploadedResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  expertApplyVerification: (expertData) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(expertData.id) },
+            {
+              $set: {
+                profilePic: expertData.profilePic,
+                idProofPic: expertData.idProofPic,
+                trainersLicensePic: expertData.licensePic,
+                applied: expertData.applied,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       } catch (error) {
         console.log(error);
       }

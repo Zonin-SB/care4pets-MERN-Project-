@@ -59,7 +59,7 @@ const userAuth=async (req,res,next)=>{
    
 }
 
-const expertAuth=async (req,res,next)=>{
+const expertNotverifiedAuth=async (req,res,next)=>{
     let token;
 
     if(
@@ -70,8 +70,8 @@ const expertAuth=async (req,res,next)=>{
             token=req.headers.authorization.split(' ')[1]
           
             const decoded=jwt.verify(token,process.env.JWT_SECRET_KEY)
-        //   console.log(decoded,'token dec');
-            req.user=await userUtilities.findUserById(decoded.userId)
+         
+            req.user=await expertUtilities.findExpertById(decoded.expertId)
             next()
         } catch (error) {
             res.status(401);
@@ -91,5 +91,6 @@ const expertAuth=async (req,res,next)=>{
 
 module.exports={
     adminAuth,
-    userAuth
+    userAuth,
+    expertNotverifiedAuth,
 }

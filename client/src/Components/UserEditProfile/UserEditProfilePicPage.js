@@ -8,7 +8,7 @@ import {
 
 function UserEditProfilePicPage() {
   const [fileInputState, setFileInputState] = useState('');
-  // const [selectedFile, setSelectedFile] = useState('');
+
   const [previewSource, setPreviewSource] = useState();
   const [error, setError] = useState('');
   const navigate = useNavigate();

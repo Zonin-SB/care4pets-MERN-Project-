@@ -58,8 +58,33 @@ const uploadDocuments = (req, res) => {
     });
 };
 
+const expertApplyVerification = (req, res) => {
+  expertUtilities
+    .expertApplyVerification(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getExpertDetails = (req, res) => {
+  const id = req.params.id;
+   expertUtilities
+    .findExpertById(id)
+    .then((details) => {
+      res.json({ status: 'ok', expertDetails: details });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 module.exports = {
   expertSignup,
   expertLogin,
   uploadDocuments,
+  expertApplyVerification,
+  getExpertDetails,
 };

@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-// import { useFormik } from 'formik';
-// import { expertApplyFormSchema } from '../../Validation/Validation';
-import { uploadDocuments } from '../../Axios/Services/ExpertServices';
-
-// const initialValues = {
-//   profilepic: '',
-//   idproof: '',
-//   licensepic: '',
-// };
+import { expertApplyVerification, uploadDocuments } from '../../Axios/Services/ExpertServices';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function ExpertApplyFormPage() {
   const [previewSource1, setPreviewSource1] = useState();
   const [previewSource2, setPreviewSource2] = useState();
   const [previewSource3, setPreviewSource3] = useState();
   const [fileInputState, setFileInputState] = useState('');
+  const [error,setError]=useState('')
+  const navigate=useNavigate();
+
+  const expertId = useSelector((state) => state.admin.expertDetails.expertId);
 
   const handleFileInputChange1 = (e) => {
     const file = e.target.files[0];
@@ -50,45 +48,45 @@ function ExpertApplyFormPage() {
     };
   };
 
-
-  // const[profilePic,setProfilePic]=useState();
-  // const onSubmit = async (values, action) => {
-  //   console.log(values,'values on submit');
-  //   const formdata = new FormData();
-  //   formdata.append('file',profilePic)
-  //   console.log(formdata,'formdata');
-  // };
-
-
-
-  // const { values, errors, touched,setFieldValue, handleBlur, handleChange, handleSubmit } =
-  //   useFormik({
-  //     initialValues: initialValues,
-  //     validationSchema: expertApplyFormSchema,
-  //     onSubmit,
-  //   });
-  // console.log(values);
-
-  // const uploadImage1 = (e) => {
-    
-  //   setFieldValue('profilepic', e.target.files[0]);
-  //   setProfilePic(e.target.files[0])
-  // };
+  let values = {};
 
  const handleSubmit = async(e) => {
     e.preventDefault();
     if (!previewSource1) return;
     if (!previewSource2) return;
     if (!previewSource3) return;
+    const uploadImage=async(base64EncodedImage)=>{
+      const {imageData}= await uploadDocuments(base64EncodedImage)
+      console.log(imageData,'in uploadImage');
+      if(imageData.url){
+        return imageData.url
+      }else{
+        setError('Image upload failed')
+      }
+     }
   const profilePic=await  uploadImage(previewSource1);
    const idProof=await uploadImage(previewSource2);
    const licensePic=await uploadImage(previewSource3);
+
+   if(profilePic && idProof&& licensePic){
+    values.profilePic=profilePic
+    values.idProofPic=idProof
+    values.licensePic=licensePic
+    values.applied=true
+    values.id=expertId
+
+   
+   const token= localStorage.getItem('expertToken')
+   const response=await expertApplyVerification(token,values)
+   if (response.status === 'ok') {
+    navigate('/expertProfile');
+  } else {
+    setError('Documents upload failed');
+  }
+   }
   };
 
-  const uploadImage=async(base64EncodedImage)=>{
-    await uploadDocuments(base64EncodedImage)
-  }
-
+ 
   return (
     <div>
       <div className="w-3/5 mx-auto mt-9">
@@ -98,6 +96,13 @@ function ExpertApplyFormPage() {
           className="flex flex-col justify-center items-center bg-white rounded shadow-lg p-12 mt-12"
           onSubmit={handleSubmit}
         >
+           {error ? (
+                <p style={{ color: 'red' }} className="text-center">
+                  {error}
+                </p>
+              ) : (
+                ''
+              )}
           <label className="font-bold text-xs">Upload Your Latest Photo</label>
           {previewSource1 && (
                 <img src={previewSource1} className="h-20" alt="profile pic" />

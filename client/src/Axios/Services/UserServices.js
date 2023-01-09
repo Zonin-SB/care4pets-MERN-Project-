@@ -82,15 +82,14 @@ export const uploadProfilePic = async (imageText) => {
     data: imageText,
     headers: { 'Content-type': 'application.json' },
   });
-  // console.log(data, 'in axios');
+
   if (data.status) {
     return data;
   }
 };
 
 export const userProfilePicUpdate = async (token, values) => {
-  console.log(token, 'pro token');
-  console.log(values, 'cloud values');
+
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
