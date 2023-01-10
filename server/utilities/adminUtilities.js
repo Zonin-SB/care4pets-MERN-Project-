@@ -3,7 +3,6 @@ const { ObjectId } = require('mongodb');
 const collection = require('../config/collection');
 const db = require('../config/connection');
 
-
 module.exports = {
   doAdminLogin: (adminData) => {
     return new Promise(async (resolve, reject) => {
@@ -196,54 +195,172 @@ module.exports = {
     });
   },
 
-  deletePlan:(planId)=>{
-    return new Promise(async(resolve,reject)=>{
+  deletePlan: (planId) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        await db.get().collection(collection.PLAN_COLLECTION).deleteOne({_id:ObjectId(planId)}).then(async()=>{
-          const planDetails=await db.get().collection(collection.PLAN_COLLECTION).find().toArray()
-          resolve(planDetails)
-        }).catch(()=>{
-          reject()
-        })
+        await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .deleteOne({ _id: ObjectId(planId) })
+          .then(async () => {
+            const planDetails = await db
+              .get()
+              .collection(collection.PLAN_COLLECTION)
+              .find()
+              .toArray();
+            resolve(planDetails);
+          })
+          .catch(() => {
+            reject();
+          });
       } catch (error) {
         console.log(error);
       }
-    })
+    });
   },
 
-  getPlanDetails:(planId)=>{
-    return new Promise(async(resolve,reject)=>{
+  getPlanDetails: (planId) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const details=await db.get().collection(collection.PLAN_COLLECTION).find({_id:ObjectId(planId)}).toArray()
-        resolve(details)
+        const details = await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .find({ _id: ObjectId(planId) })
+          .toArray();
+        resolve(details);
       } catch (error) {
         console.log(error);
       }
-    })
+    });
   },
 
-  editPlan:(planData)=>{
-    
-    return new Promise((resolve,reject)=>{
+  editPlan: (planData) => {
+    return new Promise((resolve, reject) => {
       try {
-        db.get().collection(collection.PLAN_COLLECTION).updateOne({_id:ObjectId(planData.planId)},{
-          $set:{
-            planName:planData.planName,
-            validity:planData.validity,
-            currentPrice:planData.currentPrice,
-            previousPrice:planData.previousPrice,
-            dietPlan:planData.dietPlan,
-            expertAvailability:planData.expertAvailability,
-            numberOfCheckup:planData.numberOfCheckup,
-            tipAvailabilty:planData.tipAvailabilty
-          }
-        }).then((response)=>{
-      
-          resolve(response)
-        })
+        db.get()
+          .collection(collection.PLAN_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(planData.planId) },
+            {
+              $set: {
+                planName: planData.planName,
+                validity: planData.validity,
+                currentPrice: planData.currentPrice,
+                previousPrice: planData.previousPrice,
+                dietPlan: planData.dietPlan,
+                expertAvailability: planData.expertAvailability,
+                numberOfCheckup: planData.numberOfCheckup,
+                tipAvailabilty: planData.tipAvailabilty,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  getPendingApprovalCount: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const pendingApprovalcount = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .countDocuments({ applied: true });
+
+        resolve(pendingApprovalcount);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getUsersCount: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const usersCount = await db
+          .get()
+          .collection(collection.USER_COLLECTION)
+          .countDocuments({ blocked: false });
+
+        resolve(usersCount);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getExpertsCount: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const expertsCount = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .countDocuments({ blocked: false });
+
+        resolve(expertsCount);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getPendingApprovalDetails: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const approvalDetails = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .find({ applied: true })
+          .toArray();
+
+        resolve(approvalDetails);
       } catch (error) {
         reject()
       }
-    })
+    });
+  },
+
+  getExpertAllDetails:(expertId)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .find({ _id: ObjectId(expertId) })
+          .toArray();
+        resolve(details);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  approveExpert:(expertId)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(expertId) },
+            {
+              $set: {
+                applied:false,
+                verified:true,
+                expertFrom:new Date(),
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
   }
 };

@@ -4,10 +4,13 @@ import './index.css';
 import { Routes, Route } from 'react-router-dom';
 import {
   AdminAddPlans,
+  AdminApprovalDetailedView,
+  AdminApprovalList,
   AdminEditPlan,
   AdminExpertInfo,
   AdminHome,
   AdminLogin,
+  AdminRejectExpert,
   AdminUserInfo,
   AdminViewPlans,
   Error,
@@ -44,6 +47,9 @@ function App() {
         <Route path="/adminViewPlans" element={<AdminViewPlans />} />
         <Route path="/adminAddPlans" element={<AdminAddPlans />} />
         <Route path="/adminEditPlan/:id" element={<AdminEditPlan />} />
+        <Route path="/adminApprovalList" element={<AdminApprovalList/>} />
+        <Route path="/expertDetailedView/:id" element={<AdminApprovalDetailedView/>} />
+        <Route path="/adminRejectExpert/:id" element={<AdminRejectExpert/>} />
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />

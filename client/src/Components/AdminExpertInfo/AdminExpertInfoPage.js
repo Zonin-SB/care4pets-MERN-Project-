@@ -15,7 +15,9 @@ function AdminExpertInfoPage() {
 
     async function getAllExperts() {
       const response = await getExpertDetails(token);
+      
       setExpertDetails(response.expertDetails);
+      
       setFilteredExpertDetails(response.expertDetails);
     }
   }, []);

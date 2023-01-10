@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getExpertDetails } from '../../Axios/Services/ExpertServices';
 import expertProfile from '../../images/proImg.jpg';
+import expertVerified from '../../images/verifiedExpert.png'
 
 function ExpertProfilePage() {
   const [expertDetails, setExpertDetails] = useState([]);
@@ -84,7 +85,9 @@ function ExpertProfilePage() {
                       </div>
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
+                   
                       <div className="py-6 px-3 mt-32 sm:mt-0">
+                      {expertDetails.verified? <img className='w-18 h-20 lg:ml-28' src={expertVerified} alt="verified" />:
                         <Link to="/expertApplyForm">
                           {' '}
                           <button
@@ -94,7 +97,9 @@ function ExpertProfilePage() {
                             Apply for Verification
                           </button>
                         </Link>
+}
                       </div>
+                      
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-1">
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
@@ -103,7 +108,7 @@ function ExpertProfilePage() {
                             22
                           </span>
                           <span className="text-sm text-blueGray-400">
-                            Friends
+                            Clients
                           </span>
                         </div>
                         <div className="mr-4 p-3 text-center">
@@ -111,7 +116,7 @@ function ExpertProfilePage() {
                             10
                           </span>
                           <span className="text-sm text-blueGray-400">
-                            Photos
+                            Videos
                           </span>
                         </div>
                         <div className="lg:mr-4 p-3 text-center">

@@ -147,7 +147,7 @@ export const deletePlan = async (token, id) => {
   }
 };
 
-export const getPlanDetails=async (token,id)=>{
+export const getPlanDetails = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
@@ -155,14 +155,93 @@ export const getPlanDetails=async (token,id)=>{
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosAdminInstance.get(`/getPlanDetails/${id}`,config)
-  if(data.status){
+  const { data } = await axiosAdminInstance.get(
+    `/getPlanDetails/${id}`,
+    config
+  );
+  if (data.status) {
+    return data;
+  }
+};
+
+export const editPlan = async (token, values) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.post('/editPlan', values, config);
+  if (data.status) {
+    return data;
+  }
+};
+export const getPendingApprovalCount = async (token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get(
+    '/getPendingApprovalCount',
+    config
+  );
+
+  if (data.status) {
+    return data;
+  }
+};
+
+export const getUsersCount = async (token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get('/getUsersCount', config);
+
+  if (data.status) {
+    return data;
+  }
+};
+
+export const getExpertsCount = async (token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get('/getExpertsCount', config);
+
+  if (data.status) {
+    return data;
+  }
+};
+
+export const getPendingApprovalDetails=async(token)=>{
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const {data}=await axiosAdminInstance.get('/getPendingApprovalDetails',config)
+  console.log(data);
+  if (data.status) {
     return data;
   }
 }
 
-export const editPlan=async(token,values)=>{
-
+export const getExpertAllDetails=async(token,id)=>{
+  
   const config = {
     headers: {
       Accept: 'application/json',
@@ -170,8 +249,24 @@ export const editPlan=async(token,values)=>{
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosAdminInstance.post('/editPlan',values,config)
-  if(data.status){
+  const {data}=await axiosAdminInstance.get(`/getExpertAllDetails/${id}`,config)
+ 
+  if (data.status) {
+    return data;
+  }
+}
+
+export const approveExpert=async(token,id)=>{
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
+  console.log(data);
+  if (data.status) {
     return data;
   }
 }
