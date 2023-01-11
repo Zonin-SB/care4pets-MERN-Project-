@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getExpertDetails } from '../../Axios/Services/ExpertServices';
 import expertProfile from '../../images/proImg.jpg';
 import expertVerified from '../../images/verifiedExpert.png'
+import notification from '../../images/notification.png'
 
 function ExpertProfilePage() {
   const [expertDetails, setExpertDetails] = useState([]);
-
+  const navigate=useNavigate();
   const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   useEffect(() => {
     const token = localStorage.getItem('expertToken');
@@ -20,6 +21,7 @@ function ExpertProfilePage() {
       setExpertDetails(data.expertDetails);
     }
   }, [expertId]);
+  
   return (
     <div>
       <>
@@ -102,6 +104,10 @@ function ExpertProfilePage() {
                       
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-1">
+                     {expertDetails.rejected? 
+                    <div> <img onClick={()=>navigate(`/expertRejectedReason/${expertDetails._id}`)} className='w-14 cursor-pointer' src={notification} alt="notification" /></div>
+                     :'' }
+                      {expertDetails.verified?
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
                           <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
@@ -128,6 +134,8 @@ function ExpertProfilePage() {
                           </span>
                         </div>
                       </div>
+                      :''
+}
                     </div>
                   </div>
                   <div className="text-center mt-12">

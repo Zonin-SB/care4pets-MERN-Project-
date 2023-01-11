@@ -114,7 +114,7 @@ function ExpertApplyFormPage() {
             id="profilepic"
             value={fileInputState}
             onChange={handleFileInputChange1} 
-                      
+                   
           />
 
         
@@ -128,7 +128,8 @@ function ExpertApplyFormPage() {
             name="idproof"
             id="idproof"
             value={fileInputState}
-            onChange={handleFileInputChange2}           
+            onChange={handleFileInputChange2}  
+                  
           />
         
             <label className="font-bold text-xs mt-3" htmlFor="passwordField">
@@ -144,6 +145,7 @@ function ExpertApplyFormPage() {
             id="licensepic"
             value={fileInputState}
             onChange={handleFileInputChange3}
+            
           />
         
           <button

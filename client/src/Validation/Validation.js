@@ -119,3 +119,12 @@ export const addPlanSchema = Yup.object({
   numberOfCheckup: Yup.number().positive().integer().required('Required'),
   tipAvailabilty: Yup.string().required('Required'),
 });
+
+export const rejectionMessageSchema=Yup.object({
+  name:Yup.string()
+  .min(2, 'Enter a valid name.')
+  .max(20)
+  .required('Required'),
+  reason:Yup.string().required('This field is required'),
+  message:Yup.string().required('This field is required')
+})

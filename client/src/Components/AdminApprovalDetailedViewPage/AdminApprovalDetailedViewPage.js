@@ -112,7 +112,7 @@ function AdminApprovalDetailedViewPage() {
             )}
             <div className="md:inline-flex w-full space-y-4 md:space-y-0 p-8 text-gray-500 items-center">
               <div className="md:w-3/12 text-center md:pl-6">
-                <button className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
+                <button onClick={()=>{navigate(`/adminRejectExpert/${expertDetails._id}`)}} className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
                   <svg
                     fill="none"
                     className="w-4 text-white mr-2"

@@ -216,6 +216,16 @@ const approveExpert=(req,res)=>{
   
 }
 
+const rejectExpert=(req,res)=>{
+  adminUtilities.rejectExpert(req.body).then(()=>{
+    res.json({status:'ok'})
+  }).catch(()=>{
+    res.json({status:'error'})
+  })
+}
+
+
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -235,4 +245,6 @@ module.exports = {
   getPendingApprovalDetails,
   getExpertAllDetails,
   approveExpert,
+  rejectExpert,
+ 
 };

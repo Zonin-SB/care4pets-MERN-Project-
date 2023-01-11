@@ -70,7 +70,7 @@ const expertNotverifiedAuth=async (req,res,next)=>{
             token=req.headers.authorization.split(' ')[1]
           
             const decoded=jwt.verify(token,process.env.JWT_SECRET_KEY)
-         
+            // console.log(decoded,'token dec');
             req.user=await expertUtilities.findExpertById(decoded.expertId)
             next()
         } catch (error) {

@@ -362,5 +362,34 @@ module.exports = {
         reject();
       }
     });
+  },
+
+  rejectExpert:(data)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(data.id) },
+            {
+              $set: {
+                applied:false,
+              },
+              $push:{
+                rejected:{
+                  reason:data.reason,
+                  message:data.message
+                }
+              }
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    })
   }
 };

@@ -9,5 +9,6 @@ router.post('/api/expertLogin',expertController.expertLogin)
 router.post('/api/uploadDocuments',expertController.uploadDocuments)
 router.post('/api/expertApplyVerification',auth.expertNotverifiedAuth,expertController.expertApplyVerification)
 router.get('/api/getExpertDetails/:id',auth.expertNotverifiedAuth,expertController.getExpertDetails)
+router.get('/api/expertRejectionAccepted/:id',auth.expertNotverifiedAuth,expertController.expertRejectionAccepted)
 
 module.exports=router;

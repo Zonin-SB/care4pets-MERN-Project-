@@ -234,7 +234,7 @@ export const getPendingApprovalDetails=async(token)=>{
     },
   };
   const {data}=await axiosAdminInstance.get('/getPendingApprovalDetails',config)
-  console.log(data);
+  
   if (data.status) {
     return data;
   }
@@ -265,7 +265,21 @@ export const approveExpert=async(token,id)=>{
     },
   };
   const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
-  console.log(data);
+ 
+  if (data.status) {
+    return data;
+  }
+}
+
+export const rejectExpert=async(token,values)=>{
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.post('/rejectExpert', values, config);
   if (data.status) {
     return data;
   }

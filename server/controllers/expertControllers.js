@@ -81,10 +81,20 @@ const getExpertDetails = (req, res) => {
     });
 };
 
+const expertRejectionAccepted=(req,res)=>{
+  const id=req.params.id
+  expertUtilities.expertRejectionAccepted(id).then(()=>{
+    res.json({status:'ok'})
+  }).catch(()=>{
+    res.json({status:'error'})
+  })
+}
+
 module.exports = {
   expertSignup,
   expertLogin,
   uploadDocuments,
   expertApplyVerification,
   getExpertDetails,
+  expertRejectionAccepted,
 };

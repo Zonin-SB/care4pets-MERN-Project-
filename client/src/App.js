@@ -18,6 +18,7 @@ import {
   ExpertHome,
   ExpertLogin,
   ExpertProfile,
+  ExpertRejectedReason,
   ExpertSignup,
   Home,
   UserEditProfile,
@@ -56,6 +57,7 @@ function App() {
         <Route path="/expertHome" element={<ExpertHome />} />
         <Route path="/expertProfile" element={<ExpertProfile/>} />
         <Route path="/expertApplyForm" element={<ExpertApplyForm/>} />
+        <Route path="/expertRejectedReason/:id" element={<ExpertRejectedReason/>} />
         
 
         <Route path="*" element={<Error />} />

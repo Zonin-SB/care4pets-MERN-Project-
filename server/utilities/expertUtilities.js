@@ -130,4 +130,27 @@ module.exports = {
       }
     });
   },
+
+  expertRejectionAccepted:(expertId)=>{
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(expertId) },
+            {
+              $unset: {
+                rejected:''
+               
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  }
 };

@@ -98,18 +98,18 @@ function AdminExpertInfoPage() {
         );
       },
     },
-    {
-      name: 'More Details',
-      selector: (row) => {
-        return (
-          <div>
-            <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-              Details
-            </button>
-          </div>
-        );
-      },
-    },
+    // {
+    //   name: 'More Details',
+    //   selector: (row) => {
+    //     return (
+    //       <div>
+    //         <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+    //           Details
+    //         </button>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
   return (

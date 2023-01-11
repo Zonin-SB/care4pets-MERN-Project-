@@ -74,8 +74,23 @@ export const getExpertDetails=async(token,id)=>{
         },
       };
       const { data } = await axiosExpertInstance.get(`/getExpertDetails/${id}`, config);
-      console.log(data, 'in u serv');
+      
       if (data.status) {
         return data;
       }
+}
+
+export const expertRejectionAccepted=async(token,id)=>{
+ 
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosExpertInstance.get(`/expertRejectionAccepted/${id}`, config);
+  
+  if (data.status) {
+    return data;
+  }
 }
