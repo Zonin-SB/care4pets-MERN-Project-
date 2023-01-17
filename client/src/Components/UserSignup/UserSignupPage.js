@@ -10,6 +10,7 @@ const initialValues = {
   name: '',
   email: '',
   mobile: '',
+  pet:'',
   password: '',
   confirmPassword: '',
 };
@@ -107,6 +108,17 @@ function UserSignupPage() {
                       <p className="red-error">{errors.mobile}</p>
                     )}
                   </div>
+                  <div>
+                <label className="block mb-2 text-sm font-bold text-gray-700" >Your Pet</label>
+                <select name='pet' id='pet' onChange={handleChange} onBlur={handleBlur}  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <option>Select a pet</option>
+                    <option  value='Dog' >Dog</option>
+                    <option value='Cat'>Cat</option>
+                    <option value='Exotic-birds'>Exotic birds</option>
+                   
+                </select>
+                { errors.pet && touched.pet && ( <p className='red-error'>{errors.pet}</p> )}
+            </div>
                   <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Password

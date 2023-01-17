@@ -8,6 +8,7 @@ import {
   clearUserAllDetails,
   clearUserToken,
 } from '../../redux/adminReducer';
+import { getPlanOrderValues, getSelectedExpertDetails, getSelectedPlanDetails } from '../../redux/userReducer';
 function UserNav() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,9 @@ function UserNav() {
     dispatch(clearUserToken());
     dispatch(clearUserLoginDetails());
     dispatch(clearUserAllDetails());
+    dispatch(getSelectedExpertDetails(false))
+    dispatch(getSelectedPlanDetails(false));
+    dispatch(getPlanOrderValues(false))
     navigate('/');
   };
   return (
@@ -46,9 +50,13 @@ function UserNav() {
                       Home
                     </button>
 
-                    <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                   <Link to={'/userSelectExpert'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Experts
-                    </button>
+                    </button></Link>
+
+                    <Link to={'/userViewPlan'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                      Plan
+                    </button></Link>
 
                     <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Chat
@@ -154,9 +162,9 @@ function UserNav() {
                     Home
                   </button>
 
-                  <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                  <Link to={'/userSelectExpert'}> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Experts
-                  </button>
+                  </button> </Link>
 
                   <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Chat

@@ -19,6 +19,7 @@ export const userSignupSchema = Yup.object({
     .min(10, 'Phone number must be a 10 digit number')
     .max(10, 'Phone number must be a 10 digit number')
     .required('This field is required'),
+    pet: Yup.string().required('This field is required'),
   password: Yup.string()
     .min(5)
     .max(16)

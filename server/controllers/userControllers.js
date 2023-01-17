@@ -1,6 +1,7 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const userUtilities = require('../utilities/userUtilities');
+
 // const {cloudinary}=require('../middlewares/cloudinary');
 
 const userSignup = (req, res) => {
@@ -104,6 +105,71 @@ const userProfilePicUpdate = (req, res) => {
     });
 };
 
+const getUsersExpert=(req,res)=>{
+const id=req.params.id
+  userUtilities.getUsersExpert(id).then((details)=>{
+    res.json({ status: 'ok', expertDetails: details });
+  }).catch(()=>{
+    res.json({ status: 'error' });
+  })
+}
+
+// const selectExpert=(req,res)=>{
+
+// userUtilities.selectExpert(req.body).then(()=>{
+//   res.json({ status: 'ok' });
+// }).catch(()=>{
+//   res.json({ status: 'error' });
+// })
+// }
+
+const selectExpert=(req,res)=>{
+const id=req.params.id
+
+userUtilities.selectExpert(id).then((response)=>{
+  res.json({ status: 'ok',expertDetails:response });
+}).catch(()=>{
+  res.json({ status: 'error' });
+})
+}
+
+const selectPlan=(req,res)=>{
+  const id=req.params.id
+userUtilities.selectPlan(id).then((response)=>{
+  res.json({ status: 'ok',planDetails:response });
+}).catch(()=>{
+  res.json({status:'error'})
+})
+}
+
+const buyPlan=(req,res)=>{
+ 
+  userUtilities.buyPlan(req.body).then((response)=>{
+    res.json({status:'ok',data:response.url})
+  
+    
+    
+  }).catch((error)=>{
+    console.log(error);
+  })
+}
+
+const postPlanOrderValues=(req,res)=>{
+  
+  userUtilities.postPlanOrderValues(req.body).then(()=>{
+    // userUtilities.postPlanDetails(req.body).then(()=>{
+
+    // }).catch(()=>{
+
+    // })
+    res.json({status:'ok'})
+  }).catch((error)=>{
+    res.json({status:'error'})
+  })
+}
+
+
+
 module.exports = {
   userSignup,
   userLogin,
@@ -112,4 +178,9 @@ module.exports = {
   viewAllPlan,
   uploadProfilePic,
   userProfilePicUpdate,
+  getUsersExpert,
+  selectExpert,
+  selectPlan,
+  buyPlan,
+  postPlanOrderValues,
 };

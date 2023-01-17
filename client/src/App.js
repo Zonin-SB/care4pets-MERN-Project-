@@ -13,6 +13,8 @@ import {
   AdminRejectExpert,
   AdminUserInfo,
   AdminViewPlans,
+  BuyPlan,
+  BuyPlanSuccess,
   Error,
   ExpertApplyForm,
   ExpertHome,
@@ -26,7 +28,9 @@ import {
   UserHome,
   UserLogin,
   UserProfile,
+  UserSelectExpert,
   UserSignup,
+  UserViewPlan,
 } from './Pages';
 
 function App() {
@@ -40,6 +44,10 @@ function App() {
         <Route path="/userProfile" element={<UserProfile/>} />
         <Route path="/userEditProfile" element={<UserEditProfile/>} />
         <Route path="/userEditProfilePic" element={<UserEditProfilePic/>} />
+        <Route path="/userSelectExpert" element={<UserSelectExpert/>} />
+        <Route path="/userViewPlan" element={<UserViewPlan/>} />
+        <Route path="/userBuyPlan" element={<BuyPlan/>} />
+        <Route path="/buyPlanSuccess" element={<BuyPlanSuccess/>} />
 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminHome" element={<AdminHome />} />

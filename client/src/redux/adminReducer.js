@@ -63,9 +63,7 @@ const loginSlice = createSlice({
       userToken=false;
       return{...state,userToken}
     },
-    planData:(state,action)=>{
-      console.log(action,'plan details in redx');
-      
+    planData:(state,action)=>{ 
     const  planDetails=action.payload
       return{...state,planDetails}
     }

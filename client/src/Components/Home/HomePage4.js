@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import png1 from '../../images/png1.png';
-import png3 from '../../images/png3.png';
-import png2 from '../../images/png2.png';
-import { viewAllPlan } from '../../Axios/Services/UserServices';
-import './HomePage.css';
+// import {Link} from 'react-router-dom'
+import { selectPlan, viewAllPlan } from '../../Axios/Services/UserServices';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getSelectedPlanDetails } from '../../redux/userReducer';
+// import './HomePage.css';
 
-function HomePage4() {
+function HomePage4(props) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [error, setError] = useState('');
   const [plan, setPlan] = useState('');
   useEffect(() => {
     fetchPlan();
@@ -15,30 +19,39 @@ function HomePage4() {
       setPlan(data.planDetails);
     }
   }, []);
-  console.log(plan, 'in honw');
+
+  async function userSelectPlan(id) {
+    const token = localStorage.getItem('userToken');
+    if(!token){
+      navigate('/userLogin')
+    }else{
+      const data = await selectPlan(token, id);
+      if (data.status === 'ok') {
+        dispatch(getSelectedPlanDetails(data.planDetails[0]));
+        navigate('/userSelectExpert')
+      }else if(data.status==='error'){
+        setError('Something went wrong...please try again after sometimes...')
+      }else{
+        navigate('/userLogin')
+      }
+    }
+   
+  }
 
   return (
-    <div className="home-background max-w-screen-2xl mx-auto">
-      <div className="flex justify-around pt-9">
-        <div>
-          <img src={png1} className="w-24 h-24" alt="png not found" />
-          <h1 className="text-bold text-violet-700">Daily Workout</h1>
-        </div>
-        <div>
-          <img src={png2} className="w-24 h-24" alt="png not found" />
-          <h1 className="text-bold text-violet-700">Diet Plan</h1>
-        </div>
-        <div>
-          <img src={png3} className="w-28 h-24" alt="png not found" />
-          <h1 className=" text-extrabold text-violet-700">Tracking Progress</h1>
-        </div>
-      </div>
-
+    <div
+      className={
+        props.userplan
+          ? ' max-w-screen-2xl mx-auto'
+          : 'home-background max-w-screen-2xl mx-auto'
+      }
+    >
       <div>
         <section>
-          <h1 className="mt-9 text-4xl font-sans text-center font-black text-slate-700 ">
+          <h1 className="pt-9 text-4xl font-sans text-center font-black text-slate-700 ">
             CHOOSE YOUR PLAN
           </h1>
+          {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
           <div className="container mx-auto flex justify-evenly flex-wrap mt-9 px-4">
             {plan
               ? plan.map((data, index) => {
@@ -90,7 +103,8 @@ function HomePage4() {
                       </div>
                       <div className="flex justify-center items-end ">
                         <button
-                          type="button"
+                          onClick={() => userSelectPlan(data._id)}
+                          type="submit"
                           className="mt-4 rounded-full hover:bg-red-500 bg-slate-300 mb-2 py-2 px-3 text-xs font-bold tracking-wider border-red-500 hover:border-white hover:text-white  border-2 text-red-700"
                         >
                           Buy Now
