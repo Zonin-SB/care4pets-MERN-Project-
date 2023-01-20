@@ -22,8 +22,9 @@ router.get('/api/getUsersCount',auth.adminAuth,adminController.getUsersCount)
 router.get('/api/getExpertsCount',auth.adminAuth,adminController.getExpertsCount)
 router.get('/api/getPendingApprovalDetails',auth.adminAuth,adminController.getPendingApprovalDetails)
 router.get('/api/getExpertAllDetails/:id',auth.adminAuth,adminController.getExpertAllDetails)
-router.get('/api/approveExpert/:id',auth.adminAuth,adminController.approveExpert)
+// router.get('/api/approveExpert/:id',auth.adminAuth,adminController.approveExpert)
 router.post('/api/rejectExpert',auth.adminAuth,adminController.rejectExpert)
+router.post('/api/acceptExpert',auth.adminAuth,adminController.acceptExpert)
 
 
 module.exports=router;

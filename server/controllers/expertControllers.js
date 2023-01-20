@@ -71,7 +71,7 @@ const expertApplyVerification = (req, res) => {
 
 const getExpertDetails = (req, res) => {
   const id = req.params.id;
-   expertUtilities
+  expertUtilities
     .findExpertById(id)
     .then((details) => {
       res.json({ status: 'ok', expertDetails: details });
@@ -81,14 +81,87 @@ const getExpertDetails = (req, res) => {
     });
 };
 
-const expertRejectionAccepted=(req,res)=>{
-  const id=req.params.id
-  expertUtilities.expertRejectionAccepted(id).then(()=>{
-    res.json({status:'ok'})
-  }).catch(()=>{
-    res.json({status:'error'})
-  })
-}
+const expertRejectionAccepted = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .expertRejectionAccepted(id)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const expertAccepted = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .expertAccepted(id)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const expertVideoUpload = (req, res) => {
+  expertUtilities
+    .expertVideoUpload(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getAllVideos = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getAllVideos(id)
+    .then((details) => {
+      res.json({ status: 'ok', videoDetails: details });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getVideoDetails = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getVideoDetails(id)
+    .then((details) => {
+      res.json({ status: 'ok', videoDetails: details });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const editVideo = (req, res) => {
+  expertUtilities
+    .editVideo(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const deleteVideo = (req, res) => {
+  const data = req.body;
+  expertUtilities
+    .deleteVideo(data)
+    .then((details) => {
+      res.json({ status: 'ok', videoDetails: details });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
 module.exports = {
   expertSignup,
@@ -97,4 +170,10 @@ module.exports = {
   expertApplyVerification,
   getExpertDetails,
   expertRejectionAccepted,
+  expertAccepted,
+  expertVideoUpload,
+  getAllVideos,
+  getVideoDetails,
+  editVideo,
+  deleteVideo,
 };

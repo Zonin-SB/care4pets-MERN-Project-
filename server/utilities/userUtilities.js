@@ -91,6 +91,7 @@ module.exports = {
                 name: userData.name,
                 email: userData.email,
                 mobile: userData.mobile,
+                pet:userData.pet,
               },
             }
           )
@@ -157,27 +158,20 @@ module.exports = {
     });
   },
 
-  getUsersExpert: (userId) => {
+  getUsersExpert: (userData) => {
+    const userPet = userData.pet;
     return new Promise(async (resolve, reject) => {
       try {
         const expertDetails = await db
           .get()
-          .collection(collection.USER_COLLECTION)
-          .aggregate([
-            {
-              $match: { _id: ObjectId(userId) },
-            },
-            {
-              $lookup: {
-                from: collection.EXPERT_COLLECTION,
-                localField: 'pet',
-                foreignField: 'expertisedIn',
-                as: 'experts',
-              },
-            },
-          ])
+          .collection(collection.EXPERT_COLLECTION)
+          .find({
+            $and:[{ expertisedIn: userPet},{blocked:false},{verified:true}]
+           
+          })
           .toArray();
-        // console.log(expertDetails);
+
+       
         resolve(expertDetails);
       } catch (error) {
         console.log(error);
@@ -264,9 +258,8 @@ module.exports = {
           mode: 'payment',
           success_url: `${process.env.CLIENT_URL}/buyPlanSuccess`,
           cancel_url: `${process.env.CLIENT_URL}/userBuyPlan`,
-        
         });
-        console.log(response)
+        console.log(response);
         console.log(session);
         resolve(session);
         // res.send({url:session.url});
@@ -308,3 +301,32 @@ module.exports = {
   //   });
   // },
 };
+
+// getUsersExpert: (userData) => {
+//   const userPet=userData.pet
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const expertDetails = await db
+//         .get()
+//         .collection(collection.USER_COLLECTION)
+//         .aggregate([
+//           {
+//             $match: { _id: ObjectId(userId) },
+//           },
+//           {
+//             $lookup: {
+//               from: collection.EXPERT_COLLECTION,
+//               localField: 'pet',
+//               foreignField: 'expertisedIn',
+//               as: 'experts',
+//             },
+//           },
+//         ])
+//         .toArray();
+//       // console.log(expertDetails);
+//       resolve(expertDetails);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   });
+// },

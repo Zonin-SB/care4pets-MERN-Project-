@@ -37,6 +37,7 @@ const userLogin = (req, res) => {
             userId: response.user._id,
             name: response.user.name,
             email: response.user.email,
+            pet: response.user.pet,
           },
           process.env.JWT_SECRET_KEY
         );
@@ -62,7 +63,7 @@ const getUserDetails = (req, res) => {
 const updateUserProfile = (req, res) => {
   userUtilities
     .updateUserProfile(req.body)
-    .then((response) => {
+    .then(() => {
       return res.json({ status: 'ok' });
     })
     .catch((err) => {
@@ -105,14 +106,25 @@ const userProfilePicUpdate = (req, res) => {
     });
 };
 
-const getUsersExpert=(req,res)=>{
-const id=req.params.id
-  userUtilities.getUsersExpert(id).then((details)=>{
-    res.json({ status: 'ok', expertDetails: details });
-  }).catch(()=>{
-    res.json({ status: 'error' });
-  })
-}
+const getUsersExpert = (req, res) => {
+  const id = req.params.id;
+
+  userUtilities
+    .findUserById(id)
+    .then((userData) => {
+      userUtilities
+        .getUsersExpert(userData)
+        .then((details) => {
+          res.json({ status: 'ok', expertDetails: details });
+        })
+        .catch(() => {
+          res.json({ status: 'error' });
+        });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
 // const selectExpert=(req,res)=>{
 
@@ -123,52 +135,57 @@ const id=req.params.id
 // })
 // }
 
-const selectExpert=(req,res)=>{
-const id=req.params.id
+const selectExpert = (req, res) => {
+  const id = req.params.id;
 
-userUtilities.selectExpert(id).then((response)=>{
-  res.json({ status: 'ok',expertDetails:response });
-}).catch(()=>{
-  res.json({ status: 'error' });
-})
-}
+  userUtilities
+    .selectExpert(id)
+    .then((response) => {
+      res.json({ status: 'ok', expertDetails: response });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
-const selectPlan=(req,res)=>{
-  const id=req.params.id
-userUtilities.selectPlan(id).then((response)=>{
-  res.json({ status: 'ok',planDetails:response });
-}).catch(()=>{
-  res.json({status:'error'})
-})
-}
+const selectPlan = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .selectPlan(id)
+    .then((response) => {
+      res.json({ status: 'ok', planDetails: response });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
-const buyPlan=(req,res)=>{
- 
-  userUtilities.buyPlan(req.body).then((response)=>{
-    res.json({status:'ok',data:response.url})
-  
-    
-    
-  }).catch((error)=>{
-    console.log(error);
-  })
-}
+const buyPlan = (req, res) => {
+  userUtilities
+    .buyPlan(req.body)
+    .then((response) => {
+      res.json({ status: 'ok', data: response.url });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-const postPlanOrderValues=(req,res)=>{
-  
-  userUtilities.postPlanOrderValues(req.body).then(()=>{
-    // userUtilities.postPlanDetails(req.body).then(()=>{
+const postPlanOrderValues = (req, res) => {
+  userUtilities
+    .postPlanOrderValues(req.body)
+    .then(() => {
+      // userUtilities.postPlanDetails(req.body).then(()=>{
 
-    // }).catch(()=>{
+      // }).catch(()=>{
 
-    // })
-    res.json({status:'ok'})
-  }).catch((error)=>{
-    res.json({status:'error'})
-  })
-}
-
-
+      // })
+      res.json({ status: 'ok' });
+    })
+    .catch((error) => {
+      res.json({ status: 'error' });
+    });
+};
 
 module.exports = {
   userSignup,

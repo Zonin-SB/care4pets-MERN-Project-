@@ -40,7 +40,7 @@ export const getUserDetails = async (token, id) => {
     },
   };
   const { data } = await axiosUserInstance.get(`/getUserDetails/${id}`, config);
-  console.log(data, 'in u serv');
+ 
   if (data.status) {
     return data;
   }
@@ -89,7 +89,6 @@ export const uploadProfilePic = async (imageText) => {
 };
 
 export const userProfilePicUpdate = async (token, values) => {
-
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -106,19 +105,24 @@ export const userProfilePicUpdate = async (token, values) => {
   }
 };
 
-export const getUsersExpert=async (token,id)=>{
+export const getUsersExpert = async (token,id) => {
+
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosUserInstance.get(`/getUsersExpert/${id}`,config)
-  
+  const { data } = await axiosUserInstance.get(
+    `/getUsersExpert/${id}`,
+    
+    config
+  );
+console.log(data);
   if (data.status) {
     return data;
   }
-}
+};
 
 // export const selectExpert=async(token,values)=>{
 // console.log(values,'val in ax');
@@ -129,80 +133,83 @@ export const getUsersExpert=async (token,id)=>{
 //   },
 // };
 // const {data}=await axiosUserInstance.post('/selectExpert',values,config)
-  
+
 //   if (data.status) {
 //     return data;
 //   }
 // }
-export const selectExpert=async(token,id)=>{
- 
+export const selectExpert = async (token, id) => {
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosUserInstance.get(`/selectExpert/${id}`,config)
+  const { data } = await axiosUserInstance.get(`/selectExpert/${id}`, config);
+
+  if (data.status) {
+    return data;
+  }
+};
+
+export const selectPlan = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(`/selectPlan/${id}`, config);
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const buyPlan = async (token, values) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.post(
+      '/create-checkout-session',
+      values,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postPlanOrderValues = async (token, values) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.post(
+      '/postPlanOrderValues',
+      values,
+      config
+    );
     
     if (data.status) {
       return data;
     }
+  } catch (error) {
+    console.log(error);
   }
-
-  export const selectPlan=async(token,id)=>{
-    try {
-      const config = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-      };
-      const {data}=await axiosUserInstance.get(`/selectPlan/${id}`,config)
-     
-        if (data.status) {
-          return data;
-        }
-    } catch (error) {
-      console.log(error);
-    }
-    }
-
-   export const buyPlan=async(token,values)=>{
-    try {
-    
-      const config = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-      };
-      const {data}=await axiosUserInstance.post('/create-checkout-session',values,config)
-     
-        if (data.status) {
-          return data;
-        }
-    } catch (error) {
-      console.log(error);
-    }
-    }
-
-    export const postPlanOrderValues=async(token,values)=>{
-      try {
-     
-        const config = {
-          headers: {
-            Authorization: 'Bearer ' + token,
-            'Content-Type': 'application/json',
-          },
-        };
-        const {data}=await axiosUserInstance.post('/postPlanOrderValues',values,config)
-        console.log(data,'order data');
-        if (data.status) {
-          return data;
-        }
-      } catch (error) {
-        
-      }
-    }
-
-
+};

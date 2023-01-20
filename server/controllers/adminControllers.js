@@ -206,18 +206,26 @@ const getExpertAllDetails = (req, res) => {
     });
 };
 
-const approveExpert=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.approveExpert(id).then(()=>{
+// const approveExpert=(req,res)=>{
+//   const id=req.params.id
+//   adminUtilities.approveExpert(id).then(()=>{
+//     res.json({status:'ok'})
+//   }).catch(()=>{
+//     res.json({status:'error'})
+//   })
+  
+// }
+
+const rejectExpert=(req,res)=>{
+  adminUtilities.rejectExpert(req.body).then(()=>{
     res.json({status:'ok'})
   }).catch(()=>{
     res.json({status:'error'})
   })
-  
 }
 
-const rejectExpert=(req,res)=>{
-  adminUtilities.rejectExpert(req.body).then(()=>{
+const acceptExpert=(req,res)=>{
+  adminUtilities.acceptExpert(req.body).then(()=>{
     res.json({status:'ok'})
   }).catch(()=>{
     res.json({status:'error'})
@@ -244,7 +252,8 @@ module.exports = {
   getExpertsCount,
   getPendingApprovalDetails,
   getExpertAllDetails,
-  approveExpert,
+  // approveExpert,
   rejectExpert,
+  acceptExpert,
  
 };

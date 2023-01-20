@@ -9,7 +9,7 @@ import { getSelectedExpertDetails } from '../../redux/userReducer';
 function UserSelectExpertPage() {
   const navigate=useNavigate();
   const dispatch=useDispatch()
-  const userId = useSelector((state) => state.admin.userDetails.userId);
+  const id = useSelector((state) => state.admin.userDetails.userId);
   const [expertDetails, setExpertDetails] = useState([]);
   const [error, setError] = useState('');
   const [filteredExpertDetails, setFilteredExpertDetails] = useState([]);
@@ -19,16 +19,16 @@ function UserSelectExpertPage() {
 
     async function fetchExpert() {
       const token = localStorage.getItem('userToken');
-      const response = await getUsersExpert(token, userId);
+      const response = await getUsersExpert(token, id);
       if (response.status === 'ok') {
         // console.log(response.expertDetails[0].experts);
-        setExpertDetails(response.expertDetails[0].experts);
-        setFilteredExpertDetails(response.expertDetails[0].experts)
+        setExpertDetails(response.expertDetails);
+        setFilteredExpertDetails(response.expertDetails)
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
     }
-  }, [userId]);
+  }, [id]);
   console.log(expertDetails, 'in exp');
 
   useEffect(() => {
@@ -83,6 +83,10 @@ function UserSelectExpertPage() {
     {
       name: 'Experience',
       selector: (row) => row.experience,
+    },
+    {
+      name: 'Expert',
+      selector: (row) => row.expertisedIn,
     },
 
     {

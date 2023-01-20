@@ -319,12 +319,12 @@ module.exports = {
 
         resolve(approvalDetails);
       } catch (error) {
-        reject()
+        reject();
       }
     });
   },
 
-  getExpertAllDetails:(expertId)=>{
+  getExpertAllDetails: (expertId) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -339,19 +339,48 @@ module.exports = {
     });
   },
 
-  approveExpert:(expertId)=>{
+  // approveExpert: (expertId) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       await db
+  //         .get()
+  //         .collection(collection.EXPERT_COLLECTION)
+  //         .updateOne(
+  //           { _id: ObjectId(expertId) },
+  //           {
+  //             $set: {
+  //               applied: false,
+  //               verified: true,
+  //               expertFrom: new Date(),
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           resolve(response);
+  //         });
+  //     } catch (error) {
+  //       reject();
+  //     }
+  //   });
+  // },
+
+  rejectExpert: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
           .get()
           .collection(collection.EXPERT_COLLECTION)
           .updateOne(
-            { _id: ObjectId(expertId) },
+            { _id: ObjectId(data.id) },
             {
               $set: {
-                applied:false,
-                verified:true,
-                expertFrom:new Date(),
+                applied: false,
+              },
+              $push: {
+                rejected: {
+                  reason: data.reason,
+                  message: data.message,
+                },
               },
             }
           )
@@ -364,8 +393,8 @@ module.exports = {
     });
   },
 
-  rejectExpert:(data)=>{
-    return new Promise(async(resolve,reject)=>{
+  acceptExpert: (data) => {
+    return new Promise(async (resolve, reject) => {
       try {
         await db
           .get()
@@ -374,14 +403,15 @@ module.exports = {
             { _id: ObjectId(data.id) },
             {
               $set: {
-                applied:false,
+                applied: false,
+                verified: true,
+                expertFrom: new Date(),
               },
-              $push:{
-                rejected:{
-                  reason:data.reason,
-                  message:data.message
-                }
-              }
+              $push: {
+                accepted: {
+                  message: data.message,
+                },
+              },
             }
           )
           .then((response) => {
@@ -390,6 +420,6 @@ module.exports = {
       } catch (error) {
         reject();
       }
-    })
-  }
+    });
+  },
 };

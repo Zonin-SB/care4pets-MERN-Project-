@@ -3,6 +3,7 @@ import './index.css';
 
 import { Routes, Route } from 'react-router-dom';
 import {
+  AdminAcceptExpert,
   AdminAddPlans,
   AdminApprovalDetailedView,
   AdminApprovalList,
@@ -16,12 +17,16 @@ import {
   BuyPlan,
   BuyPlanSuccess,
   Error,
+  ExpertAcceptedMessage,
+  ExpertAddVideo,
   ExpertApplyForm,
+  ExpertEditVideo,
   ExpertHome,
   ExpertLogin,
   ExpertProfile,
   ExpertRejectedReason,
   ExpertSignup,
+  ExpertVideos,
   Home,
   UserEditProfile,
   UserEditProfilePic,
@@ -59,6 +64,7 @@ function App() {
         <Route path="/adminApprovalList" element={<AdminApprovalList/>} />
         <Route path="/expertDetailedView/:id" element={<AdminApprovalDetailedView/>} />
         <Route path="/adminRejectExpert/:id" element={<AdminRejectExpert/>} />
+        <Route path="/adminAcceptExpert/:id" element={<AdminAcceptExpert/>} />
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />
@@ -66,6 +72,10 @@ function App() {
         <Route path="/expertProfile" element={<ExpertProfile/>} />
         <Route path="/expertApplyForm" element={<ExpertApplyForm/>} />
         <Route path="/expertRejectedReason/:id" element={<ExpertRejectedReason/>} />
+        <Route path="/expertAccepted/:id" element={<ExpertAcceptedMessage/>} />
+        <Route path="/expertVideos" element={<ExpertVideos/>} />
+        <Route path="/expertAddVideos" element={<ExpertAddVideo/>} />
+        <Route path="/expertEditVideo/:id" element={<ExpertEditVideo/>} />
         
 
         <Route path="*" element={<Error />} />

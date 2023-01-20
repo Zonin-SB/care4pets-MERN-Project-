@@ -5,6 +5,8 @@ const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numberonly = /^\d+$/;
+const link =
+  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 
 export const userSignupSchema = Yup.object({
   name: Yup.string()
@@ -19,7 +21,7 @@ export const userSignupSchema = Yup.object({
     .min(10, 'Phone number must be a 10 digit number')
     .max(10, 'Phone number must be a 10 digit number')
     .required('This field is required'),
-    pet: Yup.string().required('This field is required'),
+  pet: Yup.string().required('This field is required'),
   password: Yup.string()
     .min(5)
     .max(16)
@@ -105,6 +107,7 @@ export const userEditProfileSchema = Yup.object({
     .min(10, 'Phone number must be a 10 digit number')
     .max(10, 'Phone number must be a 10 digit number')
     .required('This field is required'),
+  pet: Yup.string().required('This field is required'),
 });
 
 export const addPlanSchema = Yup.object({
@@ -121,11 +124,21 @@ export const addPlanSchema = Yup.object({
   tipAvailabilty: Yup.string().required('Required'),
 });
 
-export const rejectionMessageSchema=Yup.object({
-  name:Yup.string()
-  .min(2, 'Enter a valid name.')
-  .max(20)
-  .required('Required'),
-  reason:Yup.string().required('This field is required'),
-  message:Yup.string().required('This field is required')
-})
+export const rejectionMessageSchema = Yup.object({
+  name: Yup.string().min(2, 'Enter a valid name.').max(20).required('Required'),
+  reason: Yup.string().required('This field is required'),
+  message: Yup.string().required('This field is required'),
+});
+
+export const acceptMessageSchema = Yup.object({
+  name: Yup.string().min(2, 'Enter a valid name.').max(20).required('Required'),
+
+  message: Yup.string().required('This field is required'),
+});
+
+export const videoUploadSchema = Yup.object({
+  title: Yup.string().required('This field is required'),
+  type: Yup.string().required('This field is required'),
+  link: Yup.string().matches(link, 'Please paste a valid youtube link').required('This field is required'),
+  description: Yup.string().min(4).max(200).required('This field is required'),
+});

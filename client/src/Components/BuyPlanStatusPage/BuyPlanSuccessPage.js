@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postPlanOrderValues } from '../../Axios/Services/UserServices';
+import { getPlanOrderValues, getSelectedExpertDetails, getSelectedPlanDetails } from '../../redux/userReducer';
 
 function BuyPlanSuccessPage() {
   const { planOrderValues } = useSelector((state) => state.user);
   const navigate=useNavigate();
+  const dispatch=useDispatch()
   const [error,setError]=useState('')
 
   useEffect(() => {
@@ -24,8 +26,12 @@ function BuyPlanSuccessPage() {
       }
     }
 
-    return () => {};
-  }, [planOrderValues,navigate]);
+    return () => {
+      dispatch(getSelectedExpertDetails(false))
+      dispatch(getSelectedPlanDetails(false));
+      dispatch(getPlanOrderValues(false))
+    };
+  }, []);
 
   return (
     <div>

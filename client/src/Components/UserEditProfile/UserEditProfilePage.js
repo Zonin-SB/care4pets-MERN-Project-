@@ -18,7 +18,7 @@ function UserEditProfilePage() {
     name: userAllDetails.name,
     email: userAllDetails.email,
     mobile: userAllDetails.mobile,
-    
+    pet:userAllDetails.pet,
   };
 
 
@@ -134,6 +134,25 @@ function UserEditProfilePage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
+              </div>
+
+              <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  
+                </svg>
+                <select name='pet' id='pet' value={values.pet} onChange={handleChange} onBlur={handleBlur}  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                
+                    <option  value='Dog' >Dog</option>
+                    <option value='Cat'>Cat</option>
+                    <option value='Exotic-birds'>Exotic birds</option>
+                   
+                </select>
               </div>
               {errors.email && touched.email && (
                 <p className="red-error">{errors.email}</p>

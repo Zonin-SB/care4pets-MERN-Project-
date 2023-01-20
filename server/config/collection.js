@@ -4,4 +4,5 @@ module.exports={
     ADMIN_COLLECTION:'admin',
     PLAN_COLLECTION:'plan',
     PURCHASE_COLLECTION:'purchase',
+    VIDEO_COLLECTION:'video',
 }

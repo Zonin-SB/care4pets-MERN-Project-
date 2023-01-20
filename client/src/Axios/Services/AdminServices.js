@@ -256,20 +256,20 @@ export const getExpertAllDetails=async(token,id)=>{
   }
 }
 
-export const approveExpert=async(token,id)=>{
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-  };
-  const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
+// export const approveExpert=async(token,id)=>{
+//   const config = {
+//     headers: {
+//       Accept: 'application/json',
+//       Authorization: 'Bearer ' + token,
+//       'Content-Type': 'application/json',
+//     },
+//   };
+//   const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
  
-  if (data.status) {
-    return data;
-  }
-}
+//   if (data.status) {
+//     return data;
+//   }
+// }
 
 export const rejectExpert=async(token,values)=>{
   const config = {
@@ -280,6 +280,20 @@ export const rejectExpert=async(token,values)=>{
     },
   };
   const { data } = await axiosAdminInstance.post('/rejectExpert', values, config);
+  if (data.status) {
+    return data;
+  }
+}
+
+export const acceptExpert=async(token,values)=>{
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.post('/acceptExpert', values, config);
   if (data.status) {
     return data;
   }

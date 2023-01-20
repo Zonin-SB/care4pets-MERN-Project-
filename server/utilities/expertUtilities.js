@@ -89,6 +89,20 @@ module.exports = {
       }
     });
   },
+  findVerifiedExpertById: (expertId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const user = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .findOne({ $and: [{ _id: ObjectId(expertId) }, { verified: true }] });
+
+        resolve(user);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
 
   uploadDocuments: (fileStr) => {
     return new Promise(async (resolve, reject) => {
@@ -131,7 +145,7 @@ module.exports = {
     });
   },
 
-  expertRejectionAccepted:(expertId)=>{
+  expertRejectionAccepted: (expertId) => {
     return new Promise((resolve, reject) => {
       try {
         db.get()
@@ -140,8 +154,7 @@ module.exports = {
             { _id: ObjectId(expertId) },
             {
               $unset: {
-                rejected:''
-               
+                rejected: '',
               },
             }
           )
@@ -152,5 +165,131 @@ module.exports = {
         reject();
       }
     });
-  }
+  },
+
+  expertAccepted: (expertId) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(expertId) },
+            {
+              $unset: {
+                accepted: '',
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  expertVideoUpload: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .insertOne(data)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getAllVideos: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videos = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({ expertId: id })
+          .toArray();
+        resolve(videos);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  getVideoDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videoDetails = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({ _id: ObjectId(id) })
+          .toArray();
+        resolve(videoDetails);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  editVideo: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(data.videoId) },
+            {
+              $set: {
+                title: data.title,
+                type: data.type,
+                link: data.link,
+                description: data.description,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  deleteVideo: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .deleteOne({ _id: ObjectId(data.videoId) })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.VIDEO_COLLECTION)
+              .find({
+                expertId: data.expertId,
+              })
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
 };

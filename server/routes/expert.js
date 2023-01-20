@@ -10,5 +10,11 @@ router.post('/api/uploadDocuments',expertController.uploadDocuments)
 router.post('/api/expertApplyVerification',auth.expertNotverifiedAuth,expertController.expertApplyVerification)
 router.get('/api/getExpertDetails/:id',auth.expertNotverifiedAuth,expertController.getExpertDetails)
 router.get('/api/expertRejectionAccepted/:id',auth.expertNotverifiedAuth,expertController.expertRejectionAccepted)
+router.get('/api/expertAccepted/:id',auth.expertNotverifiedAuth,expertController.expertAccepted)
+router.post('/api/expertVideoUpload',auth.expertVerifiedAuth,expertController.expertVideoUpload)
+router.get('/api/getAllVideos/:id',auth.expertVerifiedAuth,expertController.getAllVideos)
+router.get('/api/getVideoDetails/:id',auth.expertVerifiedAuth,expertController.getVideoDetails)
+router.post('/api/editVideo',auth.expertVerifiedAuth,expertController.editVideo)
+router.post('/api/deleteVideo',auth.expertVerifiedAuth,expertController.deleteVideo)
 
 module.exports=router;

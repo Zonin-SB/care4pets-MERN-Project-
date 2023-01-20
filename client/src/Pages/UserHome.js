@@ -13,6 +13,7 @@ function UserHome() {
   
     if (token) {
       const user = jwt(token);
+      console.log(user,'red use');
       dispatch(userLoginDetails(user));
       if (user) {
         navigate('/userHome');

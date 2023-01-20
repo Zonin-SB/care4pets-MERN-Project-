@@ -107,6 +107,9 @@ function ExpertProfilePage() {
                      {expertDetails.rejected? 
                     <div> <img onClick={()=>navigate(`/expertRejectedReason/${expertDetails._id}`)} className='w-14 cursor-pointer' src={notification} alt="notification" /></div>
                      :'' }
+                     {expertDetails.accepted? 
+                    <div> <img onClick={()=>navigate(`/expertAccepted/${expertDetails._id}`)} className='w-14 cursor-pointer' src={notification} alt="notification" /></div>
+                     :'' }
                       {expertDetails.verified?
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
@@ -143,7 +146,7 @@ function ExpertProfilePage() {
                       {expertDetails.name}
                     </h3>
                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                      {expertDetails.expertisedIn} Expert
+                    Expert : {expertDetails.expertisedIn} 
                     </div>
                     <div className="mb-2 text-blueGray-600 mt-10">
                       {/* <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" /> */}

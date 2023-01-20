@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  approveExpert,
+  
   getExpertAllDetails,
 } from '../../Axios/Services/AdminServices';
 
@@ -9,7 +9,7 @@ function AdminApprovalDetailedViewPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [expertDetails, setExpertDetails] = useState([]);
-  const [error, setError] = useState('');
+ 
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -22,15 +22,15 @@ function AdminApprovalDetailedViewPage() {
     }
   }, [id]);
 
-  async function adminApproveExpert(id) {
-    const token = localStorage.getItem('adminToken');
-    const data = await approveExpert(token, id);
-    if (data.status === 'ok') {
-      navigate('/adminApprovalList');
-    } else {
-      setError('Something went wrong....try again after some time...');
-    }
-  }
+  // async function adminApproveExpert(id) {
+  //   const token = localStorage.getItem('adminToken');
+  //   const data = await approveExpert(token, id);
+  //   if (data.status === 'ok') {
+  //     navigate('/adminApprovalList');
+  //   } else {
+  //     setError('Something went wrong....try again after some time...');
+  //   }
+  // }
 
   return (
     <div>
@@ -103,13 +103,7 @@ function AdminApprovalDetailedViewPage() {
               </div>
             </div>
             <hr />
-            {error ? (
-              <p style={{ color: 'red' }} className="text-center">
-                {error}
-              </p>
-            ) : (
-              ''
-            )}
+        
             <div className="md:inline-flex w-full space-y-4 md:space-y-0 p-8 text-gray-500 items-center">
               <div className="md:w-3/12 text-center md:pl-6">
                 <button onClick={()=>{navigate(`/adminRejectExpert/${expertDetails._id}`)}} className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
@@ -128,7 +122,7 @@ function AdminApprovalDetailedViewPage() {
               </div>
               <div className="md:w-3/12 text-center md:pl-6">
                 <button
-                  onClick={() => adminApproveExpert(expertDetails._id)}
+                  onClick={()=>{navigate(`/adminAcceptExpert/${expertDetails._id}`)}}
                   className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-green-600 py-2 px-4 inline-flex items-center focus:outline-none md:float-right"
                 >
                   <svg
