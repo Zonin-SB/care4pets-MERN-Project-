@@ -20,7 +20,7 @@ NOTE: Please read the RUN section before opening an issue.
 >Warning: care4pets is still in development, constantly being optimized and isn't still stable enough to be used in production environments
 ## Demo
 
-![This is an image](/Screenshot (11).png)
+![This is an image](/homeimg.png)
 
 care4pets is an online platform for people who are not familiar with pets and don't know how to take care of their pets.Here they can buy subscription plan according to their need,and then they will be provided with an expert for taking care of their pets.The expert will help them to maintain the diet and workout of their pets.They  can clear all their query about pet caring with the expert.
 
