@@ -206,33 +206,80 @@ const getExpertAllDetails = (req, res) => {
     });
 };
 
-// const approveExpert=(req,res)=>{
-//   const id=req.params.id
-//   adminUtilities.approveExpert(id).then(()=>{
-//     res.json({status:'ok'})
-//   }).catch(()=>{
-//     res.json({status:'error'})
-//   })
-  
-// }
 
-const rejectExpert=(req,res)=>{
-  adminUtilities.rejectExpert(req.body).then(()=>{
-    res.json({status:'ok'})
-  }).catch(()=>{
-    res.json({status:'error'})
-  })
+
+const rejectExpert = (req, res) => {
+  adminUtilities
+    .rejectExpert(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const acceptExpert = (req, res) => {
+  adminUtilities
+    .acceptExpert(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getVideoApprovalList = (req, res) => {
+  adminUtilities
+    .getVideoApprovalList()
+    .then((response) => {
+      res.json({ status: 'ok', videoDetails: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getVideoDetails = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getVideoDetails(id)
+    .then((details) => {
+      res.json({ status: 'ok', videoDetails: details });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const approveVideo = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .approveVideo(id)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getAllVideos = (req, res) => {
+  adminUtilities
+    .getAllVideos()
+    .then((details) => {
+      res.json({ status: 'ok', videoDetails: details });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const deleteVideo=(req,res)=>{
+  const id = req.params.id;
+  // console.log(id);
 }
-
-const acceptExpert=(req,res)=>{
-  adminUtilities.acceptExpert(req.body).then(()=>{
-    res.json({status:'ok'})
-  }).catch(()=>{
-    res.json({status:'error'})
-  })
-}
-
-
 
 module.exports = {
   adminLogin,
@@ -255,5 +302,9 @@ module.exports = {
   // approveExpert,
   rejectExpert,
   acceptExpert,
- 
+  getVideoApprovalList,
+  getVideoDetails,
+  approveVideo,
+  getAllVideos,
+  deleteVideo,
 };

@@ -106,6 +106,9 @@ const expertAccepted = (req, res) => {
 };
 
 const expertVideoUpload = (req, res) => {
+  const ytUrl = req.body.link;
+  req.body.link = ytUrl.replace('/watch?v=', '/embed/');
+
   expertUtilities
     .expertVideoUpload(req.body)
     .then(() => {

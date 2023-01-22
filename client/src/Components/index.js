@@ -39,4 +39,7 @@ export {default as AdminApprovalListPage} from './AdminApprovalListPage/AdminApp
 export {default as AdminApprovalDetailedViewPage} from './AdminApprovalDetailedViewPage/AdminApprovalDetailedViewPage'
 export {default as AdminRejectExpertPage} from './AdminRejectExpertPage/AdminRejectExpertPage'
 export {default as AdminAcceptExpertPage} from './AdminAcceptExpertPage/AdminAcceptExpertPage'
+export {default as AdminVideoApprovalListPage} from './AdminVideoApprovalList/AdminVideoApprovalListPage'
+export {default as AdminVideoApprovalDetailsPage} from './AdminVideoApprovalDetails/AdminVideoApprovalDetailsPage'
+export {default as AdminManageVideosPage} from './AdminManageVideos/AdminManageVideosPage'
 export {default as ErrorPage} from './Error/ErrorPage'

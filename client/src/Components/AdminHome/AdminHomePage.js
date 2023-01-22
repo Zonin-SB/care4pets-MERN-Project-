@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import { getExpertsCount, getPendingApprovalCount, getUsersCount } from '../../Axios/Services/AdminServices';
 
 function AdminHomePage() {
   const[approvalCount,setApprovalCount]=useState('')
   const [usersCount,setUsersCount]=useState('')
   const [expertsCount,setExpertsCount]=useState('')
-  const navigate=useNavigate();
+
 
   useEffect(() => {
     fetchPendingApproval()
@@ -45,12 +45,18 @@ function AdminHomePage() {
         <p className='text-lg  font-semibold'>Experts</p>
         </div>
           </div>
-        <div onClick={()=>navigate('/adminApprovalList')} className=" h-24 flex items-center justify-center bg-sky-500/75 w-72 rounded-xl mt-6 px-4 shadow-lg hover:cursor-pointer">
+          <Link to={'/adminVideoApproval'}><div className=" h-24 flex items-center justify-center bg-sky-500/75 w-72 rounded-xl mt-6 px-4 shadow-lg">
+          <div className='flex-row'>
+        <p className='text-3xl  font-bold text-center'>{expertsCount}</p>
+        <p className='text-lg  font-semibold'>Video Pending Approvals</p>
+        </div>
+          </div></Link>
+          <Link to={'/adminApprovalList'}> <div  className=" h-24 flex items-center justify-center bg-sky-500/75 w-72 rounded-xl mt-6 px-4 shadow-lg hover:cursor-pointer">
           <div className='flex-row'>
         <p className='text-3xl  font-bold text-center'>{approvalCount?approvalCount:0}</p>
-        <p className='text-lg  font-semibold '>Pending Approval</p>
+        <p className='text-lg  font-semibold '>Expert Pending Approval</p>
         </div>
-          </div>
+          </div></Link>
 
         {/* <main class="antialiased bg-gray-200 text-gray-900 font-sans overflow-x-hidden">
   <div class="relative px-4 min-h-screen md:flex md:items-center md:justify-center">

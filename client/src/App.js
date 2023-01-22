@@ -11,8 +11,11 @@ import {
   AdminExpertInfo,
   AdminHome,
   AdminLogin,
+  AdminManageVideos,
   AdminRejectExpert,
   AdminUserInfo,
+  AdminVideoApprovalDetails,
+  AdminVideoApprovalList,
   AdminViewPlans,
   BuyPlan,
   BuyPlanSuccess,
@@ -46,13 +49,13 @@ function App() {
         <Route path="/userHome" element={<UserHome />} />
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userSignup" element={<UserSignup />} />
-        <Route path="/userProfile" element={<UserProfile/>} />
-        <Route path="/userEditProfile" element={<UserEditProfile/>} />
-        <Route path="/userEditProfilePic" element={<UserEditProfilePic/>} />
-        <Route path="/userSelectExpert" element={<UserSelectExpert/>} />
-        <Route path="/userViewPlan" element={<UserViewPlan/>} />
-        <Route path="/userBuyPlan" element={<BuyPlan/>} />
-        <Route path="/buyPlanSuccess" element={<BuyPlanSuccess/>} />
+        <Route path="/userProfile" element={<UserProfile />} />
+        <Route path="/userEditProfile" element={<UserEditProfile />} />
+        <Route path="/userEditProfilePic" element={<UserEditProfilePic />} />
+        <Route path="/userSelectExpert" element={<UserSelectExpert />} />
+        <Route path="/userViewPlan" element={<UserViewPlan />} />
+        <Route path="/userBuyPlan" element={<BuyPlan />} />
+        <Route path="/buyPlanSuccess" element={<BuyPlanSuccess />} />
 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminHome" element={<AdminHome />} />
@@ -61,22 +64,39 @@ function App() {
         <Route path="/adminViewPlans" element={<AdminViewPlans />} />
         <Route path="/adminAddPlans" element={<AdminAddPlans />} />
         <Route path="/adminEditPlan/:id" element={<AdminEditPlan />} />
-        <Route path="/adminApprovalList" element={<AdminApprovalList/>} />
-        <Route path="/expertDetailedView/:id" element={<AdminApprovalDetailedView/>} />
-        <Route path="/adminRejectExpert/:id" element={<AdminRejectExpert/>} />
-        <Route path="/adminAcceptExpert/:id" element={<AdminAcceptExpert/>} />
+        <Route path="/adminApprovalList" element={<AdminApprovalList />} />
+        <Route
+          path="/expertDetailedView/:id"
+          element={<AdminApprovalDetailedView />}
+        />
+        <Route path="/adminRejectExpert/:id" element={<AdminRejectExpert />} />
+        <Route path="/adminAcceptExpert/:id" element={<AdminAcceptExpert />} />
+        <Route
+          path="/adminVideoApproval"
+          element={<AdminVideoApprovalList />}
+        />
+        <Route
+          path="/videoDetailedView/:id"
+          element={<AdminVideoApprovalDetails />}
+        />
+        <Route
+          path="/adminManageVideos"
+          element={<AdminManageVideos />}
+        />
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />
         <Route path="/expertHome" element={<ExpertHome />} />
-        <Route path="/expertProfile" element={<ExpertProfile/>} />
-        <Route path="/expertApplyForm" element={<ExpertApplyForm/>} />
-        <Route path="/expertRejectedReason/:id" element={<ExpertRejectedReason/>} />
-        <Route path="/expertAccepted/:id" element={<ExpertAcceptedMessage/>} />
-        <Route path="/expertVideos" element={<ExpertVideos/>} />
-        <Route path="/expertAddVideos" element={<ExpertAddVideo/>} />
-        <Route path="/expertEditVideo/:id" element={<ExpertEditVideo/>} />
-        
+        <Route path="/expertProfile" element={<ExpertProfile />} />
+        <Route path="/expertApplyForm" element={<ExpertApplyForm />} />
+        <Route
+          path="/expertRejectedReason/:id"
+          element={<ExpertRejectedReason />}
+        />
+        <Route path="/expertAccepted/:id" element={<ExpertAcceptedMessage />} />
+        <Route path="/expertVideos" element={<ExpertVideos />} />
+        <Route path="/expertAddVideos" element={<ExpertAddVideo />} />
+        <Route path="/expertEditVideo/:id" element={<ExpertEditVideo />} />
 
         <Route path="*" element={<Error />} />
       </Routes>

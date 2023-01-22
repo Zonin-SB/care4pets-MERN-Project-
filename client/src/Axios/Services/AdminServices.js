@@ -225,7 +225,7 @@ export const getExpertsCount = async (token) => {
   }
 };
 
-export const getPendingApprovalDetails=async(token)=>{
+export const getPendingApprovalDetails = async (token) => {
   const config = {
     headers: {
       Accept: 'application/json',
@@ -233,15 +233,17 @@ export const getPendingApprovalDetails=async(token)=>{
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosAdminInstance.get('/getPendingApprovalDetails',config)
-  
-  if (data.status) {
-    return data;
-  }
-}
+  const { data } = await axiosAdminInstance.get(
+    '/getPendingApprovalDetails',
+    config
+  );
 
-export const getExpertAllDetails=async(token,id)=>{
-  
+  if (data.status) {
+    return data;
+  }
+};
+
+export const getExpertAllDetails = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
@@ -249,12 +251,15 @@ export const getExpertAllDetails=async(token,id)=>{
       'Content-Type': 'application/json',
     },
   };
-  const {data}=await axiosAdminInstance.get(`/getExpertAllDetails/${id}`,config)
- 
+  const { data } = await axiosAdminInstance.get(
+    `/getExpertAllDetails/${id}`,
+    config
+  );
+
   if (data.status) {
     return data;
   }
-}
+};
 
 // export const approveExpert=async(token,id)=>{
 //   const config = {
@@ -264,14 +269,14 @@ export const getExpertAllDetails=async(token,id)=>{
 //       'Content-Type': 'application/json',
 //     },
 //   };
-//   const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
- 
-//   if (data.status) {
-//     return data;
-//   }
+// const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
+
+// if (data.status) {
+//   return data;
+// }
 // }
 
-export const rejectExpert=async(token,values)=>{
+export const rejectExpert = async (token, values) => {
   const config = {
     headers: {
       Accept: 'application/json',
@@ -279,13 +284,17 @@ export const rejectExpert=async(token,values)=>{
       'Content-Type': 'application/json',
     },
   };
-  const { data } = await axiosAdminInstance.post('/rejectExpert', values, config);
+  const { data } = await axiosAdminInstance.post(
+    '/rejectExpert',
+    values,
+    config
+  );
   if (data.status) {
     return data;
   }
-}
+};
 
-export const acceptExpert=async(token,values)=>{
+export const acceptExpert = async (token, values) => {
   const config = {
     headers: {
       Accept: 'application/json',
@@ -293,8 +302,116 @@ export const acceptExpert=async(token,values)=>{
       'Content-Type': 'application/json',
     },
   };
-  const { data } = await axiosAdminInstance.post('/acceptExpert', values, config);
+  const { data } = await axiosAdminInstance.post(
+    '/acceptExpert',
+    values,
+    config
+  );
   if (data.status) {
     return data;
+  }
+};
+
+export const getVideoApprovalList = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      '/getVideoApprovalList',
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVideoDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getVideoDetails/${id}`,
+      config
+    );
+    console.log(data, 'in ax');
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const approveVideo = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/approveVideo/${id}`,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllVideos=async(token)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get('/getAllVideos', config);
+
+  if (data.status) {
+    return data;
+  }
+  } catch (error) {
+    
+  }
+}
+
+export const deleteVideo=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(`/deleteVideo/${id}`, config);
+  
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    
   }
 }

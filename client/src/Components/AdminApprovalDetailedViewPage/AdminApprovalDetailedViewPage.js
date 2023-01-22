@@ -22,15 +22,7 @@ function AdminApprovalDetailedViewPage() {
     }
   }, [id]);
 
-  // async function adminApproveExpert(id) {
-  //   const token = localStorage.getItem('adminToken');
-  //   const data = await approveExpert(token, id);
-  //   if (data.status === 'ok') {
-  //     navigate('/adminApprovalList');
-  //   } else {
-  //     setError('Something went wrong....try again after some time...');
-  //   }
-  // }
+
 
   return (
     <div>

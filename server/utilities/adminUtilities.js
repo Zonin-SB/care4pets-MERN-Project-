@@ -422,4 +422,186 @@ module.exports = {
       }
     });
   },
+
+  getVideoApprovalList: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .aggregate([
+            {
+              $match:{approved:false}
+            },
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                let: { eid: '$expertId' },
+                pipeline: [
+                  
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$_id', { $toObjectId: '$$eid' }],
+                      },
+                    },
+                  },
+                ],
+                as: 'experts',
+              },
+            },
+            {
+              $set: {
+                experts: {
+                  $arrayElemAt: ['$experts', 0],
+                },
+              },
+            },
+            {
+              $project: {
+                title: 1,
+                type: 1,
+                link: 1,
+                description: 1,
+                expertId: 1,
+                experts: {
+                  name: 1,
+                  expertisedIn: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+        // console.log(details);
+        resolve(details);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  getVideoDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .aggregate([
+            {
+              $match: { _id: ObjectId(id) },
+            },
+
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                let: { eid: '$expertId' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$_id', { $toObjectId: '$$eid' }],
+                      },
+                    },
+                  },
+                ],
+                as: 'expert',
+              },
+            },
+            {
+              $set: {
+                expert: {
+                  $arrayElemAt: ['$expert', 0],
+                },
+              },
+            },
+          ])
+          .toArray();
+
+        resolve(details);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+  approveVideo: (videoId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(videoId) },
+            {
+              $set: {
+                approved: true,
+                videoPosted: new Date(),
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  getAllVideos: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .aggregate([
+            {
+              $match:{approved:true}
+            },
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                let: { eid: '$expertId' },
+                pipeline: [
+                  
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$_id', { $toObjectId: '$$eid' }],
+                      },
+                    },
+                  },
+                ],
+                as: 'experts',
+              },
+            },
+            {
+              $set: {
+                experts: {
+                  $arrayElemAt: ['$experts', 0],
+                },
+              },
+            },
+            {
+              $project: {
+                title: 1,
+                type: 1,
+                link: 1,
+                description: 1,
+                expertId: 1,
+                experts: {
+                  name: 1,
+                  expertisedIn: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+        // console.log(details);
+        resolve(details);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
 };

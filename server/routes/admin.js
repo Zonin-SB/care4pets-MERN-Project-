@@ -25,6 +25,11 @@ router.get('/api/getExpertAllDetails/:id',auth.adminAuth,adminController.getExpe
 // router.get('/api/approveExpert/:id',auth.adminAuth,adminController.approveExpert)
 router.post('/api/rejectExpert',auth.adminAuth,adminController.rejectExpert)
 router.post('/api/acceptExpert',auth.adminAuth,adminController.acceptExpert)
+router.get('/api/getVideoApprovalList',auth.adminAuth,adminController.getVideoApprovalList)
+router.get('/api/getVideoDetails/:id',auth.adminAuth,adminController.getVideoDetails)
+router.get('/api/approveVideo/:id',auth.adminAuth,adminController.approveVideo)
+router.get('/api/getAllVideos',auth.adminAuth,adminController.getAllVideos)
+router.get('/api/deleteVideo/:id',auth.adminAuth,adminController.deleteVideo)
 
 
 module.exports=router;
