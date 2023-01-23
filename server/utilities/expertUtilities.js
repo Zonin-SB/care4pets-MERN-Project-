@@ -252,6 +252,7 @@ module.exports = {
                 type: data.type,
                 link: data.link,
                 description: data.description,
+                uploaded:true,
               },
             }
           )
@@ -292,4 +293,95 @@ module.exports = {
       }
     });
   },
+
+  getRejectedVideoCount: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videosCount = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .countDocuments({
+            $and: [{ expertId: id }, { videoRejected: { $exists: true } }],
+          });
+        resolve(videosCount);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  getRejectedVideos: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videos = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({
+            $and: [{ expertId: id }, { videoRejected: { $exists: true } }],
+          })
+          .toArray();
+        resolve(videos);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  getRejectedVideoDetails:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videos = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({
+           _id:ObjectId(id)
+          })
+          .toArray();
+        resolve(videos);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  expertVideoRejected:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $unset: {
+                videoRejected:''
+              },
+            }
+          )
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  getVideosCount:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videoCount = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .countDocuments({ $and:[{expertId:id},{approved:true}] });
+
+        resolve(videoCount);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
 };

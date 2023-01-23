@@ -142,3 +142,10 @@ export const videoUploadSchema = Yup.object({
   link: Yup.string().matches(link, 'Please paste a valid youtube link').required('This field is required'),
   description: Yup.string().min(4).max(200).required('This field is required'),
 });
+
+export const rejectionVideoSchema = Yup.object({
+  name: Yup.string().min(2, 'Enter a valid name.').max(20).required('Required'),
+  title:Yup.string().required('This field is required'),
+  reason: Yup.string().required('This field is required'),
+  message: Yup.string().required('This field is required'),
+});

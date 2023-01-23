@@ -347,7 +347,7 @@ export const getVideoDetails = async (token, id) => {
       `/getVideoDetails/${id}`,
       config
     );
-    console.log(data, 'in ax');
+   
     if (data.status) {
       return data;
     }
@@ -412,6 +412,90 @@ export const deleteVideo=async(token,id)=>{
       return data;
     }
   } catch (error) {
-    
+    console.log(error);
   }
 }
+
+export const getVideoApprovalCount = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      '/getVideoApprovalCount',
+      config
+    );
+  
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
+export const getEditVideoDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getEditVideoDetails/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const adminEditVideo=async(token,values)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.post(
+      '/adminEditVideo',
+      values,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const adminRejectVideo = async (token, values) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.post(
+    '/adminRejectVideo',
+    values,
+    config
+  );
+  if (data.status) {
+    return data;
+  }
+};

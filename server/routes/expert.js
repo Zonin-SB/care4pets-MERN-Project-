@@ -16,5 +16,10 @@ router.get('/api/getAllVideos/:id',auth.expertVerifiedAuth,expertController.getA
 router.get('/api/getVideoDetails/:id',auth.expertVerifiedAuth,expertController.getVideoDetails)
 router.post('/api/editVideo',auth.expertVerifiedAuth,expertController.editVideo)
 router.post('/api/deleteVideo',auth.expertVerifiedAuth,expertController.deleteVideo)
+router.get('/api/getRejectedVideoCount/:id',auth.expertVerifiedAuth,expertController.getRejectedVideoCount)
+router.get('/api/getRejectedVideos/:id',auth.expertVerifiedAuth,expertController.getRejectedVideos)
+router.get('/api/getRejectedVideoDetails/:id',auth.expertVerifiedAuth,expertController.getRejectedVideoDetails)
+router.get('/api/expertVideoRejected/:id',auth.expertVerifiedAuth,expertController.expertVideoRejected)
+router.get('/api/getVideosCount/:id',auth.expertVerifiedAuth,expertController.getVideosCount)
 
 module.exports=router;

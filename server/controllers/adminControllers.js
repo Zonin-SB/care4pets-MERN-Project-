@@ -206,8 +206,6 @@ const getExpertAllDetails = (req, res) => {
     });
 };
 
-
-
 const rejectExpert = (req, res) => {
   adminUtilities
     .rejectExpert(req.body)
@@ -276,10 +274,62 @@ const getAllVideos = (req, res) => {
     });
 };
 
-const deleteVideo=(req,res)=>{
+const deleteVideo = (req, res) => {
   const id = req.params.id;
-  // console.log(id);
-}
+  adminUtilities
+    .deleteVideo(id)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const getVideoApprovalCount = (req, res) => {
+  adminUtilities
+    .getVideoApprovalCount()
+    .then((response) => {
+      res.json({ status: 'ok', videoCount: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getEditVideoDetails = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getEditVideoDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', videoDetails: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const adminEditVideo = (req, res) => {
+  adminUtilities
+    .adminEditVideo(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const adminRejectVideo = (req, res) => {
+  adminUtilities
+    .adminRejectVideo(req.body)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
 module.exports = {
   adminLogin,
@@ -307,4 +357,8 @@ module.exports = {
   approveVideo,
   getAllVideos,
   deleteVideo,
+  getVideoApprovalCount,
+  getEditVideoDetails,
+  adminEditVideo,
+  adminRejectVideo,
 };

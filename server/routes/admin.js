@@ -30,6 +30,10 @@ router.get('/api/getVideoDetails/:id',auth.adminAuth,adminController.getVideoDet
 router.get('/api/approveVideo/:id',auth.adminAuth,adminController.approveVideo)
 router.get('/api/getAllVideos',auth.adminAuth,adminController.getAllVideos)
 router.get('/api/deleteVideo/:id',auth.adminAuth,adminController.deleteVideo)
+router.get('/api/getVideoApprovalCount',auth.adminAuth,adminController.getVideoApprovalCount)
+router.get('/api/getEditVideoDetails/:id',auth.adminAuth,adminController.getEditVideoDetails)
+router.post('/api/adminEditVideo',auth.adminAuth,adminController.adminEditVideo)
+router.post('/api/adminRejectVideo',auth.adminAuth,adminController.adminRejectVideo)
 
 
 module.exports=router;

@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getExpertDetails } from '../../Axios/Services/ExpertServices';
+import { getExpertDetails, getVideosCount } from '../../Axios/Services/ExpertServices';
 import expertProfile from '../../images/proImg.jpg';
 import expertVerified from '../../images/verifiedExpert.png'
 import notification from '../../images/notification.png'
 
 function ExpertProfilePage() {
   const [expertDetails, setExpertDetails] = useState([]);
+  const [videoCount, setVideoCount] = useState('');
   const navigate=useNavigate();
   const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   useEffect(() => {
     const token = localStorage.getItem('expertToken');
 
     fetchData();
+    fetchVideoCount();
 
     async function fetchData() {
       const data = await getExpertDetails(token, expertId);
 
       setExpertDetails(data.expertDetails);
+    }
+
+    async function fetchVideoCount(){
+      const data=await getVideosCount(token,expertId)
+      setVideoCount(data.videoCount)
     }
   }, [expertId]);
   
@@ -122,7 +129,7 @@ function ExpertProfilePage() {
                         </div>
                         <div className="mr-4 p-3 text-center">
                           <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                            10
+                            {videoCount?videoCount:0}
                           </span>
                           <span className="text-sm text-blueGray-400">
                             Videos

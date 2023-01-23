@@ -8,11 +8,13 @@ import {
   AdminApprovalDetailedView,
   AdminApprovalList,
   AdminEditPlan,
+  AdminEditVideo,
   AdminExpertInfo,
   AdminHome,
   AdminLogin,
   AdminManageVideos,
   AdminRejectExpert,
+  AdminRejectVideo,
   AdminUserInfo,
   AdminVideoApprovalDetails,
   AdminVideoApprovalList,
@@ -28,6 +30,8 @@ import {
   ExpertLogin,
   ExpertProfile,
   ExpertRejectedReason,
+  ExpertRejectedVideoDetailedViewPage,
+  ExpertRejectedVideoList,
   ExpertSignup,
   ExpertVideos,
   Home,
@@ -38,6 +42,7 @@ import {
   UserProfile,
   UserSelectExpert,
   UserSignup,
+  UserVideos,
   UserViewPlan,
 } from './Pages';
 
@@ -56,6 +61,7 @@ function App() {
         <Route path="/userViewPlan" element={<UserViewPlan />} />
         <Route path="/userBuyPlan" element={<BuyPlan />} />
         <Route path="/buyPlanSuccess" element={<BuyPlanSuccess />} />
+        <Route path="/userVideos" element={<UserVideos />} />
 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminHome" element={<AdminHome />} />
@@ -79,10 +85,9 @@ function App() {
           path="/videoDetailedView/:id"
           element={<AdminVideoApprovalDetails />}
         />
-        <Route
-          path="/adminManageVideos"
-          element={<AdminManageVideos />}
-        />
+        <Route path="/adminManageVideos" element={<AdminManageVideos />} />
+        <Route path="/adminEditVideo/:id" element={<AdminEditVideo />} />
+        <Route path="/adminRejectVideo/:id" element={<AdminRejectVideo />} />
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />
@@ -97,6 +102,8 @@ function App() {
         <Route path="/expertVideos" element={<ExpertVideos />} />
         <Route path="/expertAddVideos" element={<ExpertAddVideo />} />
         <Route path="/expertEditVideo/:id" element={<ExpertEditVideo />} />
+        <Route path="/expertRejectedVideos" element={<ExpertRejectedVideoList />} />
+        <Route path="/expertRejectedVideoDetails/:id" element={<ExpertRejectedVideoDetailedViewPage />} />
 
         <Route path="*" element={<Error />} />
       </Routes>

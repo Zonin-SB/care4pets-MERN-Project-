@@ -1,11 +1,11 @@
 import React from 'react'
-import { AdminHomeNavPage } from '../Components'
+import { AdminHomeNavPage, AdminRejectVideoPage } from '../Components'
 
 function AdminRejectVideo() {
   return (
     <div>
         <AdminHomeNavPage/>
-        
+        <AdminRejectVideoPage/>
     </div>
   )
 }

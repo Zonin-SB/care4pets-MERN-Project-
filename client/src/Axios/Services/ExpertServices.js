@@ -42,7 +42,7 @@ export const uploadDocuments = async (values) => {
     data: values,
     headers: { 'Content-type': 'application.json' },
   });
-  console.log(data, 'in axios');
+  
   if (data.status) {
     return data;
   }
@@ -218,3 +218,108 @@ export const deleteVideo = async (token, values) => {
     }
   } catch (error) {}
 };
+
+export const getRejectedVideoCount=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getRejectedVideoCount/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getRejectedVideos=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getRejectedVideos/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getRejectedVideoDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getRejectedVideoDetails/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const expertVideoRejected=async (token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/expertVideoRejected/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getVideosCount=async (token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getVideosCount/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

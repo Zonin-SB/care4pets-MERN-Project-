@@ -299,7 +299,7 @@ module.exports = {
         const expertsCount = await db
           .get()
           .collection(collection.EXPERT_COLLECTION)
-          .countDocuments({ blocked: false });
+          .countDocuments({ $and: [{ blocked: false }, { verified: true }] });
 
         resolve(expertsCount);
       } catch (error) {
@@ -431,14 +431,13 @@ module.exports = {
           .collection(collection.VIDEO_COLLECTION)
           .aggregate([
             {
-              $match:{approved:false}
+              $match: { $and: [{ approved: false }, { uploaded: true }] },
             },
             {
               $lookup: {
                 from: collection.EXPERT_COLLECTION,
                 let: { eid: '$expertId' },
                 pipeline: [
-                  
                   {
                     $match: {
                       $expr: {
@@ -534,6 +533,7 @@ module.exports = {
             {
               $set: {
                 approved: true,
+                uploaded: false,
                 videoPosted: new Date(),
               },
             }
@@ -555,14 +555,13 @@ module.exports = {
           .collection(collection.VIDEO_COLLECTION)
           .aggregate([
             {
-              $match:{approved:true}
+              $match: { approved: true },
             },
             {
               $lookup: {
                 from: collection.EXPERT_COLLECTION,
                 let: { eid: '$expertId' },
                 pipeline: [
-                  
                   {
                     $match: {
                       $expr: {
@@ -604,4 +603,111 @@ module.exports = {
     });
   },
 
+  deleteVideo: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .deleteOne({ _id: ObjectId(id) })
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getVideoApprovalCount: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videoApprovalcount = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .countDocuments({ $and:[{uploaded: true},{approved:false}] });
+
+        resolve(videoApprovalcount);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getEditVideoDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({ _id: ObjectId(id) })
+          .toArray();
+        resolve(details);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  adminEditVideo:(data)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(data.videoId) },
+            {
+              $set: {
+                title: data.title,
+                type: data.type,
+                link: data.link,
+                description: data.description,
+              },
+            }
+          )
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  adminRejectVideo:(data)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(data.id) },
+            {
+              $set: {
+                uploaded: false,
+              },
+              $push: {
+                videoRejected: {
+                  expert:data.name,
+                  reason: data.reason,
+                  message: data.message,
+                },
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  }
 };

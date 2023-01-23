@@ -9,7 +9,6 @@ const expertSignup = (req, res) => {
   expertUtilities
     .doExpertSignup(data)
     .then((response) => {
-      console.log(response);
       if (response.emailFound) {
         res.json({
           status: 'error',
@@ -166,6 +165,53 @@ const deleteVideo = (req, res) => {
     });
 };
 
+const getRejectedVideoCount = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getRejectedVideoCount(id)
+    .then((response) => {
+      res.json({ status: 'ok', videoCount: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+const getRejectedVideos=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.getRejectedVideos(id).then((response)=>{
+    res.json({ status: 'ok', videos: response });
+  }).catch(()=>{
+    console.log(err);
+  })
+}
+
+const getRejectedVideoDetails=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.getRejectedVideoDetails(id).then((response)=>{
+    res.json({ status: 'ok', videoDetails: response });
+  }).catch(()=>{
+    console.log(err);
+  })
+}
+
+const expertVideoRejected=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.expertVideoRejected(id).then(()=>{
+    res.json({ status: 'ok' });
+  }).catch(()=>{
+    res.json({ status: 'error' });
+  })
+}
+
+const getVideosCount=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.getVideosCount(id).then((response)=>{
+    res.json({ status: 'ok', videoCount: response });
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
 module.exports = {
   expertSignup,
   expertLogin,
@@ -179,4 +225,9 @@ module.exports = {
   getVideoDetails,
   editVideo,
   deleteVideo,
+  getRejectedVideoCount,
+  getRejectedVideos,
+  getRejectedVideoDetails,
+  expertVideoRejected,
+  getVideosCount,
 };
