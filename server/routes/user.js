@@ -16,6 +16,8 @@ router.get('/api/selectExpert/:id',auth.userAuth,userController.selectExpert)
 router.get('/api/selectPlan/:id',auth.userAuth,userController.selectPlan)
 router.post('/api/create-checkout-session',auth.userAuth,userController.buyPlan)
 router.post('/api/postPlanOrderValues',auth.userAuth,userController.postPlanOrderValues)
+router.get('/api/getFreeVideos/:id',auth.userAuth,userController.getFreeVideos)
+router.get('/api/getVideosCount/:id',auth.userAuth,userController.getVideosCount)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
 

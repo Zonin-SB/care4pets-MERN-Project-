@@ -9,6 +9,7 @@ const initialValues = {
   title: '',
   type: '',
   link: '',
+  category:'',
   description: '',
   uploaded:true,
 };
@@ -87,6 +88,29 @@ function ExpertAddVideosPage() {
                 </select>
                 {errors.type && touched.type && (
                   <p className="red-error">{errors.type}</p>
+                )}
+              </div>
+              <div>
+                <label
+                  className="text-white dark:text-gray-200"
+                  htmlFor="passwordConfirmation"
+                >
+                  Pet Category
+                </label>
+                <select
+                  name="category"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                >
+                  <option>Select Pet Category</option>
+                  <option value="Dog">Dog</option>
+                  <option value="Cat">Cat</option>
+                  <option value="Exotic-birds">Exotic-birds</option>
+               
+                </select>
+                {errors.category && touched.category && (
+                  <p className="red-error">{errors.category}</p>
                 )}
               </div>
               <div>

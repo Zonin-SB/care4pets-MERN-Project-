@@ -9,6 +9,7 @@ export {default as UserEditProfilePicPage} from './UserEditProfile/UserEditProfi
 export {default as UserSelectExpertPage} from './UserSelectExpert/UserSelectExpertPage'
 export {default as UserVideosPage} from './UserVideos/UserVideosPage'
 export {default as UserViewPlanPage} from './UserViewPlan/UserViewPlanPage'
+export {default as UserViewExpertPage} from './UserViewExpert/UserViewExpertPage'
 export {default as BuyPlanPage} from './BuyPlan/BuyPlanPage'
 export {default as BuyPlanSuccessPage} from './BuyPlanStatusPage/BuyPlanSuccessPage'
 export {default as ExpertSignupPage} from './ExpertSignup/ExpertSignupPage'

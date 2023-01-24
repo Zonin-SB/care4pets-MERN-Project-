@@ -40,7 +40,7 @@ export const getUserDetails = async (token, id) => {
     },
   };
   const { data } = await axiosUserInstance.get(`/getUserDetails/${id}`, config);
- 
+
   if (data.status) {
     return data;
   }
@@ -105,8 +105,7 @@ export const userProfilePicUpdate = async (token, values) => {
   }
 };
 
-export const getUsersExpert = async (token,id) => {
-
+export const getUsersExpert = async (token, id) => {
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -115,10 +114,10 @@ export const getUsersExpert = async (token,id) => {
   };
   const { data } = await axiosUserInstance.get(
     `/getUsersExpert/${id}`,
-    
+
     config
   );
-console.log(data);
+
   if (data.status) {
     return data;
   }
@@ -205,7 +204,7 @@ export const postPlanOrderValues = async (token, values) => {
       values,
       config
     );
-    
+
     if (data.status) {
       return data;
     }
@@ -213,3 +212,47 @@ export const postPlanOrderValues = async (token, values) => {
     console.log(error);
   }
 };
+
+export const getFreeVideos = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getFreeVideos/${id}`,
+
+      config
+    );
+    console.log(data,'in axio');
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVideosCount=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getVideosCount/${id}`,
+
+      config
+    );
+    
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -252,6 +252,7 @@ module.exports = {
                 type: data.type,
                 link: data.link,
                 description: data.description,
+                category:data.category,
                 uploaded:true,
               },
             }

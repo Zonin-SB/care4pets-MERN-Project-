@@ -91,7 +91,7 @@ module.exports = {
                 name: userData.name,
                 email: userData.email,
                 mobile: userData.mobile,
-                pet:userData.pet,
+                pet: userData.pet,
               },
             }
           )
@@ -166,12 +166,14 @@ module.exports = {
           .get()
           .collection(collection.EXPERT_COLLECTION)
           .find({
-            $and:[{ expertisedIn: userPet},{blocked:false},{verified:true}]
-           
+            $and: [
+              { expertisedIn: userPet },
+              { blocked: false },
+              { verified: true },
+            ],
           })
           .toArray();
 
-       
         resolve(expertDetails);
       } catch (error) {
         console.log(error);
@@ -292,6 +294,89 @@ module.exports = {
         .catch((error) => {
           reject(error);
         });
+    });
+  },
+
+  getFreeVideos: (userData) => {
+    const userPet = userData.pet;
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videos = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                $and: [
+                  {
+                    category: userPet,
+                  },
+                  { approved: true },
+                ],
+              },
+            },
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                let: { eid: '$expertId' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$_id', { $toObjectId: '$$eid' }],
+                      },
+                    },
+                  },
+                ],
+                as: 'experts',
+              },
+            },
+            {
+              $set: {
+                experts: {
+                  $arrayElemAt: ['$experts', 0],
+                },
+              },
+            },
+            {
+              $project: {
+                title: 1,
+                type: 1,
+                link: 1,
+                description: 1,
+                category: 1,
+                expertId: 1,
+                videoPosted: 1,
+                experts: {
+                  name: 1,
+                  expertisedIn: 1,
+                  profilePic: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+
+        resolve(videos);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getVideosCount: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const count = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .countDocuments({ $and: [{ expertId: id },{approved:true}] });
+          
+          resolve(count)
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
 

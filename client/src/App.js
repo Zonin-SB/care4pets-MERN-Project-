@@ -43,6 +43,7 @@ import {
   UserSelectExpert,
   UserSignup,
   UserVideos,
+  UserViewExpert,
   UserViewPlan,
 } from './Pages';
 
@@ -62,6 +63,7 @@ function App() {
         <Route path="/userBuyPlan" element={<BuyPlan />} />
         <Route path="/buyPlanSuccess" element={<BuyPlanSuccess />} />
         <Route path="/userVideos" element={<UserVideos />} />
+        <Route path="/userViewExpert/:id" element={<UserViewExpert />} />
 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminHome" element={<AdminHome />} />

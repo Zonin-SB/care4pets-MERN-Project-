@@ -68,6 +68,7 @@ function AdminVideoApprovalDetailsPage() {
                 <p>Title : {videoDetails.title}</p>
                 <p>Type : {videoDetails.type}</p>
                 <p>Description : {videoDetails.description}</p>
+                <p>Category : {videoDetails.category}</p>
               </div>
             </div>
             <hr />

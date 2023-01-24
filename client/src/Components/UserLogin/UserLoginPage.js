@@ -28,7 +28,7 @@ if(response.blocked){
    
     dispatch(userToken(response.user))
 		const user = jwt(response.user);
-		console.log(user);
+		
 		localStorage.setItem('userDetails', user.name);
 	
 		navigate('/userHome')

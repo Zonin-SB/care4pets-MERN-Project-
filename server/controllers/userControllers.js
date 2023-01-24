@@ -175,17 +175,40 @@ const postPlanOrderValues = (req, res) => {
   userUtilities
     .postPlanOrderValues(req.body)
     .then(() => {
-      // userUtilities.postPlanDetails(req.body).then(()=>{
-
-      // }).catch(()=>{
-
-      // })
       res.json({ status: 'ok' });
     })
     .catch((error) => {
       res.json({ status: 'error' });
     });
 };
+
+const getFreeVideos = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .findUserById(id)
+    .then((userData) => {
+      userUtilities
+        .getFreeVideos(userData)
+        .then((details) => {
+          res.json({ status: 'ok', freeVideos: details });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getVideosCount=(req,res)=>{
+  const id = req.params.id;
+  userUtilities.getVideosCount(id).then((response)=>{
+    res.json({ status: 'ok', count: response });
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
 
 module.exports = {
   userSignup,
@@ -200,4 +223,6 @@ module.exports = {
   selectPlan,
   buyPlan,
   postPlanOrderValues,
+  getFreeVideos,
+  getVideosCount,
 };

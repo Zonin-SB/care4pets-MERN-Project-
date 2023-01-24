@@ -396,6 +396,26 @@ module.exports = {
   acceptExpert: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
+        let date_time = new Date();
+
+        // get current date
+        // adjust 0 before single digit date
+        let date = ('0' + date_time.getDate()).slice(-2);
+
+        // get current month
+        let month = ('0' + (date_time.getMonth() + 1)).slice(-2);
+
+        // get current year
+        let year = date_time.getFullYear();
+
+        // get current hours
+        let hours = date_time.getHours();
+
+        // get current minutes
+        let minutes = date_time.getMinutes();
+
+        // get current seconds
+        let seconds = date_time.getSeconds();
         await db
           .get()
           .collection(collection.EXPERT_COLLECTION)
@@ -405,7 +425,7 @@ module.exports = {
               $set: {
                 applied: false,
                 verified: true,
-                expertFrom: new Date(),
+                expertFrom: year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds,
               },
               $push: {
                 accepted: {
@@ -462,6 +482,7 @@ module.exports = {
                 type: 1,
                 link: 1,
                 description: 1,
+                category: 1,
                 expertId: 1,
                 experts: {
                   name: 1,
@@ -525,6 +546,26 @@ module.exports = {
   approveVideo: (videoId) => {
     return new Promise(async (resolve, reject) => {
       try {
+        let date_time = new Date();
+
+        // get current date
+        // adjust 0 before single digit date
+        let date = ('0' + date_time.getDate()).slice(-2);
+
+        // get current month
+        let month = ('0' + (date_time.getMonth() + 1)).slice(-2);
+
+        // get current year
+        let year = date_time.getFullYear();
+
+        // get current hours
+        let hours = date_time.getHours();
+
+        // get current minutes
+        let minutes = date_time.getMinutes();
+
+        // get current seconds
+        let seconds = date_time.getSeconds();
         await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
@@ -534,7 +575,9 @@ module.exports = {
               $set: {
                 approved: true,
                 uploaded: false,
-                videoPosted: new Date(),
+                videoPosted:year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds,
+                // videoPosted: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+                
               },
             }
           )
@@ -586,6 +629,7 @@ module.exports = {
                 type: 1,
                 link: 1,
                 description: 1,
+                category: 1,
                 expertId: 1,
                 experts: {
                   name: 1,
@@ -628,7 +672,7 @@ module.exports = {
         const videoApprovalcount = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .countDocuments({ $and:[{uploaded: true},{approved:false}] });
+          .countDocuments({ $and: [{ uploaded: true }, { approved: false }] });
 
         resolve(videoApprovalcount);
       } catch (error) {
@@ -652,7 +696,7 @@ module.exports = {
     });
   },
 
-  adminEditVideo:(data)=>{
+  adminEditVideo: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
@@ -665,6 +709,7 @@ module.exports = {
                 title: data.title,
                 type: data.type,
                 link: data.link,
+                category: data.category,
                 description: data.description,
               },
             }
@@ -681,7 +726,7 @@ module.exports = {
     });
   },
 
-  adminRejectVideo:(data)=>{
+  adminRejectVideo: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
@@ -695,7 +740,7 @@ module.exports = {
               },
               $push: {
                 videoRejected: {
-                  expert:data.name,
+                  expert: data.name,
                   reason: data.reason,
                   message: data.message,
                 },
@@ -709,5 +754,5 @@ module.exports = {
         reject();
       }
     });
-  }
+  },
 };

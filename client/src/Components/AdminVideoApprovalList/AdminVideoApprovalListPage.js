@@ -17,7 +17,7 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
       setApprovalDetails(response.videoDetails);
     }
   }, []);
-  
+  console.log(approvalDetails);
   useEffect(() => {
     const result = approvalDetails.filter(video=>{
       return video.title.toLowerCase().match(search.toLowerCase())
@@ -51,6 +51,11 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
       name: 'Expert Type',
       sortable: true,
       selector: (row) => row.experts.expertisedIn,
+    },
+    {
+      name: 'Video Category',
+      sortable: true,
+      selector: (row) => row.category,
     },
 
 

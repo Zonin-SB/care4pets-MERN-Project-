@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { adminEditVideo, getEditVideoDetails } from '../../Axios/Services/AdminServices';
+import { videoUploadSchema } from '../../Validation/Validation';
 
 function AdminEditVideoPage() {
   const [error, setError] = useState('');
@@ -23,6 +24,7 @@ function AdminEditVideoPage() {
     title:video.title,
     type:video.type,
     link:video.link,
+    category:video.category,
     description:video.description,
     videoId:id,
   };
@@ -41,7 +43,7 @@ function AdminEditVideoPage() {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
   useFormik({
     initialValues: initialValues,
-    validationSchema: '',
+    validationSchema: videoUploadSchema,
     onSubmit,
     enableReinitialize:true,
   });
@@ -94,6 +96,30 @@ function AdminEditVideoPage() {
                 </select>
                 {errors.type && touched.type && (
                   <p className="red-error">{errors.type}</p>
+                )}
+              </div>
+              <div>
+                <label
+                  className="text-white dark:text-gray-200"
+                  htmlFor="passwordConfirmation"
+                >
+                  Pet Category
+                </label>
+                <select
+                  name="category"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.category}
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                >
+                  
+                  <option>Select Pet Category</option>
+                  <option value="Dog">Dog</option>
+                  <option value="Cat">Cat</option>
+                  <option value="Exotic-birds">Exotic-birds</option>
+                </select>
+                {errors.category && touched.category && (
+                  <p className="red-error">{errors.category}</p>
                 )}
               </div>
               <div>
