@@ -48,4 +48,5 @@ export {default as AdminVideoApprovalDetailsPage} from './AdminVideoApprovalDeta
 export {default as AdminManageVideosPage} from './AdminManageVideos/AdminManageVideosPage'
 export {default as AdminEditVideoPage}from  './AdminEditVideo/AdminEditVideoPage'
 export {default as AdminRejectVideoPage} from './AdminRejectVideo/AdminRejectVideoPage'
+export {default as AdminViewPaymentPage} from './AdminViewPaymentPage/AdminViewPaymentPage'
 export {default as ErrorPage} from './Error/ErrorPage'

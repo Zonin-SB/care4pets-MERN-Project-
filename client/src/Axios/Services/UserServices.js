@@ -256,3 +256,25 @@ export const getVideosCount=async(token,id)=>{
     console.log(error);
   }
 }
+
+export const getPlanDetails=async(token,id)=>{
+try {
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosUserInstance.get(
+    `/getPlanDetails/${id}`,
+
+    config
+  );
+  
+  if (data.status) {
+    return data;
+  }
+} catch (error) {
+  console.log(error);
+}
+}

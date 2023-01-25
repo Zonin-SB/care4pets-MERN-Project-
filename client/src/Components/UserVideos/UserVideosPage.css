@@ -1,0 +1,8 @@
+.video-list{
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+ }
+ .video-list::-webkit-scrollbar {
+    display: none;
+  }

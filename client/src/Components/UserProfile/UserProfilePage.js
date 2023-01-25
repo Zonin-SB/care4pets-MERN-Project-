@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUserDetails } from '../../Axios/Services/UserServices';
+import { getPlanDetails, getUserDetails } from '../../Axios/Services/UserServices';
 import {useDispatch} from 'react-redux';
 import { userAllDetails} from '../../redux/adminReducer';
 import userProfile from '../../images/proImg.jpg'
@@ -13,16 +13,23 @@ function UserProfilePage() {
   const navigate=useNavigate()
   const userId = useSelector((state) => state.admin.userDetails.userId);
   const [userDetails,setUserDetails]=useState([])
+  const [planDetails,selectedPlanDetails]=useState([])
  
   useEffect(() => {
     const token = localStorage.getItem('userToken');
  
     fetchData()
+    fetchPlan()
 
     async function fetchData() {
       const data=await getUserDetails(token,userId)
     
       setUserDetails(data.userDetails)
+    }
+
+    async function fetchPlan(){
+      const data=await getPlanDetails(token,userId)
+      selectedPlanDetails(data.plan)
     }
   }, [userId,dispatch]);
 
@@ -104,6 +111,14 @@ function UserProfilePage() {
                           </span>
                           <span className="text-sm text-blueGray-400">
                             Friends
+                          </span>
+                        </div>
+                        <div className="mr-4 p-3 text-center">
+                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                            {planDetails? planDetails.planName: <p>No Active Plan</p> }
+                          </span>
+                          <span className="text-sm text-blueGray-400">
+                            Current Plan
                           </span>
                         </div>
                       </div>

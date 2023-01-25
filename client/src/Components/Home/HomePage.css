@@ -10,3 +10,12 @@ width: 20rem;
 .comments::-webkit-scrollbar{
     display: none;
 }
+
+.testimonials{
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+ }
+ .testimonials::-webkit-scrollbar {
+    display: none;
+  }

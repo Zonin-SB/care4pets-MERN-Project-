@@ -231,19 +231,7 @@ module.exports = {
   buyPlan: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
-        // const line_items=data.map((item)=>{
-        //   return{
-        //     price_data:{
-        //       currency:'inr',
-        //       product_data:{
-        //         name:item.planName,
-        //         validity:item.planValidity
-        //       },
-        //       unit_amount:item.planPrice*100,
-        //     },
-        //     quantity:1,
-        //   }
-        // })
+      
         const session = await stripe.checkout.sessions.create({
           line_items: [
             {
@@ -258,11 +246,11 @@ module.exports = {
             },
           ],
           mode: 'payment',
-          success_url: `${process.env.CLIENT_URL}/buyPlanSuccess`,
+          success_url: `${process.env.CLIENT_URL}/buyPlanSuccess?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${process.env.CLIENT_URL}/userBuyPlan`,
         });
-        console.log(response);
-        console.log(session);
+        // console.log(response,'check res');
+        // console.log(session);
         resolve(session);
         // res.send({url:session.url});
       } catch (error) {
@@ -272,28 +260,105 @@ module.exports = {
   },
 
   postPlanOrderValues: (data) => {
-    return new Promise((resolve, reject) => {
-      const orderDetails = {};
-      const validFrom = new Date();
-      const validTill = new Date();
-      validTill.setMonth(validFrom.getMonth() + data.planValidity);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const orderDetails = {};
+        let validFrom = new Date();
+        let validTill = new Date();
+        validTill.setMonth(
+          validFrom.getMonth() + data.planOrderValues.planValidity
+        );
+        // get current date
+        // adjust 0 before single digit date
+        let date = ('0' + validFrom.getDate()).slice(-2);
 
-      (orderDetails.planId = data.planId),
-        (orderDetails.expertId = data.expertId),
-        (orderDetails.userId = data.userId),
-        (orderDetails.validFrom = validFrom),
-        (orderDetails.validTill = validTill);
+        // get current month
+        let month = ('0' + (validFrom.getMonth() + 1)).slice(-2);
 
-      db.get()
-        .collection(collection.PURCHASE_COLLECTION)
-        .insertOne(orderDetails)
-        .then((response) => {
-          console.log(response);
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
+        // get current year
+        let year = validFrom.getFullYear();
+
+        // get current hours
+        let hours = validFrom.getHours();
+
+        // get current minutes
+        let minutes = validFrom.getMinutes();
+
+        // get current seconds
+        let seconds = validFrom.getSeconds();
+
+        // get current date
+        // adjust 0 before single digit date
+        let validTillDate = ('0' + validTill.getDate()).slice(-2);
+
+        // get current month
+        let validTillMonth = ('0' + (validTill.getMonth() + 1)).slice(-2);
+
+        // get current year
+        let validTillYear = validTill.getFullYear();
+
+        // get current hours
+        let validTillHours = validTill.getHours();
+
+        // get current minutes
+        let validTillMinutes = validTill.getMinutes();
+
+        // get current seconds
+        let validTillSeconds = validTill.getSeconds();
+
+        validFrom =
+          year +
+          '-' +
+          month +
+          '-' +
+          date +
+          ' ' +
+          hours +
+          ':' +
+          minutes +
+          ':' +
+          seconds;
+
+        validTill =
+          validTillYear +
+          '-' +
+          validTillMonth +
+          '-' +
+          validTillDate +
+          ' ' +
+          validTillHours +
+          ':' +
+          validTillMinutes +
+          ':' +
+          validTillSeconds;
+
+        (orderDetails.planId = ObjectId(data.planOrderValues.planId)),
+          (orderDetails.expertId = ObjectId(data.planOrderValues.expertId) ),
+          (orderDetails.userId = ObjectId(data.planOrderValues.userId) ),
+          (orderDetails.validFrom = validFrom),
+          (orderDetails.validTill = validTill);
+        const redirectUrl = data.succesurl;
+
+        const url = new URL(redirectUrl);
+        const sessionId = url.searchParams.get('session_id');
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        // console.log(session.status,'session status'); // "complete" or "canceled"
+        if (session.status === 'complete') {
+          db.get()
+            .collection(collection.PURCHASE_COLLECTION)
+            .insertOne(orderDetails)
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        } else {
+          console.log('payment failed');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
 
@@ -371,47 +436,41 @@ module.exports = {
         const count = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .countDocuments({ $and: [{ expertId: id },{approved:true}] });
-          
-          resolve(count)
+          .countDocuments({ $and: [{ expertId: id }, { approved: true }] });
+
+        resolve(count);
       } catch (error) {
         console.log(error);
       }
     });
   },
 
-  // postPlanDetails: (data) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.get().collection(collection.USER_COLLECTION)
-  //   });
-  // },
+  findPlanById:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const details=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({userId:ObjectId(id)})
+      
+        resolve(details)
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  },
+
+  getPlanDetails:(data)=>{
+    
+    return new Promise(async(resolve,reject)=>{
+      try {
+       
+        const details=await db.get().collection(collection.PLAN_COLLECTION).findOne({_id:data.planId});
+        
+        resolve(details)
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
+
+ 
 };
 
-// getUsersExpert: (userData) => {
-//   const userPet=userData.pet
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       const expertDetails = await db
-//         .get()
-//         .collection(collection.USER_COLLECTION)
-//         .aggregate([
-//           {
-//             $match: { _id: ObjectId(userId) },
-//           },
-//           {
-//             $lookup: {
-//               from: collection.EXPERT_COLLECTION,
-//               localField: 'pet',
-//               foreignField: 'expertisedIn',
-//               as: 'experts',
-//             },
-//           },
-//         ])
-//         .toArray();
-//       // console.log(expertDetails);
-//       resolve(expertDetails);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   });
-// },

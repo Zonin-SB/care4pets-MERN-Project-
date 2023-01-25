@@ -59,9 +59,9 @@ function AdminHomeNavPage() {
                       Videos
                     </button></Link>
 
-                    <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link to={'/adminViewPayment'}>  <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Payments
-                    </button>
+                    </button></Link>
                    <Link to='/adminViewPlans'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Plans
                     </button></Link>
@@ -175,9 +175,9 @@ function AdminHomeNavPage() {
                     Videos
                   </button> </Link>
 
-                  <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                 <Link to={'/adminViewPayment'}> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Payments
-                  </button>
+                  </button></Link>
                  <Link to='/adminViewPlans'><button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Plans
                   </button></Link> 
