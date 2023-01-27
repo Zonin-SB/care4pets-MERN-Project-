@@ -214,7 +214,7 @@ module.exports = {
         const videos = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .find({ expertId: id })
+          .find({ expertId: ObjectId(id )})
           .toArray();
         resolve(videos);
       } catch (error) {
@@ -281,7 +281,7 @@ module.exports = {
               .get()
               .collection(collection.VIDEO_COLLECTION)
               .find({
-                expertId: data.expertId,
+                expertId: ObjectId(data.expertId),
               })
               .toArray();
             resolve(details);
@@ -302,7 +302,7 @@ module.exports = {
           .get()
           .collection(collection.VIDEO_COLLECTION)
           .countDocuments({
-            $and: [{ expertId: id }, { videoRejected: { $exists: true } }],
+            $and: [{ expertId: ObjectId(id )}, { videoRejected: { $exists: true } }],
           });
         resolve(videosCount);
       } catch (error) {
@@ -318,7 +318,7 @@ module.exports = {
           .get()
           .collection(collection.VIDEO_COLLECTION)
           .find({
-            $and: [{ expertId: id }, { videoRejected: { $exists: true } }],
+            $and: [{ expertId: ObjectId(id )}, { videoRejected: { $exists: true } }],
           })
           .toArray();
         resolve(videos);
@@ -377,7 +377,7 @@ module.exports = {
         const videoCount = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .countDocuments({ $and:[{expertId:id},{approved:true}] });
+          .countDocuments({ $and:[{expertId:ObjectId(id)},{approved:true}] });
 
         resolve(videoCount);
       } catch (error) {

@@ -1,5 +1,6 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongodb');
 const expertUtilities = require('../utilities/expertUtilities');
 
 const expertSignup = (req, res) => {
@@ -107,7 +108,7 @@ const expertAccepted = (req, res) => {
 const expertVideoUpload = (req, res) => {
   const ytUrl = req.body.link;
   req.body.link = ytUrl.replace('/watch?v=', '/embed/');
-
+req.body.expertId=ObjectId(req.body.expertId)
   expertUtilities
     .expertVideoUpload(req.body)
     .then(() => {

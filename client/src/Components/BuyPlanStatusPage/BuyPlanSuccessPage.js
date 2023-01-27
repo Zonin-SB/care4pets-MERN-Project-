@@ -13,14 +13,14 @@ function BuyPlanSuccessPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
-  console.log(planOrderValues, 'ordre val');
+ 
   useEffect(() => {
     const token = localStorage.getItem('userToken');
     postOrderValues();
     async function postOrderValues() {
       try {
         const succesurl = window.location.href;
-        console.log(succesurl, 'success url');
+      
         // planOrderValues.succesurl=succesurl
         // console.log(planOrderValues,'with url');
         const data = await postPlanOrderValues(token, {

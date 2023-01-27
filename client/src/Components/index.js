@@ -10,6 +10,7 @@ export {default as UserSelectExpertPage} from './UserSelectExpert/UserSelectExpe
 export {default as UserVideosPage} from './UserVideos/UserVideosPage'
 export {default as UserViewPlanPage} from './UserViewPlan/UserViewPlanPage'
 export {default as UserViewExpertPage} from './UserViewExpert/UserViewExpertPage'
+export {default as UserChatPage} from './UserChat/UserChatPage'
 export {default as BuyPlanPage} from './BuyPlan/BuyPlanPage'
 export {default as BuyPlanSuccessPage} from './BuyPlanStatusPage/BuyPlanSuccessPage'
 export {default as ExpertSignupPage} from './ExpertSignup/ExpertSignupPage'

@@ -201,29 +201,79 @@ const getFreeVideos = (req, res) => {
     });
 };
 
-const getVideosCount=(req,res)=>{
+const getPlanVideos = (req, res) => {
   const id = req.params.id;
-  userUtilities.getVideosCount(id).then((response)=>{
-    res.json({ status: 'ok', count: response });
-  }).catch((err)=>{
-    console.log(err);
+  userUtilities
+    .findPlanById(id)
+    .then((response) => {
+      if (response !== null) {
+        userUtilities.getPlanVideos(response).then((data) => {
+          res.json({ status: 'ok', planVideos: data });
+        });
+      } else {
+        res.json({ status: 'ok', plan: false });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getVideosCount = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .getVideosCount(id)
+    .then((response) => {
+      res.json({ status: 'ok', count: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getPlanDetails = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .findPlanById(id)
+    .then((response) => {
+      if (response !== null) {
+        userUtilities.getPlanDetails(response).then((data) => {
+          res.json({ status: 'ok', plan: data });
+        });
+      } else {
+        res.json({ status: 'ok', plan: false });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getYourExpertDetails=(req,res)=>{
+  const id = req.params.id;
+
+ userUtilities.findPlanById(id).then((response)=>{
+if(response!==null){
+  userUtilities.getYourExpertDetails(response).then((data)=>{
+    res.json({ status: 'ok', expert: data });
   })
+}else{
+  res.json({ status: 'ok', expert: false });
+}
+ }).catch((err)=>{
+  console.log(err);
+ })
 }
 
-const getPlanDetails=(req,res)=>{
-  const id = req.params.id;
-  userUtilities.findPlanById(id).then((response)=>{
-    if(response!==null){
-      userUtilities.getPlanDetails(response).then((data)=>{
-        res.json({ status: 'ok', plan: data });
-      })
-    }else{
-      res.json({ status: 'ok', plan: false });
-    }
-    
-  }).catch((err)=>{
-console.log(err);
-  })
+const sendMessage=(req,res)=>{
+  const to =req.params.id
+  const message=req.body;
+  const from=req.user._id;
+ userUtilities.sendMessage(to,from,message).then(()=>{
+
+ }).catch(()=>{
+
+ })
 }
 
 module.exports = {
@@ -242,4 +292,7 @@ module.exports = {
   getFreeVideos,
   getVideosCount,
   getPlanDetails,
+  getPlanVideos,
+  getYourExpertDetails,
+  sendMessage,
 };

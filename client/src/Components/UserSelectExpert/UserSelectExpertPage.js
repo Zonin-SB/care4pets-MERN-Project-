@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import {
   getUsersExpert,
+  getYourExpertDetails,
   selectExpert,
 } from '../../Axios/Services/UserServices';
 import { useSelector } from 'react-redux';
@@ -14,11 +15,13 @@ function UserSelectExpertPage() {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.admin.userDetails.userId);
   const [expertDetails, setExpertDetails] = useState([]);
+  const [yourExpertDetails,setYourExpertDetails]=useState([])
   const [error, setError] = useState('');
   const [filteredExpertDetails, setFilteredExpertDetails] = useState([]);
   const [search, setSearch] = useState('');
   useEffect(() => {
     fetchExpert();
+    fetchYourExpert();
 
     async function fetchExpert() {
       const token = localStorage.getItem('userToken');
@@ -30,6 +33,12 @@ function UserSelectExpertPage() {
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
+    }
+
+    async function fetchYourExpert(){
+      const token = localStorage.getItem('userToken');
+      const response=await getYourExpertDetails(token,id)
+      setYourExpertDetails(response.expert[0])
     }
   }, [id]);
   console.log(expertDetails, 'in exp');
@@ -129,7 +138,39 @@ function UserSelectExpertPage() {
   ];
   return (
     <div>
-      <div className="container mx-auto mt-9">
+      <>
+      <h1 className='text-center font-semibold text-2xl mt-6'>Your Expert</h1>
+  {/* component */}
+  <div className="mx-5 min-h-screen grid place-content-center mt-9">
+    <div className="bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl text-white p-8 text-center h-72 max-w-sm mx-auto">
+      <button onClick={()=>navigate(`/userViewExpert/${yourExpertDetails._id}`)} className="text-2xl mb-3 border border-white rounded-xl">More Info</button>
+      <p className="text-lg">
+        You can contact us whenever you need help or just curious about
+        something.
+      </p>
+    </div>
+    <div className="bg-white py-8 px-10 text-center rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 max-w-xs mx-auto">
+      <h2 className="font-semibold text-2xl mb-6">Start chatting</h2>
+      <img
+        className="w-20 h-20 object-cover rounded-full mx-auto shadow-lg"
+        src={yourExpertDetails.profilePic}
+        alt="User avatar"
+      />
+      <p className="capitalize text-xl mt-1">{yourExpertDetails.name}</p>
+      <span className="flex items-center border rounded-full w-24 pr-2 justify-center mx-auto mt-2 mb-12">
+        <div className="bg-green-400 rounded-full w-2.5 h-2.5 block mr-2" />
+        Active
+      </span>
+      <button onClick={()=>navigate(`/userChat/${yourExpertDetails._id}`)} className="rounded-md bg-gradient-to-r from-blue-400 to-indigo-500 text-xl text-white pt-3 pb-4 px-8 inline">
+        Send a message
+      </button>
+    </div>
+  </div>
+</>
+
+
+
+      <div className="container mx-auto mt-2">
         {error ? (
           <p style={{ color: 'red' }} className="text-center">
             {error}

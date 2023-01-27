@@ -226,7 +226,7 @@ export const getFreeVideos = async (token, id) => {
 
       config
     );
-    console.log(data,'in axio');
+
     if (data.status) {
       return data;
     }
@@ -235,7 +235,29 @@ export const getFreeVideos = async (token, id) => {
   }
 };
 
-export const getVideosCount=async(token,id)=>{
+export const getPlanVideos = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getPlanVideos/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVideosCount = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -248,33 +270,78 @@ export const getVideosCount=async(token,id)=>{
 
       config
     );
-    
+
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getPlanDetails=async(token,id)=>{
-try {
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-  };
-  const { data } = await axiosUserInstance.get(
-    `/getPlanDetails/${id}`,
+export const getPlanDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getPlanDetails/${id}`,
 
-    config
-  );
-  
-  if (data.status) {
-    return data;
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
   }
-} catch (error) {
-  console.log(error);
-}
-}
+};
+
+export const getYourExpertDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getYourExpertDetails/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendMessage = async (token, id, values) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const value = { message: values };
+    const { data } = await axiosUserInstance.post(
+      `/sendMessage/${id}`,
+      value,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

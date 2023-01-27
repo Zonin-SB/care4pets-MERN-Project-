@@ -41,6 +41,7 @@ import {
   ExpertSignup,
   ExpertVideos,
   Home,
+  UserChat,
   UserEditProfile,
   UserEditProfilePic,
   UserHome,
@@ -71,6 +72,7 @@ function App() {
           <Route path="/buyPlanSuccess" element={<BuyPlanSuccess />} />
           <Route path="/userVideos" element={<UserVideos />} />
           <Route path="/userViewExpert/:id" element={<UserViewExpert />} />
+          <Route path="/userChat/:id" element={<UserChat />} />
         </Route>
 
         <Route path="/admin" element={<AdminLogin />} />

@@ -231,7 +231,6 @@ module.exports = {
   buyPlan: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
-      
         const session = await stripe.checkout.sessions.create({
           line_items: [
             {
@@ -260,6 +259,7 @@ module.exports = {
   },
 
   postPlanOrderValues: (data) => {
+    // console.log(data);
     return new Promise(async (resolve, reject) => {
       try {
         const orderDetails = {};
@@ -333,10 +333,11 @@ module.exports = {
           validTillSeconds;
 
         (orderDetails.planId = ObjectId(data.planOrderValues.planId)),
-          (orderDetails.expertId = ObjectId(data.planOrderValues.expertId) ),
-          (orderDetails.userId = ObjectId(data.planOrderValues.userId) ),
-          (orderDetails.validFrom = validFrom),
-          (orderDetails.validTill = validTill);
+          (orderDetails.expertId = ObjectId(data.planOrderValues.expertId)),
+          (orderDetails.userId = ObjectId(data.planOrderValues.userId)),
+          (orderDetails.validFrom = validFrom);
+        orderDetails.validTill = validTill;
+        orderDetails.plan = data.planOrderValues.planName;
         const redirectUrl = data.succesurl;
 
         const url = new URL(redirectUrl);
@@ -378,6 +379,7 @@ module.exports = {
                     category: userPet,
                   },
                   { approved: true },
+                  { type: 'Free' },
                 ],
               },
             },
@@ -436,7 +438,9 @@ module.exports = {
         const count = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .countDocuments({ $and: [{ expertId: id }, { approved: true }] });
+          .countDocuments({
+            $and: [{ expertId: ObjectId(id) }, { approved: true }],
+          });
 
         resolve(count);
       } catch (error) {
@@ -445,32 +449,84 @@ module.exports = {
     });
   },
 
-  findPlanById:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  findPlanById: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const details=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({userId:ObjectId(id)})
-      
-        resolve(details)
+        const details = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({ userId: ObjectId(id) });
+
+        resolve(details);
       } catch (error) {
         console.log(error);
       }
-    })
+    });
   },
 
-  getPlanDetails:(data)=>{
-    
-    return new Promise(async(resolve,reject)=>{
+  getPlanDetails: (data) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       
-        const details=await db.get().collection(collection.PLAN_COLLECTION).findOne({_id:data.planId});
-        
-        resolve(details)
+        const details = await db
+          .get()
+          .collection(collection.PLAN_COLLECTION)
+          .findOne({ _id: data.planId });
+
+        resolve(details);
       } catch (error) {
         console.log(error);
       }
-    })
-  }
+    });
+  },
 
- 
+  getPlanVideos: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const videos = await db
+          .get()
+          .collection(collection.VIDEO_COLLECTION)
+          .find({
+            $and: [
+              { expertId: data.expertId },
+              { type: data.plan },
+              { approved: true },
+            ],
+          })
+          .toArray();
+
+        resolve(videos);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getYourExpertDetails: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const expert = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: data.expertId,
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                profilePic: 1,
+                expertisedIn: 1,
+              },
+            },
+          ])
+          .toArray();
+
+        resolve(expert);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };
-
