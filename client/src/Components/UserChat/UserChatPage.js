@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {  useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getYourExpertDetails, sendMessage } from '../../Axios/Services/UserServices';
+import { getAllMessages, getYourExpertDetails, sendMessage } from '../../Axios/Services/UserServices';
 
 function UserChatPage() {
   const { id } = useParams();
@@ -9,19 +9,26 @@ function UserChatPage() {
   const [expertDetails,setExpertDetails]=useState([])
   const userId = useSelector((state) => state.admin.userDetails.userId);
   useEffect(() => {
-  fetchExpertDetails()
+  fetchExpertDetails();
+  fetchMessage();
   async function fetchExpertDetails(){
     const token = localStorage.getItem('userToken');
     const response=await getYourExpertDetails(token,userId)
     setExpertDetails(response.expert[0]);
   }
 
-  }, [userId])
+  async function fetchMessage(){
+    const token = localStorage.getItem('userToken');
+    const data=await getAllMessages(token,id)
+  }
+
+  }, [userId,id])
 
   
   const sendChat=async()=>{
     const token = localStorage.getItem('userToken');
     const data=await sendMessage(token,id,message)
+    setMessage('');
   }
   
   return (

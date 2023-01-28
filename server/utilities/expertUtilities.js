@@ -214,7 +214,7 @@ module.exports = {
         const videos = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .find({ expertId: ObjectId(id )})
+          .find({ expertId: ObjectId(id) })
           .toArray();
         resolve(videos);
       } catch (error) {
@@ -252,8 +252,8 @@ module.exports = {
                 type: data.type,
                 link: data.link,
                 description: data.description,
-                category:data.category,
-                uploaded:true,
+                category: data.category,
+                uploaded: true,
               },
             }
           )
@@ -302,7 +302,10 @@ module.exports = {
           .get()
           .collection(collection.VIDEO_COLLECTION)
           .countDocuments({
-            $and: [{ expertId: ObjectId(id )}, { videoRejected: { $exists: true } }],
+            $and: [
+              { expertId: ObjectId(id) },
+              { videoRejected: { $exists: true } },
+            ],
           });
         resolve(videosCount);
       } catch (error) {
@@ -318,7 +321,10 @@ module.exports = {
           .get()
           .collection(collection.VIDEO_COLLECTION)
           .find({
-            $and: [{ expertId: ObjectId(id )}, { videoRejected: { $exists: true } }],
+            $and: [
+              { expertId: ObjectId(id) },
+              { videoRejected: { $exists: true } },
+            ],
           })
           .toArray();
         resolve(videos);
@@ -328,14 +334,14 @@ module.exports = {
     });
   },
 
-  getRejectedVideoDetails:(id)=>{
+  getRejectedVideoDetails: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         const videos = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
           .find({
-           _id:ObjectId(id)
+            _id: ObjectId(id),
           })
           .toArray();
         resolve(videos);
@@ -345,7 +351,7 @@ module.exports = {
     });
   },
 
-  expertVideoRejected:(id)=>{
+  expertVideoRejected: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
@@ -355,7 +361,7 @@ module.exports = {
             { _id: ObjectId(id) },
             {
               $unset: {
-                videoRejected:''
+                videoRejected: '',
               },
             }
           )
@@ -371,18 +377,100 @@ module.exports = {
     });
   },
 
-  getVideosCount:(id)=>{
+  getVideosCount: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         const videoCount = await db
           .get()
           .collection(collection.VIDEO_COLLECTION)
-          .countDocuments({ $and:[{expertId:ObjectId(id)},{approved:true}] });
+          .countDocuments({
+            $and: [{ expertId: ObjectId(id) }, { approved: true }],
+          });
 
         resolve(videoCount);
       } catch (error) {
         console.log(error);
       }
     });
-  }
+  },
+
+  getAllClients: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const clients = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                expertId: ObjectId(id),
+              },
+            },
+            {
+              $lookup: {
+                from: collection.USER_COLLECTION,
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'clientDetails',
+              },
+            },
+            {
+              $unwind: '$clientDetails',
+            },
+            {
+              $project: {
+                planId: 1,
+                expertId: 1,
+                userId: 1,
+                validFrom: 1,
+                validTill: 1,
+                plan: 1,
+                clientDetails: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  profileImage: 1,
+                  pet: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+
+        resolve(clients);
+      } catch (error) {}
+    });
+  },
+
+  getClientDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userDetails = await db
+          .get()
+          .collection(collection.USER_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(id),
+              },
+            },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                email: 1,
+                mobile: 1,
+                profileImage: 1,
+                pet:1,
+              },
+            },
+          ]).toArray()
+        resolve(userDetails)
+      } catch (error) {
+        reject(error)
+      }
+    });
+  },
+
+ 
 };

@@ -22,6 +22,7 @@ router.get('/api/getPlanDetails/:id',auth.userAuth,userController.getPlanDetails
 router.get('/api/getPlanVideos/:id',auth.userAuth,userController.getPlanVideos)
 router.get('/api/getYourExpertDetails/:id',auth.userAuth,userController.getYourExpertDetails)
 router.post('/api/sendMessage/:id',auth.userAuth,userController.sendMessage)
+router.get('/api/getAllMessages/:id',auth.userAuth,userController.getAllMessages)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
 

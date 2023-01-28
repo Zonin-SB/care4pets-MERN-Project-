@@ -138,7 +138,8 @@ function UserSelectExpertPage() {
   ];
   return (
     <div>
-      <>
+{yourExpertDetails?
+      <div>
       <h1 className='text-center font-semibold text-2xl mt-6'>Your Expert</h1>
   {/* component */}
   <div className="mx-5 min-h-screen grid place-content-center mt-9">
@@ -166,7 +167,9 @@ function UserSelectExpertPage() {
       </button>
     </div>
   </div>
-</>
+</div>
+:''
+}
 
 
 

@@ -1,6 +1,7 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
+const commonUtilities = require('../utilities/commonUtilities');
 const expertUtilities = require('../utilities/expertUtilities');
 
 const expertSignup = (req, res) => {
@@ -213,6 +214,35 @@ const getVideosCount=(req,res)=>{
   })
 }
 
+const getAllClients=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.getAllClients(id).then((response)=>{
+    res.json({ status: true, clients: response });
+  }).catch(()=>{
+    res.json({ status: false});
+  })
+}
+
+const getClientDetails=(req,res)=>{
+  const id = req.params.id;
+  expertUtilities.getClientDetails(id).then((response)=>{
+    res.json({ status: true, client: response });
+  }).catch(()=>{
+    res.json({ status: false});
+  })
+}
+
+const sendMessage=(req,res)=>{
+  const to =req.params.id
+  const message=req.body;
+  const from=req.user._id;
+ commonUtilities.sendMessage(to,from,message).then(()=>{
+  res.json({ status: true, message: 'success' })
+ }).catch((err)=>{
+  res.json({ status: false, message: err })
+ })
+}
+
 module.exports = {
   expertSignup,
   expertLogin,
@@ -231,4 +261,7 @@ module.exports = {
   getRejectedVideoDetails,
   expertVideoRejected,
   getVideosCount,
+  getAllClients,
+  getClientDetails,
+  sendMessage,
 };

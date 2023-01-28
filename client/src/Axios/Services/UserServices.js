@@ -343,5 +343,30 @@ export const sendMessage = async (token, id, values) => {
     }
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
+
+export const getAllMessages=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+   
+    const { data } = await axiosUserInstance.get(
+      `/getAllMessages/${id}`,
+   
+      config
+    );
+console.log(data,'in chat');
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}

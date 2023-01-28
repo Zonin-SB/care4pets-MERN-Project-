@@ -42,7 +42,7 @@ export const uploadDocuments = async (values) => {
     data: values,
     headers: { 'Content-type': 'application.json' },
   });
-  
+
   if (data.status) {
     return data;
   }
@@ -219,7 +219,7 @@ export const deleteVideo = async (token, values) => {
   } catch (error) {}
 };
 
-export const getRejectedVideoCount=async(token,id)=>{
+export const getRejectedVideoCount = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -238,9 +238,9 @@ export const getRejectedVideoCount=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getRejectedVideos=async(token,id)=>{
+export const getRejectedVideos = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -259,9 +259,9 @@ export const getRejectedVideos=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getRejectedVideoDetails=async(token,id)=>{
+export const getRejectedVideoDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -280,9 +280,9 @@ export const getRejectedVideoDetails=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const expertVideoRejected=async (token,id)=>{
+export const expertVideoRejected = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -301,9 +301,9 @@ export const expertVideoRejected=async (token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getVideosCount=async (token,id)=>{
+export const getVideosCount = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -322,4 +322,72 @@ export const getVideosCount=async (token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const getAllClients = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getAllClients/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getClientDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getClientDetails/${id}`,
+      config
+    );
+   
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendMessage = async (token, id, values) => {
+ 
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const value = { message: values };
+    const { data } = await axiosExpertInstance.post(
+      `/sendMessage/${id}`,
+      value,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

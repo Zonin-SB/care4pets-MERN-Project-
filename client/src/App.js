@@ -31,6 +31,8 @@ import {
   ExpertAcceptedMessage,
   ExpertAddVideo,
   ExpertApplyForm,
+  ExpertChat,
+  ExpertClientView,
   ExpertEditVideo,
   ExpertHome,
   ExpertLogin,
@@ -129,6 +131,8 @@ function App() {
           <Route path="/expertVideos" element={<ExpertVideos />} />
           <Route path="/expertAddVideos" element={<ExpertAddVideo />} />
           <Route path="/expertEditVideo/:id" element={<ExpertEditVideo />} />
+          <Route path="/expertClientView" element={<ExpertClientView />} />
+          <Route path="/expertChat/:id" element={<ExpertChat />} />
           <Route
             path="/expertRejectedVideos"
             element={<ExpertRejectedVideoList />}

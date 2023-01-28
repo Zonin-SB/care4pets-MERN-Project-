@@ -26,6 +26,8 @@ export {default as ExpertAddVideosPage} from './ExpertAddVideos/ExpertAddVideosP
 export {default as ExpertEditVideoPage} from './ExpertEditVideo/ExpertEditVideoPage'
 export {default as ExpertRejectedVideoListPage} from './ExpertRejectedVideoList/ExpertRejectedVideoListPage'
 export {default as ExpertRejectedVideoDetailedViewPage} from './ExpertedRejectedVideoDetailedView/ExpertRejectedVideoDetailedViewPage'
+export {default as ExpertChatPage} from './ExpertChat/ExpertChatPage'
+export {default as ExpertClientViewPage} from './ExpertClientView/ExpertClientViewPage'
 export {default as UserHomeNavPage} from './UserHomeNav/UserHomeNavPage'
 export {default as HomePage} from './Home/HomePage'
 export {default as HomePage2} from './Home/HomePage2'

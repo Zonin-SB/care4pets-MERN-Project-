@@ -1,5 +1,6 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
+const commonUtilities = require('../utilities/commonUtilities');
 const userUtilities = require('../utilities/userUtilities');
 
 // const {cloudinary}=require('../middlewares/cloudinary');
@@ -269,11 +270,21 @@ const sendMessage=(req,res)=>{
   const to =req.params.id
   const message=req.body;
   const from=req.user._id;
- userUtilities.sendMessage(to,from,message).then(()=>{
-
- }).catch(()=>{
-
+ commonUtilities.sendMessage(to,from,message).then(()=>{
+  res.json({ status: true, message: 'success' })
+ }).catch((err)=>{
+  res.json({ status: false, message: err })
  })
+}
+
+const getAllMessages=(req,res)=>{
+  const to =req.params.id
+  const from=req.user._id;
+  commonUtilities.getAllMessages(to,from).then(()=>{
+
+  }).catch(()=>{
+
+  })
 }
 
 module.exports = {
@@ -295,4 +306,5 @@ module.exports = {
   getPlanVideos,
   getYourExpertDetails,
   sendMessage,
+  getAllMessages,
 };

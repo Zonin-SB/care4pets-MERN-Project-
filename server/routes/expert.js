@@ -21,5 +21,8 @@ router.get('/api/getRejectedVideos/:id',auth.expertVerifiedAuth,expertController
 router.get('/api/getRejectedVideoDetails/:id',auth.expertVerifiedAuth,expertController.getRejectedVideoDetails)
 router.get('/api/expertVideoRejected/:id',auth.expertVerifiedAuth,expertController.expertVideoRejected)
 router.get('/api/getVideosCount/:id',auth.expertVerifiedAuth,expertController.getVideosCount)
+router.get('/api/getAllClients/:id',auth.expertVerifiedAuth,expertController.getAllClients)
+router.get('/api/getClientDetails/:id',auth.expertVerifiedAuth,expertController.getClientDetails)
+router.post('/api/sendMessage/:id',auth.expertVerifiedAuth,expertController.sendMessage)
 
 module.exports=router;
