@@ -243,6 +243,24 @@ const sendMessage=(req,res)=>{
  })
 }
 
+const getAllMessages=(req,res)=>{
+  const to = req.params.id;
+  const from = req.user._id;
+  commonUtilities
+    .getAllMessages(to, from)
+    .then((response) => {
+      res.json({
+        status: true,
+        to: response.to,
+        from: response.from,
+        messages: response.message,
+      });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+}
+
 module.exports = {
   expertSignup,
   expertLogin,
@@ -264,4 +282,5 @@ module.exports = {
   getAllClients,
   getClientDetails,
   sendMessage,
+  getAllMessages,
 };

@@ -25,6 +25,7 @@ router.post('/api/sendMessage/:id',auth.userAuth,userController.sendMessage)
 router.get('/api/getAllMessages/:id',auth.userAuth,userController.getAllMessages)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
+router.get('/api/getExperts',userController.getExperts)
 
 
 module.exports=router;

@@ -119,6 +119,37 @@ module.exports = {
     });
   },
 
+  getExperts: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const experts = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                verified: true,
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                profilePic: 1,
+                expertisedIn: 1,
+                experience:1,
+                expertFrom:1,
+              },
+            },
+          ])
+          .toArray();
+        
+        resolve(experts);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
   uploadProfilePic: (fileStr) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -529,7 +560,4 @@ module.exports = {
       }
     });
   },
-
- 
-
 };

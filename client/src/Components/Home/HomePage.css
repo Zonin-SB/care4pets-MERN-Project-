@@ -19,3 +19,12 @@ width: 20rem;
  .testimonials::-webkit-scrollbar {
     display: none;
   }
+
+  .expertCard{
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+ }
+ .expertCard::-webkit-scrollbar {
+    display: none;
+  }

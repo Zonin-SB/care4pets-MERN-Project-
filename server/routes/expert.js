@@ -24,5 +24,6 @@ router.get('/api/getVideosCount/:id',auth.expertVerifiedAuth,expertController.ge
 router.get('/api/getAllClients/:id',auth.expertVerifiedAuth,expertController.getAllClients)
 router.get('/api/getClientDetails/:id',auth.expertVerifiedAuth,expertController.getClientDetails)
 router.post('/api/sendMessage/:id',auth.expertVerifiedAuth,expertController.sendMessage)
+router.get('/api/getAllMessages/:id',auth.expertVerifiedAuth,expertController.getAllMessages)
 
 module.exports=router;

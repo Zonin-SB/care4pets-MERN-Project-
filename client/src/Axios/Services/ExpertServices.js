@@ -60,7 +60,7 @@ export const expertApplyVerification = async (token, values) => {
     values,
     config
   );
-  console.log(data, 'data in axios');
+
   if (data.status) {
     return data;
   }
@@ -358,7 +358,7 @@ export const getClientDetails = async (token, id) => {
       `/getClientDetails/${id}`,
       config
     );
-   
+
     if (data.status) {
       return data;
     }
@@ -368,7 +368,6 @@ export const getClientDetails = async (token, id) => {
 };
 
 export const sendMessage = async (token, id, values) => {
- 
   try {
     const config = {
       headers: {
@@ -380,6 +379,30 @@ export const sendMessage = async (token, id, values) => {
     const { data } = await axiosExpertInstance.post(
       `/sendMessage/${id}`,
       value,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getAllMessages = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axiosExpertInstance.get(
+      `/getAllMessages/${id}`,
+
       config
     );
 

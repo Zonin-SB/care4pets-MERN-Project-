@@ -1,41 +1,63 @@
 import React, { useEffect, useState } from 'react'
 import {  useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 import { getAllMessages, getYourExpertDetails, sendMessage } from '../../Axios/Services/UserServices';
+// import nochat from '../../images/nochat.png'
 
 function UserChatPage() {
   const { id } = useParams();
   const [message,setMessage]=useState('');
+  const [chatFrom,setChatFrom]=useState('')
+  const [chat,setChat]=useState('')
+  const scrollRef = useRef();
   const [expertDetails,setExpertDetails]=useState([])
   const userId = useSelector((state) => state.admin.userDetails.userId);
+
   useEffect(() => {
   fetchExpertDetails();
-  fetchMessage();
+  if(id){
+    fetchMessage();
+  }
+  
+
+
   async function fetchExpertDetails(){
     const token = localStorage.getItem('userToken');
     const response=await getYourExpertDetails(token,userId)
     setExpertDetails(response.expert[0]);
   }
 
+  }, [userId,id])
+
+ 
   async function fetchMessage(){
     const token = localStorage.getItem('userToken');
     const data=await getAllMessages(token,id)
+    if(data.messages){
+      setChatFrom(data.from);
+      setChat(data.messages);
+    }
   }
-
-  }, [userId,id])
 
   
   const sendChat=async()=>{
     const token = localStorage.getItem('userToken');
-    const data=await sendMessage(token,id,message)
+    await sendMessage(token,id,message).then(()=>{
+      fetchMessage()
+    })
+
     setMessage('');
   }
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView(false);
+  }, [chat]);
   
   return (
     <div>
         <>
   {/* component */}
-  <div className="flex h-screen antialiased text-gray-800 mt-9">
+  <div className="flex h-screen antialiased text-gray-800 ">
     <div className="flex md:flex-row flex-col h-full w-full overflow-x-hidden">
       <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
         <div className="flex flex-row items-center justify-center h-12 w-full">
@@ -60,13 +82,13 @@ function UserChatPage() {
         <div className="flex flex-col  items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
           <div className="h-20 w-20 rounded-full border overflow-hidden">
             <img
-              src={expertDetails.profilePic}
+              src={expertDetails?expertDetails.profilePic:''}
               alt="Avatar"
               className="h-full w-full"
             />
           </div>
-          <div className="text-sm font-semibold mt-2">{expertDetails.name}</div>
-          <div className="text-xs text-gray-500">{expertDetails.expertisedIn} Expert</div>
+          <div className="text-sm font-semibold mt-2">{expertDetails?expertDetails.name:''}</div>
+          <div className="text-xs text-gray-500">{expertDetails?expertDetails.expertisedIn:''} Expert</div>
           <div className="flex flex-row items-center mt-3">
             <div className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full">
               <div className="h-3 w-3 bg-white rounded-full self-end mr-1" />
@@ -139,7 +161,7 @@ function UserChatPage() {
           <div className="flex flex-col h-full overflow-x-auto mb-4">
             <div className="flex flex-col h-full">
               <div className="grid grid-cols-12 gap-y-2">
-                <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
                   <div className="flex flex-row items-center">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                       A
@@ -148,8 +170,8 @@ function UserChatPage() {
                       <div>Hey How are you today?</div>
                     </div>
                   </div>
-                </div>
-                <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                </div> */}
+                {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
                   <div className="flex flex-row items-center">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                       A
@@ -162,8 +184,8 @@ function UserChatPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                </div> */}
+                {/* <div className="col-start-6 col-end-13 p-3 rounded-lg">
                   <div className="flex items-center justify-start flex-row-reverse">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                       A
@@ -184,8 +206,8 @@ function UserChatPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                </div> */}
+                {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
                   <div className="flex flex-row items-center">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                       A
@@ -194,36 +216,62 @@ function UserChatPage() {
                       <div>Lorem ipsum dolor sit amet !</div>
                     </div>
                   </div>
-                </div>
-                <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                </div> */}
+
+                {chat?( chat.map((data,index)=>{
+                  if(data._id===chatFrom){
+                    return(
+                      
+                <div key={index} className="col-start-6 col-end-13 p-3 rounded-lg">
                   <div className="flex items-center justify-start flex-row-reverse">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                      A
+                      
                     </div>
                     <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
                       <div>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing. ?
+                        {data.messages.message}
                       </div>
-                      <div className="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500">
-                        Seen
+                      <div className="absolute text-xs bottom-0 right-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
+                       {data.messages.time}
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-start-1 col-end-8 p-3 rounded-lg">
+
+                
+                    )
+                  }else{
+                    return(
+                   
+                <div key={index} className="col-start-1 col-end-8 p-3 rounded-lg">
                   <div className="flex flex-row items-center">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                      A
+                      {/* <img src={expertDetails?expertDetails.profilePic:''} alt="" /> */}
                     </div>
                     <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
                       <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Perspiciatis, in.
+                      {data.messages.message}
+                      </div>
+                      <div className="absolute text-xs bottom-0 left-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
+                      {data.messages.time}
                       </div>
                     </div>
+                    
                   </div>
                 </div>
-                <div className="col-start-1 col-end-8 p-3 rounded-lg">
+
+                   
+                    )
+                  }
+                })) : (
+                  <div>
+                    {/* <img src={nochat} alt="no chats found" /> */}
+                  </div>
+                )}
+
+
+
+                {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
                   <div className="flex flex-row items-center">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                       A
@@ -288,7 +336,8 @@ function UserChatPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <div ref={scrollRef}></div>
               </div>
             </div>
           </div>

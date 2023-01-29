@@ -83,6 +83,14 @@ const viewAllPlan = (req, res) => {
     });
 };
 
+const getExperts=(req,res)=>{
+  userUtilities.getExperts().then((details)=>{
+    res.json({ status: 'ok', experts: details });
+  }).catch(()=>{
+    console.log(err);
+  })
+}
+
 const uploadProfilePic = (req, res) => {
   const fileStr = req.body.data;
 
@@ -250,42 +258,56 @@ const getPlanDetails = (req, res) => {
     });
 };
 
-const getYourExpertDetails=(req,res)=>{
+const getYourExpertDetails = (req, res) => {
   const id = req.params.id;
 
- userUtilities.findPlanById(id).then((response)=>{
-if(response!==null){
-  userUtilities.getYourExpertDetails(response).then((data)=>{
-    res.json({ status: 'ok', expert: data });
-  })
-}else{
-  res.json({ status: 'ok', expert: false });
-}
- }).catch((err)=>{
-  console.log(err);
- })
-}
+  userUtilities
+    .findPlanById(id)
+    .then((response) => {
+      if (response !== null) {
+        userUtilities.getYourExpertDetails(response).then((data) => {
+          res.json({ status: 'ok', expert: data });
+        });
+      } else {
+        res.json({ status: 'ok', expert: false });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-const sendMessage=(req,res)=>{
-  const to =req.params.id
-  const message=req.body;
-  const from=req.user._id;
- commonUtilities.sendMessage(to,from,message).then(()=>{
-  res.json({ status: true, message: 'success' })
- }).catch((err)=>{
-  res.json({ status: false, message: err })
- })
-}
+const sendMessage = (req, res) => {
+  const to = req.params.id;
+  const message = req.body;
+  const from = req.user._id;
+  commonUtilities
+    .sendMessage(to, from, message)
+    .then(() => {
+      res.json({ status: true, message: 'success' });
+    })
+    .catch((err) => {
+      res.json({ status: false, message: err });
+    });
+};
 
-const getAllMessages=(req,res)=>{
-  const to =req.params.id
-  const from=req.user._id;
-  commonUtilities.getAllMessages(to,from).then(()=>{
-
-  }).catch(()=>{
-
-  })
-}
+const getAllMessages = (req, res) => {
+  const to = req.params.id;
+  const from = req.user._id;
+  commonUtilities
+    .getAllMessages(to, from)
+    .then((response) => {
+      res.json({
+        status: true,
+        to: response.to,
+        from: response.from,
+        messages: response.message,
+      });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 module.exports = {
   userSignup,
@@ -307,4 +329,5 @@ module.exports = {
   getYourExpertDetails,
   sendMessage,
   getAllMessages,
+  getExperts,
 };

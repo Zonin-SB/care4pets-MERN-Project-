@@ -155,12 +155,7 @@ function ExpertClientViewPage() {
                           </svg>
                         </button>
 
-                        <div className="flex justify-end">
-                          <p className="inline-block font-semibold text-primary whitespace-nowrap leading-tight rounded-xl">
-                            <span className="text-sm uppercase">$</span>
-                            <span className="text-lg">3,200</span>/m
-                          </p>
-                        </div>
+                     
                       </div>
                     </div>
                   </button>

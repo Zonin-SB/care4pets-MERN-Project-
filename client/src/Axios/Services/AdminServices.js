@@ -14,7 +14,6 @@ export const adminLogin = async (values) => {
 };
 
 export const getUserDetails = async (token) => {
-  // console.log(token,'axios token for admin');
   const config = {
     headers: {
       Accept: 'application/json',
@@ -23,7 +22,7 @@ export const getUserDetails = async (token) => {
     },
   };
   const { data } = await axiosAdminInstance.get('/userDetails', config);
-  // console.log('data in admin axios',data);
+
   if (data.status) {
     return data;
   }
@@ -38,7 +37,7 @@ export const blockUser = async (token, id) => {
     },
   };
   const { data } = await axiosAdminInstance.get(`/blockUser/${id}`, config);
-  //   console.log(data);
+
   if (data.status) {
     return data;
   }
@@ -53,7 +52,7 @@ export const unblockUser = async (token, id) => {
     },
   };
   const { data } = await axiosAdminInstance.get(`/unblockUser/${id}`, config);
-  console.log(data);
+
   if (data.status) {
     return data;
   }
@@ -98,7 +97,7 @@ export const unblockExpert = async (token, id) => {
     },
   };
   const { data } = await axiosAdminInstance.get(`/unblockExpert/${id}`, config);
-  // console.log(data);
+
   if (data.status) {
     return data;
   }
@@ -113,7 +112,7 @@ export const addPlan = async (token, values) => {
     },
   };
   const { data } = await axiosAdminInstance.post('/addPlan', values, config);
-  console.log(data, 'in admin serv');
+
   if (data.status) {
     return data;
   }
@@ -261,21 +260,6 @@ export const getExpertAllDetails = async (token, id) => {
   }
 };
 
-// export const approveExpert=async(token,id)=>{
-//   const config = {
-//     headers: {
-//       Accept: 'application/json',
-//       Authorization: 'Bearer ' + token,
-//       'Content-Type': 'application/json',
-//     },
-//   };
-// const {data}=await axiosAdminInstance.get(`/approveExpert/${id}`,config)
-
-// if (data.status) {
-//   return data;
-// }
-// }
-
 export const rejectExpert = async (token, values) => {
   const config = {
     headers: {
@@ -347,7 +331,7 @@ export const getVideoDetails = async (token, id) => {
       `/getVideoDetails/${id}`,
       config
     );
-   
+
     if (data.status) {
       return data;
     }
@@ -378,7 +362,7 @@ export const approveVideo = async (token, id) => {
   }
 };
 
-export const getAllVideos=async(token)=>{
+export const getAllVideos = async (token) => {
   try {
     const config = {
       headers: {
@@ -389,15 +373,13 @@ export const getAllVideos=async(token)=>{
     };
     const { data } = await axiosAdminInstance.get('/getAllVideos', config);
 
-  if (data.status) {
-    return data;
-  }
-  } catch (error) {
-    
-  }
-}
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {}
+};
 
-export const deleteVideo=async(token,id)=>{
+export const deleteVideo = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -407,14 +389,14 @@ export const deleteVideo=async(token,id)=>{
       },
     };
     const { data } = await axiosAdminInstance.get(`/deleteVideo/${id}`, config);
-  
+
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getVideoApprovalCount = async (token) => {
   try {
@@ -429,17 +411,16 @@ export const getVideoApprovalCount = async (token) => {
       '/getVideoApprovalCount',
       config
     );
-  
+
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
-
 };
 
-export const getEditVideoDetails=async(token,id)=>{
+export const getEditVideoDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -458,9 +439,9 @@ export const getEditVideoDetails=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const adminEditVideo=async(token,values)=>{
+export const adminEditVideo = async (token, values) => {
   try {
     const config = {
       headers: {
@@ -480,7 +461,7 @@ export const adminEditVideo=async(token,values)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const adminRejectVideo = async (token, values) => {
   const config = {

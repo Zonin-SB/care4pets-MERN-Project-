@@ -123,20 +123,6 @@ export const getUsersExpert = async (token, id) => {
   }
 };
 
-// export const selectExpert=async(token,values)=>{
-// console.log(values,'val in ax');
-// const config = {
-//   headers: {
-//     Authorization: 'Bearer ' + token,
-//     'Content-Type': 'application/json',
-//   },
-// };
-// const {data}=await axiosUserInstance.post('/selectExpert',values,config)
-
-//   if (data.status) {
-//     return data;
-//   }
-// }
 export const selectExpert = async (token, id) => {
   const config = {
     headers: {
@@ -347,7 +333,7 @@ export const sendMessage = async (token, id, values) => {
   }
 };
 
-export const getAllMessages=async(token,id)=>{
+export const getAllMessages = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -355,18 +341,30 @@ export const getAllMessages=async(token,id)=>{
         'Content-Type': 'application/json',
       },
     };
-   
+
     const { data } = await axiosUserInstance.get(
       `/getAllMessages/${id}`,
-   
+
       config
     );
-console.log(data,'in chat');
+
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const getExperts=async()=>{
+  const config = {
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  const { data } = await axiosUserInstance.get('/getExperts', config);
+  if (data.status) {
+    return data;
   }
 }
