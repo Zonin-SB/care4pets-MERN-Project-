@@ -28,6 +28,7 @@ export {default as ExpertRejectedVideoListPage} from './ExpertRejectedVideoList/
 export {default as ExpertRejectedVideoDetailedViewPage} from './ExpertedRejectedVideoDetailedView/ExpertRejectedVideoDetailedViewPage'
 export {default as ExpertChatPage} from './ExpertChat/ExpertChatPage'
 export {default as ExpertClientViewPage} from './ExpertClientView/ExpertClientViewPage'
+export {default as ExpertEditProfilePage} from './ExpertEditProfile/ExpertEditProfilePage'
 export {default as UserHomeNavPage} from './UserHomeNav/UserHomeNavPage'
 export {default as HomePage} from './Home/HomePage'
 export {default as HomePage2} from './Home/HomePage2'
@@ -52,4 +53,5 @@ export {default as AdminManageVideosPage} from './AdminManageVideos/AdminManageV
 export {default as AdminEditVideoPage}from  './AdminEditVideo/AdminEditVideoPage'
 export {default as AdminRejectVideoPage} from './AdminRejectVideo/AdminRejectVideoPage'
 export {default as AdminViewPaymentPage} from './AdminViewPaymentPage/AdminViewPaymentPage'
+export {default as AdminViewPaymentDetailsPage} from './AdminViewPaymentDetails/AdminViewPaymentDetailsPage'
 export {default as ErrorPage} from './Error/ErrorPage'

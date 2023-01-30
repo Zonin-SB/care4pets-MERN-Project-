@@ -425,7 +425,18 @@ module.exports = {
               $set: {
                 applied: false,
                 verified: true,
-                expertFrom: year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds,
+                expertFrom:
+                  year +
+                  '-' +
+                  month +
+                  '-' +
+                  date +
+                  ' ' +
+                  hours +
+                  ':' +
+                  minutes +
+                  ':' +
+                  seconds,
               },
               $push: {
                 accepted: {
@@ -575,9 +586,19 @@ module.exports = {
               $set: {
                 approved: true,
                 uploaded: false,
-                videoPosted:year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds,
+                videoPosted:
+                  year +
+                  '-' +
+                  month +
+                  '-' +
+                  date +
+                  ' ' +
+                  hours +
+                  ':' +
+                  minutes +
+                  ':' +
+                  seconds,
                 // videoPosted: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
-                
               },
             }
           )
@@ -755,4 +776,163 @@ module.exports = {
       }
     });
   },
+
+  getPaymentDetails: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                localField: 'expertId',
+                foreignField: '_id',
+                as: 'expert',
+              },
+            },
+            {
+              $lookup: {
+                from: collection.USER_COLLECTION,
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user',
+              },
+            },
+            {
+              $lookup: {
+                from: collection.PLAN_COLLECTION,
+                localField: 'planId',
+                foreignField: '_id',
+                as: 'plan',
+              },
+            },
+            {
+              $unwind: '$expert',
+            },
+            {
+              $unwind: '$user',
+            },
+            {
+              $unwind: '$plan',
+            },
+            {
+              $project: {
+                _id: 1,
+                planId: 1,
+                expertId: 1,
+                userId: 1,
+                validFrom: 1,
+                validTill: 1,
+                expert: {
+                  name: 1,
+                },
+                user: {
+                  name: 1,
+                  pet: 1,
+                },
+                plan: {
+                  validity: 1,
+                  currentPrice: 1,
+                  planName: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+        // console.log(data);
+        resolve(data);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  getPaymentAllDetails:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
+          {
+            $match:{
+              _id:ObjectId(id)
+            }
+          },
+          {
+            $lookup: {
+              from: collection.EXPERT_COLLECTION,
+              localField: 'expertId',
+              foreignField: '_id',
+              as: 'expert',
+            },
+          },
+          {
+            $lookup: {
+              from: collection.USER_COLLECTION,
+              localField: 'userId',
+              foreignField: '_id',
+              as: 'user',
+            },
+          },
+          {
+            $lookup: {
+              from: collection.PLAN_COLLECTION,
+              localField: 'planId',
+              foreignField: '_id',
+              as: 'plan',
+            },
+          },
+          {
+            $unwind: '$expert',
+          },
+          {
+            $unwind: '$user',
+          },
+          {
+            $unwind: '$plan',
+          },
+          {
+            $project:{
+              _id:1,
+              planId:1,
+              expertId:1,
+              userId:1,
+              validFrom:1,
+              validTill:1,
+              expert:{
+                name:1,
+                email:1,
+                mobile:1,
+                dob:1,
+                gender:1,
+                expertisedIn:1,
+                experience:1,
+                profilePic:1,
+              },
+              user:{
+                name:1,
+                email:1,
+                mobile:1,
+                pet:1,
+                profileImage:1,
+              },
+              plan:{
+                planName:1,
+                validity:1,
+                currentPrice:1,
+                dietPlan:1,
+                expertAvailability:1,
+                numberOfCheckup:1,
+                tipAvailabilty:1,
+              }
+            }
+          }
+        ]).toArray()
+        // console.log(data);
+        resolve(data)
+      } catch (error) {
+        reject()
+      }
+    })
+  }
 };

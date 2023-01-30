@@ -25,5 +25,8 @@ router.get('/api/getAllClients/:id',auth.expertVerifiedAuth,expertController.get
 router.get('/api/getClientDetails/:id',auth.expertVerifiedAuth,expertController.getClientDetails)
 router.post('/api/sendMessage/:id',auth.expertVerifiedAuth,expertController.sendMessage)
 router.get('/api/getAllMessages/:id',auth.expertVerifiedAuth,expertController.getAllMessages)
+router.get('/api/getClientsCount/:id',auth.expertVerifiedAuth,expertController.getClientsCount)
+router.get('/api/getExpertEditDetails/:id',auth.expertVerifiedAuth,expertController.getExpertEditDetails)
+router.post('/api/updateExpertProfile',auth.expertVerifiedAuth,expertController.updateExpertProfile)
 
 module.exports=router;

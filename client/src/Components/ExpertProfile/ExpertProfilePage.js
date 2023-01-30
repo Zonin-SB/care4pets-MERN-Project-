@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getExpertDetails, getVideosCount } from '../../Axios/Services/ExpertServices';
+import { getClientsCount, getExpertDetails, getVideosCount } from '../../Axios/Services/ExpertServices';
 import expertProfile from '../../images/proImg.jpg';
 import expertVerified from '../../images/verifiedExpert.png'
 import notification from '../../images/notification.png'
@@ -9,6 +9,7 @@ import notification from '../../images/notification.png'
 function ExpertProfilePage() {
   const [expertDetails, setExpertDetails] = useState([]);
   const [videoCount, setVideoCount] = useState('');
+  const [clientCount,setClientCount]=useState('')
   const navigate=useNavigate();
   const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   useEffect(() => {
@@ -16,6 +17,7 @@ function ExpertProfilePage() {
 
     fetchData();
     fetchVideoCount();
+    fetchClientCount();
 
     async function fetchData() {
       const data = await getExpertDetails(token, expertId);
@@ -26,6 +28,11 @@ function ExpertProfilePage() {
     async function fetchVideoCount(){
       const data=await getVideosCount(token,expertId)
       setVideoCount(data.videoCount)
+    }
+
+    async function fetchClientCount(){
+      const data=await getClientsCount(token,expertId)
+      setClientCount(data.clientCount)
     }
   }, [expertId]);
   
@@ -121,7 +128,7 @@ function ExpertProfilePage() {
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
                           <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                            22
+                            {clientCount?clientCount:0}
                           </span>
                           <span className="text-sm text-blueGray-400">
                             Clients
@@ -150,30 +157,30 @@ function ExpertProfilePage() {
                   </div>
                   <div className="text-center mt-12">
                     <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
-                      {expertDetails.name}
+                      {expertDetails?expertDetails.name:''}
                     </h3>
                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    Expert : {expertDetails.expertisedIn} 
+                    Expert : {expertDetails?expertDetails.expertisedIn:''} 
                     </div>
                     <div className="mb-2 text-blueGray-600 mt-10">
                       {/* <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" /> */}
-                      Email : {expertDetails.email}
+                      Email : {expertDetails?expertDetails.email:''}
                     </div>
                     <div className="mb-2 text-blueGray-600">
                       {/* <i className="fas fa-university mr-2 text-lg text-blueGray-400" /> */}
-                      Mobile : {expertDetails.mobile}
+                      Mobile : {expertDetails?expertDetails.mobile:''}
                     </div>
                     <div className="mb-2 text-blueGray-600">
                       {/* <i className="fas fa-university mr-2 text-lg text-blueGray-400" /> */}
-                      Experience : {expertDetails.experience}
+                      Experience : {expertDetails?expertDetails.experience:''}
                     </div>
                     <div className="mb-2 text-blueGray-600">
                       {/* <i className="fas fa-university mr-2 text-lg text-blueGray-400" /> */}
-                      DOB : {expertDetails.dob}
+                      DOB : {expertDetails?expertDetails.dob:''}
                     </div>
                     <div className="mb-2 text-blueGray-600">
                       {/* <i className="fas fa-university mr-2 text-lg text-blueGray-400" /> */}
-                      Gender : {expertDetails.gender}
+                      Gender : {expertDetails?expertDetails.gender:''}
                     </div>
                     
                   </div>
@@ -181,6 +188,7 @@ function ExpertProfilePage() {
                     <div className="flex flex-wrap justify-center">
                       <div className="w-full lg:w-9/12 px-4">
                         <button
+                        onClick={()=>navigate(`/expertEditProfile/${expertDetails._id}`)}
                           className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                           type="button"
                         >

@@ -109,7 +109,7 @@ const expertAccepted = (req, res) => {
 const expertVideoUpload = (req, res) => {
   const ytUrl = req.body.link;
   req.body.link = ytUrl.replace('/watch?v=', '/embed/');
-req.body.expertId=ObjectId(req.body.expertId)
+  req.body.expertId = ObjectId(req.body.expertId);
   expertUtilities
     .expertVideoUpload(req.body)
     .then(() => {
@@ -178,72 +178,93 @@ const getRejectedVideoCount = (req, res) => {
       console.log(err);
     });
 };
-const getRejectedVideos=(req,res)=>{
+const getRejectedVideos = (req, res) => {
   const id = req.params.id;
-  expertUtilities.getRejectedVideos(id).then((response)=>{
-    res.json({ status: 'ok', videos: response });
-  }).catch(()=>{
-    console.log(err);
-  })
-}
+  expertUtilities
+    .getRejectedVideos(id)
+    .then((response) => {
+      res.json({ status: 'ok', videos: response });
+    })
+    .catch(() => {
+      console.log(err);
+    });
+};
 
-const getRejectedVideoDetails=(req,res)=>{
+const getRejectedVideoDetails = (req, res) => {
   const id = req.params.id;
-  expertUtilities.getRejectedVideoDetails(id).then((response)=>{
-    res.json({ status: 'ok', videoDetails: response });
-  }).catch(()=>{
-    console.log(err);
-  })
-}
+  expertUtilities
+    .getRejectedVideoDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', videoDetails: response });
+    })
+    .catch(() => {
+      console.log(err);
+    });
+};
 
-const expertVideoRejected=(req,res)=>{
+const expertVideoRejected = (req, res) => {
   const id = req.params.id;
-  expertUtilities.expertVideoRejected(id).then(()=>{
-    res.json({ status: 'ok' });
-  }).catch(()=>{
-    res.json({ status: 'error' });
-  })
-}
+  expertUtilities
+    .expertVideoRejected(id)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
-const getVideosCount=(req,res)=>{
+const getVideosCount = (req, res) => {
   const id = req.params.id;
-  expertUtilities.getVideosCount(id).then((response)=>{
-    res.json({ status: 'ok', videoCount: response });
-  }).catch((err)=>{
-    console.log(err);
-  })
-}
+  expertUtilities
+    .getVideosCount(id)
+    .then((response) => {
+      res.json({ status: 'ok', videoCount: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-const getAllClients=(req,res)=>{
+const getAllClients = (req, res) => {
   const id = req.params.id;
-  expertUtilities.getAllClients(id).then((response)=>{
-    res.json({ status: true, clients: response });
-  }).catch(()=>{
-    res.json({ status: false});
-  })
-}
+  expertUtilities
+    .getAllClients(id)
+    .then((response) => {
+      res.json({ status: true, clients: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
-const getClientDetails=(req,res)=>{
+const getClientDetails = (req, res) => {
   const id = req.params.id;
-  expertUtilities.getClientDetails(id).then((response)=>{
-    res.json({ status: true, client: response });
-  }).catch(()=>{
-    res.json({ status: false});
-  })
-}
+  expertUtilities
+    .getClientDetails(id)
+    .then((response) => {
+      res.json({ status: true, client: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
-const sendMessage=(req,res)=>{
-  const to =req.params.id
-  const message=req.body;
-  const from=req.user._id;
- commonUtilities.sendMessage(to,from,message).then(()=>{
-  res.json({ status: true, message: 'success' })
- }).catch((err)=>{
-  res.json({ status: false, message: err })
- })
-}
+const sendMessage = (req, res) => {
+  const to = req.params.id;
+  const message = req.body;
+  const from = req.user._id;
+  commonUtilities
+    .sendMessage(to, from, message)
+    .then(() => {
+      res.json({ status: true, message: 'success' });
+    })
+    .catch((err) => {
+      res.json({ status: false, message: err });
+    });
+};
 
-const getAllMessages=(req,res)=>{
+const getAllMessages = (req, res) => {
   const to = req.params.id;
   const from = req.user._id;
   commonUtilities
@@ -259,7 +280,42 @@ const getAllMessages=(req,res)=>{
     .catch(() => {
       res.json({ status: false });
     });
-}
+};
+
+const getClientsCount = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getClientsCount(id)
+    .then((response) => {
+      res.json({ status: 'ok', clientCount: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const getExpertEditDetails = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getExpertEditDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', expertDetails: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const updateExpertProfile = (req, res) => {
+  expertUtilities
+    .updateExpertProfile(req.body)
+    .then(() => {
+      return res.json({ status: 'ok' });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 module.exports = {
   expertSignup,
@@ -283,4 +339,7 @@ module.exports = {
   getClientDetails,
   sendMessage,
   getAllMessages,
+  getClientsCount,
+  getExpertEditDetails,
+  updateExpertProfile,
 };

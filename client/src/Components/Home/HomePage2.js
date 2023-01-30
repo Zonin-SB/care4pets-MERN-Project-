@@ -60,7 +60,7 @@ function HomePage2() {
                   className="relative mx-auto w-full flex-none  md:w-1/3  md:pb-4 border rounded-lg"
                 >
                   <div className="relative inline-block duration-300 ease-in-out transition-transform transform hover:-translate-y-2 w-full">
-                    <div className="shadow p-4 rounded-lg bg-white">
+                    <div className="shadow p-4 rounded-lg bg-violet-300">
                       <div className="flex justify-center relative rounded-lg overflow-hidden h-52">
                         <div>
                           {/* <div className="absolute inset-0 bg-black opacity-10 " /> */}

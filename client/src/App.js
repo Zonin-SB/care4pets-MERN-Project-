@@ -24,6 +24,7 @@ import {
   AdminVideoApprovalDetails,
   AdminVideoApprovalList,
   AdminViewPayment,
+  AdminViewPaymentDetails,
   AdminViewPlans,
   BuyPlan,
   BuyPlanSuccess,
@@ -33,6 +34,7 @@ import {
   ExpertApplyForm,
   ExpertChat,
   ExpertClientView,
+  ExpertEditProfile,
   ExpertEditVideo,
   ExpertHome,
   ExpertLogin,
@@ -111,6 +113,7 @@ function App() {
           <Route path="/adminEditVideo/:id" element={<AdminEditVideo />} />
           <Route path="/adminRejectVideo/:id" element={<AdminRejectVideo />} />
           <Route path="/adminViewPayment" element={<AdminViewPayment />} />
+          <Route path="/adminViewPaymentDetails/:id" element={<AdminViewPaymentDetails />} />
         </Route>
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
@@ -133,6 +136,7 @@ function App() {
           <Route path="/expertEditVideo/:id" element={<ExpertEditVideo />} />
           <Route path="/expertClientView" element={<ExpertClientView />} />
           <Route path="/expertChat/:id" element={<ExpertChat />} />
+          <Route path="/expertEditProfile/:id" element={<ExpertEditProfile />} />
           <Route
             path="/expertRejectedVideos"
             element={<ExpertRejectedVideoList />}

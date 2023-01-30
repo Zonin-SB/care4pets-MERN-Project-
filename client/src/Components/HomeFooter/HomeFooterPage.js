@@ -15,24 +15,24 @@ function HomeFooterPage() {
         </div>
         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
-                <h2 class="mb-6 text-sm font-semibold uppercase text-white">Resources</h2>
+                <h2 class="mb-6 text-sm font-semibold uppercase text-white">Quick Links</h2>
                 <ul class="text-gray-400">
                     <li class="mb-4">
-                        <p class="hover:underline">Flowbite</p>
+                        <p class="hover:underline">Home</p>
                     </li>
                     <li>
-                        <p class="hover:underline">Tailwind CSS</p>
+                        <p class="hover:underline">About us</p>
                     </li>
                 </ul>
             </div>
             <div>
-                <h2 class="mb-6 text-sm font-semibold  uppercase text-white">Follow us</h2>
+                <h2 class="mb-6 text-sm font-semibold  uppercase text-white">Support</h2>
                 <ul class="text-gray-400">
                     <li class="mb-4">
-                        <p class="hover:underline ">Github</p>
+                        <p class="hover:underline ">Feedback</p>
                     </li>
                     <li>
-                        <p class="hover:underline">Discord</p>
+                        <p class="hover:underline">Report</p>
                     </li>
                 </ul>
             </div>
@@ -51,7 +51,7 @@ function HomeFooterPage() {
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto  lg:my-8" />
     <div class="sm:flex sm:items-center sm:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center ">© 2022 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+        <span class="text-sm text-gray-500 sm:text-center ">© 2022 <p  class="hover:underline">care4pets™</p>. All Rights Reserved.
         </span>
         <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <p class="text-gray-500 hover:text-white">

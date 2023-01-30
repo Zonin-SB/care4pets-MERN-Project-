@@ -414,3 +414,63 @@ export const getAllMessages = async (token, id) => {
     return error;
   }
 };
+
+export const getClientsCount=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getClientsCount/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getExpertEditProfileDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getExpertEditDetails/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const updateExpertProfile = async (token, values) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosExpertInstance.post(
+    '/updateExpertProfile',
+    values,
+    config
+  );
+  if (data.status) {
+    return data;
+  }
+};

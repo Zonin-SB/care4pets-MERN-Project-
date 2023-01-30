@@ -1,51 +1,59 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-// import { userAllDetails } from '../../redux/adminReducer';
-import { userEditProfileSchema } from '../../Validation/Validation';
-import { useFormik } from 'formik';
-import { updateUserProfile } from '../../Axios/Services/UserServices';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { getExpertEditProfileDetails, updateExpertProfile } from '../../Axios/Services/ExpertServices';
+import { expertEditProfileSchema } from '../../Validation/Validation';
 
-function UserEditProfilePage() {
-  const navigate=useNavigate()
-  const [error,setError]=useState('')
- 
-  const { userAllDetails } = useSelector((state) => state.admin);
-  const token = useSelector((state) => state.admin.userToken);
+function ExpertEditProfilePage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [expertDetails, setExpertDetails] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchDetails();
+
+    async function fetchDetails() {
+      const token = localStorage.getItem('expertToken');
+      const data = await getExpertEditProfileDetails(token, id);
+      setExpertDetails(data.expertDetails[0]);
+    }
+  }, [id]);
+  
 
   const initialValues = {
-    id:userAllDetails._id,
-    name: userAllDetails.name,
-    email: userAllDetails.email,
-    mobile: userAllDetails.mobile,
-    pet:userAllDetails.pet,
+    id: id,
+    name: expertDetails.name,
+    mobile: expertDetails.mobile,
+    gender: expertDetails.gender,
+    expertisedIn: expertDetails.expertisedIn,
+    experience: expertDetails.experience,
+    dob: expertDetails.dob,
   };
 
-
-
   const onSubmit = async (values, action) => {
-    const data = await updateUserProfile(token, values);
-   if(data.status==='ok'){
-    navigate('/userProfile')
-   }else{
-    setError('Update Failed,try again after some time.')
-   }
-   
+    const token=localStorage.getItem('expertToken')
+        const data = await updateExpertProfile(token, values);
+       if(data.status==='ok'){
+        navigate('/expertProfile')
+       }else{
+        setError('Update Failed,try again after some time.')
+       }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: userEditProfileSchema,
+      validationSchema: expertEditProfileSchema,
       onSubmit,
+      enableReinitialize: true,
     });
- 
-
   return (
     <div>
       <>
         {/* component */}
-        <div className="h-screen flex justify-center">
+        <div className="h-screen flex justify-center mt-9">
           <div className="flex justify-center items-center bg-white">
             <form className="bg-white" onSubmit={handleSubmit}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
@@ -54,7 +62,13 @@ function UserEditProfilePage() {
               <p className="text-sm font-normal text-gray-600 mb-7">
                 Welcome Back
               </p>
-              {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+              {error ? (
+                <p style={{ color: 'red' }} className="text-center">
+                  {error}
+                </p>
+              ) : (
+                ''
+              )}
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -111,30 +125,38 @@ function UserEditProfilePage() {
                 <p className="red-error">{errors.mobile}</p>
               )}
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                  />
-                </svg>
+                
+
                 <input
                   className="pl-2 outline-none border-none"
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={values.email}
+                  id="experience"
+                  type="experience"
+                  name="experience"
+                  value={values.experience}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
               </div>
+              {errors.experience && touched.experience && (
+                <p className="red-error">{errors.experience}</p>
+              )}
+
+              <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+             
+
+                <input
+                  className="pl-2 outline-none border-none"
+                  id="dob"
+                  type="date"
+                  name="dob"
+                  value={values.dob}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+              {errors.dob && touched.dob && (
+                <p className="red-error">{errors.dob}</p>
+              )}
 
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
@@ -143,23 +165,49 @@ function UserEditProfilePage() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                ></svg>
+                <select
+                  name="gender"
+                  id="gender"
+                  value={values.gender}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
-                </svg>
-                <select name='pet' id='pet' value={values.pet} onChange={handleChange} onBlur={handleBlur}  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                
-                    <option  value='Dog' >Dog</option>
-                    <option value='Cat'>Cat</option>
-                    <option value='Exotic-birds'>Exotic birds</option>
-                   
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              {errors.gender && touched.gender && (
+                <p className="red-error">{errors.gender}</p>
+              )}
+
+              <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                ></svg>
+                <select
+                  name="pet"
+                  id="pet"
+                  value={values.pet}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                >
+                  <option value="Dog">Dog</option>
+                  <option value="Cat">Cat</option>
+                  <option value="Exotic-birds">Exotic birds</option>
                 </select>
               </div>
               {errors.pet && touched.pet && (
                 <p className="red-error">{errors.pet}</p>
               )}
 
-
-             
               <button
                 type="submit"
                 className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
@@ -174,4 +222,4 @@ function UserEditProfilePage() {
   );
 }
 
-export default UserEditProfilePage;
+export default ExpertEditProfilePage;

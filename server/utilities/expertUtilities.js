@@ -472,5 +472,82 @@ module.exports = {
     });
   },
 
+  getClientsCount:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const count = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .countDocuments({
+            expertId:ObjectId(id)
+          });
+
+        resolve(count);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getExpertEditDetails:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match:{
+                _id:ObjectId(id)
+              }
+            },{
+              $project:{
+                _id:1,
+                name:1,
+                mobile:1,
+                dob:1,
+                gender:1,
+                expertisedIn:1,
+                experience:1,
+              }
+            }
+          ]).toArray()
+
+        resolve(data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  updateExpertProfile:(data)=>{
+ 
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(data.id) },
+            {
+              $set: {
+                name: data.name,
+                gender: data.gender,
+                mobile: data.mobile,
+                expertisedIn: data.expertisedIn,
+                experience: data.experience,
+                dob: data.dob,
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject();
+      }
+    });
+  }
+
  
 };

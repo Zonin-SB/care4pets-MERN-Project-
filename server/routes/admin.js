@@ -34,6 +34,8 @@ router.get('/api/getVideoApprovalCount',auth.adminAuth,adminController.getVideoA
 router.get('/api/getEditVideoDetails/:id',auth.adminAuth,adminController.getEditVideoDetails)
 router.post('/api/adminEditVideo',auth.adminAuth,adminController.adminEditVideo)
 router.post('/api/adminRejectVideo',auth.adminAuth,adminController.adminRejectVideo)
+router.get('/api/getPaymentDetails',auth.adminAuth,adminController.getPaymentDetails)
+router.get('/api/getPaymentAllDetails/:id',auth.adminAuth,adminController.getPaymentAllDetails)
 
 
 module.exports=router;

@@ -464,19 +464,59 @@ export const adminEditVideo = async (token, values) => {
 };
 
 export const adminRejectVideo = async (token, values) => {
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-  };
-  const { data } = await axiosAdminInstance.post(
-    '/adminRejectVideo',
-    values,
-    config
-  );
-  if (data.status) {
-    return data;
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.post(
+      '/adminRejectVideo',
+      values,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
+
+export const getPaymentDetails = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get('/getPaymentDetails', config);
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPaymentAllDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(`/getPaymentAllDetails/${id}`, config);
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

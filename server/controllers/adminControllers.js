@@ -331,6 +331,26 @@ const adminRejectVideo = (req, res) => {
     });
 };
 
+const getPaymentDetails=(req,res)=>{
+  adminUtilities
+    .getPaymentDetails()
+    .then((response) => {
+      res.json({ status: 'ok',details:response });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+}
+
+const getPaymentAllDetails=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.getPaymentAllDetails(id).then((response)=>{
+    res.json({ status: 'ok',details:response });
+  }).catch(()=>{
+    res.json({ status: 'error' });
+  })
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -349,7 +369,6 @@ module.exports = {
   getExpertsCount,
   getPendingApprovalDetails,
   getExpertAllDetails,
-  // approveExpert,
   rejectExpert,
   acceptExpert,
   getVideoApprovalList,
@@ -361,4 +380,6 @@ module.exports = {
   getEditVideoDetails,
   adminEditVideo,
   adminRejectVideo,
+  getPaymentDetails,
+  getPaymentAllDetails,
 };
