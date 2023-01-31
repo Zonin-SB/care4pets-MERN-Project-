@@ -31,6 +31,34 @@ export const userLogin = async (values) => {
   }
 };
 
+export const sendverificationOTP=async(values)=>{
+  
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosUserInstance.post('/userSendOTP', values, config);
+
+  if (data) {
+    return data;
+  }
+
+}
+
+export const verifyOTP=async(values)=>{
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosUserInstance.post('/verifyOTP', values, config);
+
+  if (data) {
+    return data;
+  }
+}
+
 export const getUserDetails = async (token, id) => {
   const config = {
     headers: {
@@ -366,5 +394,29 @@ export const getExperts=async()=>{
   const { data } = await axiosUserInstance.get('/getExperts', config);
   if (data.status) {
     return data;
+  }
+}
+
+export const checkUserPlan=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axiosUserInstance.get(
+      `/checkUserPlan/${id}`,
+
+      config
+    );
+    console.log(data);
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
   }
 }

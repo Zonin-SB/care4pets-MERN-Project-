@@ -38,6 +38,7 @@ import {
   ExpertEditVideo,
   ExpertHome,
   ExpertLogin,
+  ExpertOTPLogin,
   ExpertProfile,
   ExpertRejectedReason,
   ExpertRejectedVideoDetailedViewPage,
@@ -50,6 +51,7 @@ import {
   UserEditProfilePic,
   UserHome,
   UserLogin,
+  UserOTPLogin,
   UserProfile,
   UserSelectExpert,
   UserSignup,
@@ -66,6 +68,7 @@ function App() {
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userSignup" element={<UserSignup />} />
         <Route path="/userHome" element={<UserHome />} />
+        <Route path="/userOTPLogin" element={<UserOTPLogin />} />
         <Route element={<UserProtectorRoute />}>
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/userEditProfile" element={<UserEditProfile />} />
@@ -119,6 +122,7 @@ function App() {
         <Route path="/expertLogin" element={<ExpertLogin />} />
         <Route path="/expertSignup" element={<ExpertSignup />} />
         <Route path="/expertHome" element={<ExpertHome />} />
+        <Route path="/expertOTPLogin" element={<ExpertOTPLogin />} />
 
         <Route element={<ExpertProtectorRoute />}>
           <Route path="/expertProfile" element={<ExpertProfile />} />

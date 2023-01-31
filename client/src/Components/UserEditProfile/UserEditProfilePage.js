@@ -11,7 +11,7 @@ function UserEditProfilePage() {
   const [error,setError]=useState('')
  
   const { userAllDetails } = useSelector((state) => state.admin);
-  const token = useSelector((state) => state.admin.userToken);
+  // const token = useSelector((state) => state.admin.userToken);
 
   const initialValues = {
     id:userAllDetails._id,
@@ -24,6 +24,7 @@ function UserEditProfilePage() {
 
 
   const onSubmit = async (values, action) => {
+    const token=localStorage.getItem('userToken')
     const data = await updateUserProfile(token, values);
    if(data.status==='ok'){
     navigate('/userProfile')

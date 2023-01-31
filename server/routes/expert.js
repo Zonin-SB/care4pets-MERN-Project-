@@ -6,6 +6,8 @@ const auth=require('../middlewares/tokenAuth')
 
 router.post('/api/expertSignup',expertController.expertSignup)
 router.post('/api/expertLogin',expertController.expertLogin)
+router.post('/api/expertSendOTP',expertController.expertSendOTP)
+router.post('/api/verifyOTP',expertController.verifyOTP)
 router.post('/api/uploadDocuments',expertController.uploadDocuments)
 router.post('/api/expertApplyVerification',auth.expertNotverifiedAuth,expertController.expertApplyVerification)
 router.get('/api/getExpertDetails/:id',auth.expertNotverifiedAuth,expertController.getExpertDetails)

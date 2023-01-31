@@ -5,6 +5,7 @@ const { ObjectId } = require('mongodb');
 const { cloudinary } = require('../middlewares/cloudinary');
 const Stripe = require('stripe');
 const { response } = require('express');
+const { SendOTP, } = require('../middlewares/sendEmail');
 
 const stripe = Stripe(process.env.STRIPE_KEY);
 
@@ -62,6 +63,8 @@ module.exports = {
       }
     });
   },
+
+  
 
   findUserById: (userId) => {
     return new Promise(async (resolve, reject) => {
@@ -136,13 +139,13 @@ module.exports = {
                 name: 1,
                 profilePic: 1,
                 expertisedIn: 1,
-                experience:1,
-                expertFrom:1,
+                experience: 1,
+                expertFrom: 1,
               },
             },
           ])
           .toArray();
-        
+
         resolve(experts);
       } catch (error) {
         console.log(error);
@@ -560,4 +563,86 @@ module.exports = {
       }
     });
   },
+
+  sendOTP: (data) => {
+    
+   return new Promise(async (resolve, reject) => {
+      const user = await db
+        .get()
+        .collection(collection.USER_COLLECTION)
+        .findOne({ email: data.Email });
+      if (user) {
+        if (user.blocked) {
+          const err = 'This account is blocked...';
+          reject(err);
+        } else {
+          try {
+            const { name } = user;
+            const { email } = user;
+            const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+            const hashotp = await bcrypt.hash(otp, 10);
+            db.get()
+              .collection(collection.USER_COLLECTION)
+              .updateOne(
+                {
+                  _id: user._id,
+                },
+                {
+                  $set: {
+                    otp: hashotp,
+                  },
+                }
+              )
+              .then((response) => {
+             
+                SendOTP(otp, email, name).then((data) => {
+                  resolve({ status: true });
+                });
+              });
+          } catch (error) {
+            reject(error);
+          }
+        }
+      } else {
+        const err = 'User not found..';
+        reject(err);
+      }
+    });
+  },
+
+  verifyOTP:(data)=>{
+    return new Promise(async(resolve,reject)=>{
+      
+      const response={}
+      const user=await db.get().collection(collection.USER_COLLECTION).findOne({email:data.Email})
+      if (user) {
+        bcrypt.compare(data.OTP, user.otp).then((status) => {
+          if (status) {
+            response.user = user;
+            response.status = true;
+            resolve(response);
+          } else {
+            resolve({ status: false });
+          }
+        });
+      } else {
+        resolve({ status: false });
+      }
+    })
+  },
+
+  checkUserPlan:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+       const user= await db.get().collection(collection.PURCHASE_COLLECTION).findOne({userId:ObjectId(id)})
+       if(user){
+        resolve({ status: true })
+       }else{
+        resolve({ status: false });
+       }
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
 };

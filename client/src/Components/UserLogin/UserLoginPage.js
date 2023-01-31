@@ -13,6 +13,7 @@ const initialValues = {
   password: '',
 };
 
+
 function UserLoginPage() {
   const dispatch=useDispatch()
 	const [error,setError]=useState('')
@@ -107,6 +108,7 @@ if(response.blocked){
                     <br />
 					
                   </div>
+                  <div>
                   <div className="mb-6 text-center">
                     <button
                       className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
@@ -115,6 +117,18 @@ if(response.blocked){
                       Login
                     </button>
                   </div>
+                     <h1 className='font-bold text-center mb-2'>OR</h1>
+                  <div className="mb-6 text-center">
+                   <Link to={'/userOTPLogin'}> <button
+                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >
+                      Login with OTP
+                    </button></Link>
+                  </div>
+                  </div>
+           
+                  
                   <hr className="mb-6 border-t" />
                   <div className="text-center">
                     <p className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">

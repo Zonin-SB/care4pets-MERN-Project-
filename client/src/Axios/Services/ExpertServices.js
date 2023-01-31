@@ -37,6 +37,36 @@ export const expertLogin = async (values) => {
   }
 };
 
+export const sendverificationOTP = async (values) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosExpertInstance.post(
+    '/expertSendOTP',
+    values,
+    config
+  );
+
+  if (data) {
+    return data;
+  }
+};
+
+export const verifyOTP = async (values) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosExpertInstance.post('/verifyOTP', values, config);
+
+  if (data) {
+    return data;
+  }
+};
+
 export const uploadDocuments = async (values) => {
   const { data } = await axiosExpertInstance.post('/uploadDocuments', {
     data: values,
@@ -415,7 +445,7 @@ export const getAllMessages = async (token, id) => {
   }
 };
 
-export const getClientsCount=async(token,id)=>{
+export const getClientsCount = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -434,9 +464,9 @@ export const getClientsCount=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getExpertEditProfileDetails=async(token,id)=>{
+export const getExpertEditProfileDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -455,7 +485,7 @@ export const getExpertEditProfileDetails=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const updateExpertProfile = async (token, values) => {
   const config = {

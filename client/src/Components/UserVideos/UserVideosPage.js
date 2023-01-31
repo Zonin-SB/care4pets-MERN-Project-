@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getFreeVideos, getPlanVideos } from '../../Axios/Services/UserServices';
+import { checkUserPlan, getFreeVideos, getPlanVideos } from '../../Axios/Services/UserServices';
 import './UserVideosPage.css'
 
 function UserVideosPage() {
   const userId = useSelector((state) => state.admin.userDetails.userId);
   const [videos, setVideos] = useState([]);
   const [planVideos,setPlanVideos]=useState([]);
+  const [plan,setPlan]=useState('')
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchFreeVideos();
     fetchPlanVideos();
+    fetchPlan()
 
     async function fetchFreeVideos() {
       const token = localStorage.getItem('userToken');
       const data = await getFreeVideos(token, userId);
       setVideos(data.freeVideos);
+    }
+
+    async function fetchPlan(){
+      const token = localStorage.getItem('userToken');
+      const data=await checkUserPlan(token,userId)
+      
+      setPlan(data.plan)
     }
 
     async function fetchPlanVideos(){
@@ -29,6 +38,8 @@ function UserVideosPage() {
 
   return (
     <div>
+
+      {plan?
 
 <div>
       <h1 className="font-semibold text-2xl p-6 mt-4">Videos</h1>
@@ -88,7 +99,7 @@ function UserVideosPage() {
           : 'No videos Found'}
       </div>
     </div>
-
+:''}
 
 
 

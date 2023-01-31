@@ -83,13 +83,16 @@ const viewAllPlan = (req, res) => {
     });
 };
 
-const getExperts=(req,res)=>{
-  userUtilities.getExperts().then((details)=>{
-    res.json({ status: 'ok', experts: details });
-  }).catch(()=>{
-    console.log(err);
-  })
-}
+const getExperts = (req, res) => {
+  userUtilities
+    .getExperts()
+    .then((details) => {
+      res.json({ status: 'ok', experts: details });
+    })
+    .catch(() => {
+      console.log(err);
+    });
+};
 
 const uploadProfilePic = (req, res) => {
   const fileStr = req.body.data;
@@ -309,6 +312,50 @@ const getAllMessages = (req, res) => {
     });
 };
 
+const userSendOTP = (req, res) => {
+  userUtilities
+    .sendOTP(req.body)
+    .then(() => {
+      res.json({ status: true });
+    })
+    .catch((err) => {
+      res.json({ status: false, message: err });
+    });
+};
+
+const verifyOTP = (req, res) => {
+  userUtilities.verifyOTP(req.body).then((response) => {
+    if (response.status) {
+      const token = jwt.sign(
+        {
+          userId: response.user._id,
+          name: response.user.name,
+          email: response.user.email,
+          pet: response.user.pet,
+        },
+        process.env.JWT_SECRET_KEY
+      );
+      return res.json({ status: 'ok', user: token });
+    }
+    return res.json({ status: false, user: false });
+  });
+};
+
+const checkUserPlan = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .checkUserPlan(id)
+    .then((response) => {
+     
+      if (response.status) {
+        res.json({ status: true, plan: true });
+      } 
+    })
+    .catch(() => {
+      res.json({ status: false, plan: false });
+    });
+};
+
 module.exports = {
   userSignup,
   userLogin,
@@ -330,4 +377,7 @@ module.exports = {
   sendMessage,
   getAllMessages,
   getExperts,
+  userSendOTP,
+  verifyOTP,
+  checkUserPlan,
 };

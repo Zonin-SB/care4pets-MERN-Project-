@@ -4,6 +4,7 @@ const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
 const { cloudinary } = require('../middlewares/cloudinary');
 const { response } = require('express');
+const { SendOTP, } = require('../middlewares/sendEmail');
 
 module.exports = {
   doExpertSignup: (data) => {
@@ -547,7 +548,75 @@ module.exports = {
         reject();
       }
     });
-  }
+  },
+
+  sendOTP: (data) => {
+   
+    return new Promise(async (resolve, reject) => {
+       const expert = await db
+         .get()
+         .collection(collection.EXPERT_COLLECTION)
+         .findOne({ email: data.Email });
+        
+       if (expert) {
+         if (expert.blocked) {
+           const err = 'This account is blocked...';
+           reject(err);
+         } else {
+           try {
+             const { name } = expert;
+             const { email } = expert;
+             const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+             const hashotp = await bcrypt.hash(otp, 10);
+             db.get()
+               .collection(collection.EXPERT_COLLECTION)
+               .updateOne(
+                 {
+                   _id: expert._id,
+                 },
+                 {
+                   $set: {
+                     otp: hashotp,
+                   },
+                 }
+               )
+               .then((response) => {
+              
+                 SendOTP(otp, email, name).then((data) => {
+                   resolve({ status: true });
+                 });
+               });
+           } catch (error) {
+             reject(error);
+           }
+         }
+       } else {
+         const err = 'User not found..';
+         reject(err);
+       }
+     });
+   },
+
+   verifyOTP:(data)=>{
+    return new Promise(async(resolve,reject)=>{
+      
+      const response={}
+      const expert=await db.get().collection(collection.EXPERT_COLLECTION).findOne({email:data.Email})
+      if (expert) {
+        bcrypt.compare(data.OTP, expert.otp).then((status) => {
+          if (status) {
+            response.expert = expert;
+            response.status = true;
+            resolve(response);
+          } else {
+            resolve({ status: false });
+          }
+        });
+      } else {
+        resolve({ status: false });
+      }
+    })
+  },
 
  
 };
