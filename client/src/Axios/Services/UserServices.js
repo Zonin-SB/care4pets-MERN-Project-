@@ -31,8 +31,7 @@ export const userLogin = async (values) => {
   }
 };
 
-export const sendverificationOTP=async(values)=>{
-  
+export const sendverificationOTP = async (values) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -43,10 +42,9 @@ export const sendverificationOTP=async(values)=>{
   if (data) {
     return data;
   }
+};
 
-}
-
-export const verifyOTP=async(values)=>{
+export const verifyOTP = async (values) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +55,7 @@ export const verifyOTP=async(values)=>{
   if (data) {
     return data;
   }
-}
+};
 
 export const getUserDetails = async (token, id) => {
   const config = {
@@ -375,7 +373,7 @@ export const getAllMessages = async (token, id) => {
 
       config
     );
-
+    // console.log(data)
     if (data.status) {
       return data;
     }
@@ -385,7 +383,7 @@ export const getAllMessages = async (token, id) => {
   }
 };
 
-export const getExperts=async()=>{
+export const getExperts = async () => {
   const config = {
     headers: {
       'content-type': 'application/json',
@@ -395,9 +393,9 @@ export const getExperts=async()=>{
   if (data.status) {
     return data;
   }
-}
+};
 
-export const checkUserPlan=async(token,id)=>{
+export const checkUserPlan = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -409,6 +407,52 @@ export const checkUserPlan=async(token,id)=>{
     const { data } = await axiosUserInstance.get(
       `/checkUserPlan/${id}`,
 
+      config
+    );
+    console.log(data);
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getUserHomePlan=async(id)=>{
+  try {
+    const config = {
+      headers: {
+        
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getUserHomePlan/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const sendFeedback=async(token,values)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axiosUserInstance.post(
+      '/sendFeedback',
+values,
       config
     );
     console.log(data);

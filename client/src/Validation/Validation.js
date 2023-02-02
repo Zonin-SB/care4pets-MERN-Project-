@@ -170,3 +170,12 @@ export const expertEditProfileSchema = Yup.object({
     .matches(numberonly, 'Please enter valid experience')
     .required('This field is required'),
 });
+
+export const userFeedbackSchema=Yup.object({
+  name: Yup.string()
+    .min(2, 'Name must be atleast 2 characters')
+    .max(15)
+    .required('This field is required'),
+    feedback:Yup.string().required('This field is required').max(35,'limit exceeded'),
+    message: Yup.string().required('This field is required').max(100,'limit exceeded'),
+})

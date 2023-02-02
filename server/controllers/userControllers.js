@@ -356,6 +356,16 @@ const checkUserPlan = (req, res) => {
     });
 };
 
+const sendFeedback=(req,res)=>{
+  const data=req.body
+  userUtilities.sendFeedback(data).then(()=>{
+    res.json({ status: 'ok'});
+  }).catch(()=>{
+    res.json({ status: false });
+  })
+
+}
+
 module.exports = {
   userSignup,
   userLogin,
@@ -380,4 +390,5 @@ module.exports = {
   userSendOTP,
   verifyOTP,
   checkUserPlan,
+  sendFeedback,
 };

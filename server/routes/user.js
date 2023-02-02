@@ -13,7 +13,6 @@ router.post('/api/updateUserProfile',auth.userAuth,userController.updateUserProf
 router.post('/api/uploadUserProfilePic',userController.uploadProfilePic)
 router.post('/api/userProfilePicUpdate',auth.userAuth,userController.userProfilePicUpdate)
 router.get('/api/getUsersExpert/:id',auth.userAuth,userController.getUsersExpert)
-// router.post('/api/selectExpert',auth.userAuth,userController.selectExpert)
 router.get('/api/selectExpert/:id',auth.userAuth,userController.selectExpert)
 router.get('/api/selectPlan/:id',auth.userAuth,userController.selectPlan)
 router.post('/api/create-checkout-session',auth.userAuth,userController.buyPlan)
@@ -26,9 +25,11 @@ router.get('/api/getYourExpertDetails/:id',auth.userAuth,userController.getYourE
 router.post('/api/sendMessage/:id',auth.userAuth,userController.sendMessage)
 router.get('/api/getAllMessages/:id',auth.userAuth,userController.getAllMessages)
 router.get('/api/checkUserPlan/:id',auth.userAuth,userController.checkUserPlan)
+router.post('/api/sendFeedback',auth.userAuth,userController.sendFeedback)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
 router.get('/api/getExperts',userController.getExperts)
+router.get('/api/getUserHomePlan/:id',userController.getPlanDetails)
 
 
 module.exports=router;

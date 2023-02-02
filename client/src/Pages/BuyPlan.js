@@ -1,11 +1,18 @@
 import React from 'react'
-import { BuyPlanPage, UserHomeNavPage } from '../Components'
-
+import { BuyPlanPage, UserHomeNavPage,UserViewPlanPage } from '../Components'
+import { useSelector } from 'react-redux';
 function BuyPlan() {
+   const { selectedPlanDetails } = useSelector((state) => state.user);
   return (
     <div>
         <UserHomeNavPage/>
-        <BuyPlanPage/>
+        <div>
+          {selectedPlanDetails?
+       ( <BuyPlanPage/>)
+        :(
+          <UserViewPlanPage/>
+        )}
+        </div>
     </div>
   )
 }

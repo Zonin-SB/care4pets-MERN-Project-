@@ -8,7 +8,11 @@ import {
   clearUserAllDetails,
   clearUserToken,
 } from '../../redux/adminReducer';
-import { getPlanOrderValues, getSelectedExpertDetails, getSelectedPlanDetails } from '../../redux/userReducer';
+import {
+  getPlanOrderValues,
+  getSelectedExpertDetails,
+  getSelectedPlanDetails,
+} from '../../redux/userReducer';
 function UserNav() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +23,9 @@ function UserNav() {
     dispatch(clearUserToken());
     dispatch(clearUserLoginDetails());
     dispatch(clearUserAllDetails());
-    dispatch(getSelectedExpertDetails(false))
+    dispatch(getSelectedExpertDetails(false));
     dispatch(getSelectedPlanDetails(false));
-    dispatch(getPlanOrderValues(false))
+    dispatch(getPlanOrderValues(false));
     navigate('/');
   };
   return (
@@ -33,7 +37,7 @@ function UserNav() {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div>
-                    <Link to="/userHome">
+                    <Link to="/">
                       <span className="logo1">care</span>
                       <span className="logo2">4</span>
                       <span className="logo1">pets</span>
@@ -43,24 +47,33 @@ function UserNav() {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                    <button
+                   <Link to={'/userHome'}> <button
                       className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium"
                       aria-current="page"
                     >
                       Home
-                    </button>
-
-                   <Link to={'/userSelectExpert'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Experts
                     </button></Link>
 
-                    <Link to={'/userVideos'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Videos
-                    </button></Link>
+                    <Link to={'/userVideos'}>
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Videos
+                      </button>
+                    </Link>
 
-                    <Link to={'/userViewPlan'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Plan
-                    </button></Link>
+                    <Link to={'/userSelectExpert'}>
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Experts
+                      </button>
+                    </Link>
+
+                    <Link to={'/userViewPlan'}>
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Plan
+                      </button>
+                    </Link>
 
                     {/* <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Chat
@@ -159,28 +172,34 @@ function UserNav() {
               <div className="md:hidden" id="mobile-menu">
                 <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                   {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                  <button
+                  <Link to={'/userHome'}> <button
                     className=" text-gray-300 block hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium"
                     aria-current="page"
                   >
                     Home
-                  </button>
-
-                  <Link to={'/userSelectExpert'}> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Experts
                   </button> </Link>
 
-                  <Link to={'/userVideos'}> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Videos
-                  </button> </Link>
+                  <Link to={'/userVideos'}>
+                    {' '}
+                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Videos
+                    </button>{' '}
+                  </Link>
+
+                  <Link to={'/userSelectExpert'}>
+                    {' '}
+                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Experts
+                    </button>{' '}
+                  </Link>
 
                   {/* <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Chat
                   </button> */}
 
-                  <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                 <Link to="/userProfile"> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Profile
-                  </button>
+                  </button></Link>
 
                   {/* <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reports</button> */}
                 </div>

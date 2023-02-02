@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './HomeFooterPage.css'
 function HomeFooterPage() {
   return (
@@ -28,9 +29,9 @@ function HomeFooterPage() {
             <div>
                 <h2 class="mb-6 text-sm font-semibold  uppercase text-white">Support</h2>
                 <ul class="text-gray-400">
-                    <li class="mb-4">
+                   <Link to={'/userFeedback'}><li class="mb-4">
                         <p class="hover:underline ">Feedback</p>
-                    </li>
+                    </li></Link> 
                     <li>
                         <p class="hover:underline">Report</p>
                     </li>

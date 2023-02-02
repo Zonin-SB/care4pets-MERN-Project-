@@ -84,6 +84,7 @@ module.exports = {
               $project: {
                 _id: 1,
                 messages: 1,
+                from:1,
               },
             },
           ])
@@ -106,6 +107,7 @@ module.exports = {
               $project: {
                 _id: 1,
                 messages: 1,
+                from:1,
               },
             },
           ])
@@ -115,12 +117,16 @@ module.exports = {
         if (messageFrom.length === 0) {
           messageFrom = false;
         } else {
+          const id=messageFrom[0].from.toString()
           response.from = messageFrom[0]._id;
+          response.sender=id;
         }
         if (messageTo.length === 0) {
           messageTo = false;
         } else {
-          response.to = messageTo[0]._id;
+          const id=messageTo[0].from.toString()
+          response.from = messageTo[0]._id;
+          response.reciever=id;
         }
 
         if (messageFrom && messageTo) {

@@ -4,15 +4,37 @@ import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 import { getAllMessages, getYourExpertDetails, sendMessage } from '../../Axios/Services/UserServices';
 // import nochat from '../../images/nochat.png'
+import {io} from 'socket.io-client';
 
 function UserChatPage() {
   const { id } = useParams();
   const [message,setMessage]=useState('');
+  const [arrivalMessage,setArrivalMessage]=useState('');
   const [chatFrom,setChatFrom]=useState('')
   const [chat,setChat]=useState('')
+  const socket=useRef();
   const scrollRef = useRef();
   const [expertDetails,setExpertDetails]=useState([])
   const userId = useSelector((state) => state.admin.userDetails.userId);
+
+  useEffect(() => {
+    socket.current=io('ws://localhost:3001')
+    socket.current.on("getMessage",data=>{
+      setArrivalMessage(data)
+      // console.log(data,'data in socket use');
+    })
+   }, [])
+  //  console.log(arrivalMessage,'arriv msg in use');
+
+   useEffect(() => {
+    arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+   
+
+  useEffect(() => {
+   socket.current.emit("addUser",userId)
+  }, [userId])
+  
 
   useEffect(() => {
   fetchExpertDetails();
@@ -20,7 +42,6 @@ function UserChatPage() {
     fetchMessage();
   }
   
-
 
   async function fetchExpertDetails(){
     const token = localStorage.getItem('userToken');
@@ -34,15 +55,30 @@ function UserChatPage() {
   async function fetchMessage(){
     const token = localStorage.getItem('userToken');
     const data=await getAllMessages(token,id)
+    // console.log(data,'data');
     if(data.messages){
       setChatFrom(data.from);
       setChat(data.messages);
     }
   }
+  // console.log(chat,'chat');
 
-  
+ 
   const sendChat=async()=>{
     const token = localStorage.getItem('userToken');
+    const currentDate = new Date();
+    const time = currentDate.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+    socket.current.emit("sendMessage",{
+      from:userId,
+      to:id,
+      message:message,
+      time:time,
+    })
+
     await sendMessage(token,id,message).then(()=>{
       fetchMessage()
     })
@@ -219,7 +255,7 @@ function UserChatPage() {
                 </div> */}
 
                 {chat?( chat.map((data,index)=>{
-                  if(data._id===chatFrom){
+                  if(data.from===userId){
                     return(
                       
                 <div key={index} className="col-start-6 col-end-13 p-3 rounded-lg">

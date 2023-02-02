@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { getAllMessages, getClientDetails, sendMessage } from '../../Axios/Services/ExpertServices';
+import {io} from 'socket.io-client';
 import userProfilePic from '../../images/proImg.jpg';
 
 
 function ExpertChatPage() {
+  const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   const [clientDetails, setClientDetails] = useState([]);
   const { id } = useParams();
   const [chatFrom,setChatFrom]=useState('')
+  const [arrivalMessage,setArrivalMessage]=useState('');
   const [chat,setChat]=useState('')
+  const socket=useRef();
   const scrollRef = useRef();
   const [message, setMessage] = useState('');
   useEffect(() => {
@@ -25,6 +30,23 @@ function ExpertChatPage() {
     }
   }, [id]);
 
+  useEffect(() => {
+    socket.current=io('ws://localhost:3001')
+    socket.current.on("getMessage",data=>{
+      // console.log(data,'data in sock exp');
+      setArrivalMessage(data)
+    })
+   }, [])
+
+   useEffect(() => {
+    arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+   
+
+   useEffect(() => {
+    socket.current.emit("addUser",expertId)
+   }, [expertId])
+
  async function fetchMessage(){
   const token = localStorage.getItem('expertToken');
   const data=await getAllMessages(token,id)
@@ -36,6 +58,18 @@ function ExpertChatPage() {
 
   async function sendChat(){
     const token=localStorage.getItem('expertToken')
+    const currentDate = new Date();
+    const time = currentDate.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+    socket.current.emit("sendMessage",{
+      from:expertId,
+      to:id,
+      message:message,
+      time:time,
+    })
     await sendMessage(token,id,message).then(()=>{
       fetchMessage()
     })
@@ -221,7 +255,7 @@ function ExpertChatPage() {
 
                        
                 {chat?( chat.map((data,index)=>{
-                  if(data._id===chatFrom){
+                  if(data.from===expertId){
                     return(
                       
                 <div key={index} className="col-start-6 col-end-13 p-3 rounded-lg">

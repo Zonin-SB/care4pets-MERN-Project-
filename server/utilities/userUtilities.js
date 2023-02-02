@@ -484,6 +484,7 @@ module.exports = {
   },
 
   findPlanById: (id) => {
+
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -644,5 +645,24 @@ module.exports = {
         reject(error);
       }
     })
+  },
+
+  sendFeedback:(data)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .insertOne(data)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
   }
 };

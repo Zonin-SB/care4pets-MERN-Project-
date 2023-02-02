@@ -41,7 +41,7 @@ function UserSelectExpertPage() {
       setYourExpertDetails(response.expert[0])
     }
   }, [id]);
-  console.log(expertDetails, 'in exp');
+  // console.log(expertDetails, 'in exp');
 
   useEffect(() => {
     const result = expertDetails.filter((expert) => {
@@ -201,6 +201,7 @@ function UserSelectExpertPage() {
           }
         />
       </div>
+      
     </div>
   );
 }

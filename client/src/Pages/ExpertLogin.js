@@ -9,7 +9,7 @@ function ExpertLogin() {
     const token=localStorage.getItem('expertToken')
     if(token){
       const expert=jwt(token)
-      console.log(expert);
+  
       if(expert){
         navigate('/expertHome')
       }else{

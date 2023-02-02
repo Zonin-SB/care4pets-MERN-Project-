@@ -13,6 +13,8 @@ width: 20rem;
 
 .testimonials{
     display: flex;
+    flex-wrap: nowrap;
+    /* flex-direction: row; */
     overflow-x: scroll;
     overflow-y: hidden;
  }

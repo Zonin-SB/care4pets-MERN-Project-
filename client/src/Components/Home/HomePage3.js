@@ -1,5 +1,5 @@
 import React from 'react'
-import banner2 from '../../images/banner.png'
+import banner2 from '../../images/banner1.jpg'
 import png1 from '../../images/png1.png';
 import png3 from '../../images/png3.png';
 import png2 from '../../images/png2.png';
@@ -10,14 +10,14 @@ function HomePage3() {
         <div className='pt-9 '>
           <div className='position-relative '>
             <img src={banner2} className="max-w-full h-auto" alt="banner not found" />
-            <h1 className='absolute  text-3xl '>Join Premium</h1>
+            {/* <h1 className='absolute  text-3xl '>Join Premium</h1>
             <ul className='absolute  left-25 text-2xl text-bold text-red-500 text-center'>
               <li>1000+ training and workout plans for your pet.</li>
               <li>50+ daily diet plans.</li>
               <li>Weekly checkup on your pet by trainer.</li>
               <li>Videos,live sessions and more...</li>
               <li>Ask any query related with your pet at any time.</li>
-            </ul>
+            </ul> */}
             </div>
         </div>
         <div className="flex justify-around pt-9">
