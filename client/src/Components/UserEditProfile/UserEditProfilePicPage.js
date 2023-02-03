@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import {
   uploadProfilePic,
   userProfilePicUpdate,
@@ -49,8 +50,19 @@ function UserEditProfilePicPage() {
       const response = await userProfilePicUpdate(token, values);
 
       if (response.status === 'ok') {
+        Swal.fire({         
+          icon: 'success',
+          title: 'Your profile picture has been updated',
+          showConfirmButton: false,
+          timer: 1500
+        })
         navigate('/userProfile');
       } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
         setError('Image upload failed');
       }
     }

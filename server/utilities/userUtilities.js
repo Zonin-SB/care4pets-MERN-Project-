@@ -514,6 +514,32 @@ module.exports = {
     });
   },
 
+  getUserPlanDetails:(id)=>{
+return new Promise(async(resolve,reject)=>{
+  try {
+    const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
+      {
+        $match:{
+          userId:ObjectId(id)
+        }
+      },{
+        $lookup: {
+          from: collection.PLAN_COLLECTION,
+          localField: 'planId',
+          foreignField: '_id',
+          as: 'plan',
+        },
+      }, {
+        $unwind: '$plan',
+      },
+    ]).toArray()
+    resolve(data)
+  } catch (error) {
+    console.log(error);
+  }
+})
+  },
+
   getPlanVideos: (data) => {
     return new Promise(async (resolve, reject) => {
       try {

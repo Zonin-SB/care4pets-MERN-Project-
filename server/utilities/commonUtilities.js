@@ -150,4 +150,15 @@ module.exports = {
       }
     });
   },
+
+  getHomeFeedback:()=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const data=await db.get().collection(collection.FEEDBACK_COLLECTION).find({approved:true}).toArray();
+        resolve(data)
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
 };

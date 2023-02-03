@@ -409,7 +409,6 @@ export const checkUserPlan = async (token, id) => {
 
       config
     );
-    console.log(data);
     if (data.status) {
       return data;
     }
@@ -419,27 +418,51 @@ export const checkUserPlan = async (token, id) => {
   }
 };
 
-export const getUserHomePlan=async(id)=>{
+export const getUserPlanDetails=async(token,id)=>{
   try {
     const config = {
       headers: {
-        
+        Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
     };
+
     const { data } = await axiosUserInstance.get(
-      `/getUserHomePlan/${id}`,
+      `/getUserPlanDetails/${id}`,
 
       config
     );
-
+  
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
+    return error;
   }
 }
+
+// export const getUserHomePlan=async(id)=>{
+//   try {
+//     const config = {
+//       headers: {
+        
+//         'Content-Type': 'application/json',
+//       },
+//     };
+//     const { data } = await axiosUserInstance.get(
+//       `/getUserHomePlan/${id}`,
+
+//       config
+//     );
+
+//     if (data.status) {
+//       return data;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 export const sendFeedback=async(token,values)=>{
   try {
@@ -463,4 +486,26 @@ values,
     console.log(error);
     return error;
   }
+}
+
+export const getHomeFeedback=async()=>{
+  try {
+        const config = {
+          headers: {
+            
+            'Content-Type': 'application/json',
+          },
+        };
+        const { data } = await axiosUserInstance.get(
+          '/getHomeFeedback',
+    
+          config
+        );
+    
+        if (data.status) {
+          return data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
 }

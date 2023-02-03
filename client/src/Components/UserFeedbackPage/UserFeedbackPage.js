@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { userFeedbackSchema } from '../../Validation/Validation';
 import { sendFeedback } from '../../Axios/Services/UserServices';
+import Swal from 'sweetalert2';
 
 
 
@@ -18,8 +19,19 @@ function UserFeedbackPage() {
     }
     const response=await sendFeedback(token,values)
     if(response.status==='ok'){
+      Swal.fire({         
+        icon: 'success',
+        title: 'Your feedback has been submitted',
+        showConfirmButton: false,
+        timer: 1500
+      })
         navigate('/')
     }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
         setError('Something went wrong...Please try again after some time.')
     }
   };

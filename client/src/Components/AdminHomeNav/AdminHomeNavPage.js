@@ -65,6 +65,11 @@ function AdminHomeNavPage() {
                    <Link to='/adminViewPlans'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Plans
                     </button></Link>
+
+                    <Link to='/adminViewFeedback'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                      Feedback
+                    </button></Link>
+                    
                   </div>
                 </div>
               </div>
@@ -181,6 +186,9 @@ function AdminHomeNavPage() {
                  <Link to='/adminViewPlans'><button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Plans
                   </button></Link> 
+                  <Link to='/adminViewFeedback'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                      Feedback
+                    </button></Link>
                 </div>
                 <div className="border-t border-gray-700 pt-4 pb-3">
                   <div className="flex items-center px-5">

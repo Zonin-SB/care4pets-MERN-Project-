@@ -5,6 +5,7 @@ import { getClientsCount, getExpertDetails, getVideosCount } from '../../Axios/S
 import expertProfile from '../../images/proImg.jpg';
 import expertVerified from '../../images/verifiedExpert.png'
 import notification from '../../images/notification.png'
+import Swal from 'sweetalert2';
 
 function ExpertProfilePage() {
   const [expertDetails, setExpertDetails] = useState([]);
@@ -35,6 +36,38 @@ function ExpertProfilePage() {
       setClientCount(data.clientCount)
     }
   }, [expertId]);
+
+  const expertEditProfileAlert=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to edit your profile!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, edit it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        navigate(`/expertEditProfile/${id}`)
+      }
+    });
+  }
+
+  const expertApplyAlert=()=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to apply for verification!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, apply it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        navigate('/expertApplyForm');
+      }
+    });
+  }
   
   return (
     <div>
@@ -104,15 +137,15 @@ function ExpertProfilePage() {
                    
                       <div className="py-6 px-3 mt-32 sm:mt-0">
                       {expertDetails.verified? <img className='w-18 h-20 lg:ml-28' src={expertVerified} alt="verified" />:
-                        <Link to="/expertApplyForm">
-                          {' '}
+                       
                           <button
+                          onClick={()=>expertApplyAlert()}
                             className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                             type="button"
                           >
                             Apply for Verification
                           </button>
-                        </Link>
+                       
 }
                       </div>
                       
@@ -188,7 +221,8 @@ function ExpertProfilePage() {
                     <div className="flex flex-wrap justify-center">
                       <div className="w-full lg:w-9/12 px-4">
                         <button
-                        onClick={()=>navigate(`/expertEditProfile/${expertDetails._id}`)}
+                        onClick={()=>expertEditProfileAlert(expertDetails._id)}
+                        // onClick={()=>navigate(`/expertEditProfile/${expertDetails._id}`)}
                           className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                           type="button"
                         >

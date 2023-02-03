@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { expertEditVideo, getVideoDetails } from '../../Axios/Services/ExpertServices';
 import { videoUploadSchema } from '../../Validation/Validation';
+import Swal from 'sweetalert2';
 
 
 function ExpertEditVideoPage() {
@@ -34,8 +35,19 @@ function ExpertEditVideoPage() {
         const token = localStorage.getItem('expertToken');
         const data=await expertEditVideo(token,values)
         if(data.status==='ok'){
+          Swal.fire({         
+            icon: 'success',
+            title: 'This video has been edited',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate('/expertVideos')
          }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
           setError('Update Failed,try again after some time.')
          }
        

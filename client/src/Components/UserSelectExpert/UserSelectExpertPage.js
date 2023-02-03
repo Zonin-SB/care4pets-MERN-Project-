@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import Swal from 'sweetalert2';
 import {
   getUsersExpert,
   getYourExpertDetails,
@@ -50,27 +51,51 @@ function UserSelectExpertPage() {
     setFilteredExpertDetails(result);
   }, [search, expertDetails]);
 
-  // let ids={}
-  // async function select(id){
-  //   const token=localStorage.getItem('userToken')
-  //   ids.userId=userId;
-  //   ids.expertId=id;
-  //   const data=await selectExpert(token,ids)
-  //   if(data.status==='ok'){
-  //     navigate('')
+ const selectExpertAlert=(id)=>{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to select this expert!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, select it!'
+  }).then(async(result) => {
+    if (result.isConfirmed) {
+        const token = localStorage.getItem('userToken');
+        const data = await selectExpert(token, id);
+        if (data.status === 'ok') {
+          Swal.fire({         
+            icon: 'success',
+            title: 'You selected this expert',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          dispatch(getSelectedExpertDetails(data.expertDetails[0]));
+          navigate('/userBuyPlan');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+          setError('Something went wrong...please try again after sometimes...');
+        }
+    }
+  })
+ }
+
+  // async function select(id) {
+  //   const token = localStorage.getItem('userToken');
+  //   const data = await selectExpert(token, id);
+  //   if (data.status === 'ok') {
+  //     // console.log(data.expertDetails[0],'reduc exp');
+  //     dispatch(getSelectedExpertDetails(data.expertDetails[0]));
+  //     navigate('/userBuyPlan');
+  //   } else {
+  //     setError('Something went wrong...please try again after sometimes...');
   //   }
   // }
-  async function select(id) {
-    const token = localStorage.getItem('userToken');
-    const data = await selectExpert(token, id);
-    if (data.status === 'ok') {
-      // console.log(data.expertDetails[0],'reduc exp');
-      dispatch(getSelectedExpertDetails(data.expertDetails[0]));
-      navigate('/userBuyPlan');
-    } else {
-      setError('Something went wrong...please try again after sometimes...');
-    }
-  }
 
   const columns = [
   
@@ -99,7 +124,8 @@ function UserSelectExpertPage() {
         return (
           <div>
             <button
-              onClick={() => select(row._id)}
+              onClick={() => selectExpertAlert(row._id)}
+              // onClick={() => select(row._id)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             >
               Select

@@ -261,6 +261,15 @@ const getPlanDetails = (req, res) => {
     });
 };
 
+const getUserPlanDetails=(req,res)=>{
+const id=req.params.id
+userUtilities.getUserPlanDetails(id).then((response)=>{
+  res.json({ status: 'ok', plan: response });
+}).catch(()=>{
+  res.json({ status: false, plan: false });
+})
+}
+
 const getYourExpertDetails = (req, res) => {
   const id = req.params.id;
 
@@ -366,6 +375,14 @@ const sendFeedback=(req,res)=>{
 
 }
 
+const getHomeFeedback=(req,res)=>{
+  commonUtilities.getHomeFeedback().then((details)=>{
+    res.json({ status: 'ok', feedback: details });
+  }).catch(()=>{
+    res.json({ status: false });
+  })
+}
+
 module.exports = {
   userSignup,
   userLogin,
@@ -391,4 +408,6 @@ module.exports = {
   verifyOTP,
   checkUserPlan,
   sendFeedback,
+  getUserPlanDetails,
+  getHomeFeedback,
 };

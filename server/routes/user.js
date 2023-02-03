@@ -20,6 +20,7 @@ router.post('/api/postPlanOrderValues',auth.userAuth,userController.postPlanOrde
 router.get('/api/getFreeVideos/:id',auth.userAuth,userController.getFreeVideos)
 router.get('/api/getVideosCount/:id',auth.userAuth,userController.getVideosCount)
 router.get('/api/getPlanDetails/:id',auth.userAuth,userController.getPlanDetails)
+router.get('/api/getUserPlanDetails/:id',auth.userAuth,userController.getUserPlanDetails)
 router.get('/api/getPlanVideos/:id',auth.userAuth,userController.getPlanVideos)
 router.get('/api/getYourExpertDetails/:id',auth.userAuth,userController.getYourExpertDetails)
 router.post('/api/sendMessage/:id',auth.userAuth,userController.sendMessage)
@@ -29,7 +30,8 @@ router.post('/api/sendFeedback',auth.userAuth,userController.sendFeedback)
 
 router.get('/api/viewAllPlan',userController.viewAllPlan)
 router.get('/api/getExperts',userController.getExperts)
-router.get('/api/getUserHomePlan/:id',userController.getPlanDetails)
+router.get('/api/getHomeFeedback',userController.getHomeFeedback)
+// router.get('/api/getUserHomePlan/:id',userController.getPlanDetails)
 
 
 module.exports=router;

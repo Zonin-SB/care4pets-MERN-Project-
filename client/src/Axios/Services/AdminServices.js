@@ -503,7 +503,7 @@ export const getPaymentDetails = async (token) => {
   }
 };
 
-export const getPaymentAllDetails=async(token,id)=>{
+export const getPaymentAllDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -512,11 +512,117 @@ export const getPaymentAllDetails=async(token,id)=>{
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axiosAdminInstance.get(`/getPaymentAllDetails/${id}`, config);
+    const { data } = await axiosAdminInstance.get(
+      `/getPaymentAllDetails/${id}`,
+      config
+    );
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const getFeedback = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get('/getFeedback', config);
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const approveFeedback = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/approveFeedback/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const disapproveFeedback = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/disapproveFeedback/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFeedbackDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getFeedbackDetails/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteFeedback = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/deleteFeedback/${id}`,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

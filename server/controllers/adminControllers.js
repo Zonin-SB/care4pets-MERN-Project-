@@ -351,6 +351,53 @@ const getPaymentAllDetails=(req,res)=>{
   })
 }
 
+const getFeedback=(req,res)=>{
+  adminUtilities.getFeedback().then((data)=>{
+    res.json({ status: 'ok', feedback: data });
+  }).catch(()=>{
+    res.json({ status: false, feedback: false });
+  })
+}
+
+const approveFeedback=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.approveFeedback(id).then((details)=>{
+    res.json({ status: 'ok', approved: true, feedback: details });
+  }).catch(()=>{
+    res.json({ status: false, feedback: false });
+  })
+}
+
+const disapproveFeedback=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.disapproveFeedback(id).then((details)=>{
+    res.json({ status: 'ok', disapproved: true, feedback: details });
+  }).catch(()=>{
+    res.json({ status: false, feedback: false });
+  })
+}
+
+const getFeedbackDetails=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.getFeedbackDetails(id).then((data)=>{
+    res.json({ status: 'ok', feedback: data });
+  }).catch(()=>{
+    res.json({ status: false, feedback: false });
+  })
+}
+
+const deleteFeedback=(req,res)=>{
+  const id=req.params.id
+  adminUtilities
+  .deleteFeedback(id)
+  .then((details) => {
+    res.json({ status: 'ok', feedback: details });
+  })
+  .catch(() => {
+    res.json({ status: false, feedback: false });
+  });
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -382,4 +429,9 @@ module.exports = {
   adminRejectVideo,
   getPaymentDetails,
   getPaymentAllDetails,
+  getFeedback,
+  approveFeedback,
+  disapproveFeedback,
+  getFeedbackDetails,
+  deleteFeedback,
 };

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllPlan, deletePlan } from '../../Axios/Services/AdminServices';
-
+import Swal from 'sweetalert2';
 
 function ViewPlansPage() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [plan, setPlan] = useState();
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -17,11 +17,40 @@ function ViewPlansPage() {
     }
   }, []);
 
-  async function deleteplan(id) {
-    const token = localStorage.getItem('adminToken');
-    const response = await deletePlan(token, id);
-    setPlan(response.planDetails)
-  }
+  const editPlanAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to edit this plan!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, edit it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        navigate(`/adminEditPlan/${id}`);
+      }
+    });
+  };
+
+  const deleteplanAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to delete this plan!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const token = localStorage.getItem('adminToken');
+        const response = await deletePlan(token, id);
+        setPlan(response.planDetails);
+        Swal.fire('Deleted!', 'This plan has been deleted.', 'success');
+      }
+    });
+  };
 
   const columns = [
     {
@@ -45,9 +74,12 @@ function ViewPlansPage() {
       selector: (row) => {
         return (
           <div>
-          <button onClick={()=>{navigate(`/adminEditPlan/${row._id}`)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Edit
-          </button>
+            <button
+              onClick={() => editPlanAlert(row._id)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Edit
+            </button>
           </div>
         );
       },
@@ -57,7 +89,7 @@ function ViewPlansPage() {
       selector: (row) => {
         return (
           <div>
-            <button onClick={() => deleteplan(row._id)}>🗑️</button>
+            <button onClick={() => deleteplanAlert(row._id)}>🗑️</button>
           </div>
         );
       },

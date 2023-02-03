@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
+import Swal from 'sweetalert2';
 import {
   getExpertAllDetails,
   rejectExpert,
@@ -33,8 +34,19 @@ function AdminRejectExpertPage() {
     const token = localStorage.getItem('adminToken');
     const data = await rejectExpert(token, values);
     if (data.status === 'ok') {
+      Swal.fire({          
+        icon: 'success',
+        title: 'This application has been rejected',
+        showConfirmButton: false,
+        timer: 1500
+      })
       navigate('/adminApprovalList');
     } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
       setError('Something went wrong....try again after some time...');
     }
   };

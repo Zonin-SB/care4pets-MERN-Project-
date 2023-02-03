@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { adminRejectVideo, getVideoDetails } from '../../Axios/Services/AdminServices';
 import { rejectionVideoSchema } from '../../Validation/Validation';
+import Swal from 'sweetalert2';
 
 function AdminRejectVideoPage() {
     const navigate=useNavigate();
@@ -38,8 +39,20 @@ function AdminRejectVideoPage() {
         const token = localStorage.getItem('adminToken');
         const data = await adminRejectVideo(token, values);
         if (data.status === 'ok') {
+          Swal.fire({
+           
+            icon: 'success',
+            title: 'This video has been rejected',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate('/adminVideoApproval');
         } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
           setError('Something went wrong....try again after some time...');
         }
       };

@@ -3,51 +3,51 @@ import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addPlanSchema } from '../../Validation/Validation';
 import { editPlan, getPlanDetails } from '../../Axios/Services/AdminServices';
-
+import Swal from 'sweetalert2';
 
 function AdminEditPlanPage() {
   const { id } = useParams();
   const [error, setError] = useState('');
   const [plan, setPlan] = useState([]);
-  const navigate=useNavigate();
-
-  // const { planDetails } = useSelector((state) => {
-  //   console.log(state.admin,'state admin'); return  state.admin});
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     fetchPlan();
-    
+
     async function fetchPlan() {
       const data = await getPlanDetails(token, id);
-      // dispatch(planData(data.planDetails[0]))
+
       setPlan(data.planDetails[0]);
-      
     }
-    // return  ()=>{dispatch(planData(null))}
-       
-    
   }, [id]);
-
-
-  
 
   const onSubmit = async (values, action) => {
     const token = localStorage.getItem('adminToken');
-    const data=await editPlan(token,values)
-    if(data.status==='ok'){
-      navigate('/adminViewPlans')
-     }else{
-      setError('Update Failed,try again after some time.')
-     }
+    const data = await editPlan(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({          
+        icon: 'success',
+        title: 'This plan has been edited',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      navigate('/adminViewPlans');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+      setError('Update Failed,try again after some time.');
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
-        planId:id,
-        planName: plan?.planName||'',
+        planId: id,
+        planName: plan?.planName || '',
         validity: plan?.validity || '',
         currentPrice: plan?.currentPrice || '',
         previousPrice: plan?.previousPrice || '',
@@ -58,9 +58,8 @@ function AdminEditPlanPage() {
       },
       validationSchema: addPlanSchema,
       onSubmit,
-      enableReinitialize:true,
+      enableReinitialize: true,
     });
- 
 
   return (
     <div>
@@ -104,7 +103,6 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-              
                   <option value="1">1</option>
                   <option value="3">3</option>
                   <option value="6">6</option>
@@ -179,7 +177,6 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option value="30">30</option>
                   <option value="60">60</option>
                   <option value="120">120</option>
@@ -202,7 +199,6 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -224,7 +220,6 @@ function AdminEditPlanPage() {
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>

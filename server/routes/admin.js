@@ -36,6 +36,11 @@ router.post('/api/adminEditVideo',auth.adminAuth,adminController.adminEditVideo)
 router.post('/api/adminRejectVideo',auth.adminAuth,adminController.adminRejectVideo)
 router.get('/api/getPaymentDetails',auth.adminAuth,adminController.getPaymentDetails)
 router.get('/api/getPaymentAllDetails/:id',auth.adminAuth,adminController.getPaymentAllDetails)
+router.get('/api/getFeedback',auth.adminAuth,adminController.getFeedback)
+router.get('/api/approveFeedback/:id',auth.adminAuth,adminController.approveFeedback)
+router.get('/api/disapproveFeedback/:id',auth.adminAuth,adminController.disapproveFeedback)
+router.get('/api/getFeedbackDetails/:id',auth.adminAuth,adminController.getFeedbackDetails)
+router.get('/api/deleteFeedback/:id',auth.adminAuth,adminController.deleteFeedback)
 
 
 module.exports=router;

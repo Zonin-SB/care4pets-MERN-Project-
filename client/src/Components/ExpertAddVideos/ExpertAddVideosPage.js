@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { expertVideoUpload } from '../../Axios/Services/ExpertServices';
 import { videoUploadSchema } from '../../Validation/Validation';
+import Swal from 'sweetalert2';
 
 const initialValues = {
   title: '',
@@ -25,8 +26,19 @@ function ExpertAddVideosPage() {
     const token = localStorage.getItem('expertToken');
     const data = await expertVideoUpload(token, values);
     if(data.status==='ok'){
+      Swal.fire({          
+        icon: 'success',
+        title: 'New video has been added',
+        showConfirmButton: false,
+        timer: 1500
+      })
       navigate('/expertVideos')
     }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
       setError('Something went wrong...please try again after sometimes...')
     }
   };

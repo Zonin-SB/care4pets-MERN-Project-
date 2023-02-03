@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { addPlanSchema } from '../../Validation/Validation';
 import { addPlan } from '../../Axios/Services/AdminServices';
+import Swal from 'sweetalert2';
 
 const initialValues={
   planName:'',
@@ -24,8 +25,19 @@ const navigate=useNavigate();
   const token=localStorage.getItem('adminToken')
   const response=await addPlan(token,values)
   if(response.status==='error'){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    })
     setError('Action Failed,Please try again after some time.')
   }else if(response.status==='ok'){
+    Swal.fire({          
+      icon: 'success',
+      title: 'New plan has been added',
+      showConfirmButton: false,
+      timer: 1500
+    })
     navigate('/adminViewPlans')
   }
 

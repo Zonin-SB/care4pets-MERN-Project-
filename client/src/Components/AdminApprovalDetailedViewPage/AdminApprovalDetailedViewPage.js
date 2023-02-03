@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  
-  getExpertAllDetails,
-} from '../../Axios/Services/AdminServices';
+import { getExpertAllDetails } from '../../Axios/Services/AdminServices';
+import Swal from 'sweetalert2';
 
 function AdminApprovalDetailedViewPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [expertDetails, setExpertDetails] = useState([]);
- 
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -22,7 +19,37 @@ function AdminApprovalDetailedViewPage() {
     }
   }, [id]);
 
+  const rejectExpertAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to reject this application!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reject it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        navigate(`/adminRejectExpert/${id}`)
+      }
+    });
+  };
 
+  const acceptExpertAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to accept this application!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, accept it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        navigate(`/adminAcceptExpert/${id}`);
+      }
+    });
+  };
 
   return (
     <div>
@@ -95,10 +122,16 @@ function AdminApprovalDetailedViewPage() {
               </div>
             </div>
             <hr />
-        
+
             <div className="md:inline-flex w-full space-y-4 md:space-y-0 p-8 text-gray-500 items-center">
               <div className="md:w-3/12 text-center md:pl-6">
-                <button onClick={()=>{navigate(`/adminRejectExpert/${expertDetails._id}`)}} className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
+                <button
+                  // onClick={() => {
+                  //   navigate(`/adminRejectExpert/${expertDetails._id}`);
+                  // }}
+                  onClick={() => rejectExpertAlert(expertDetails._id)}
+                  className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right"
+                >
                   <svg
                     fill="none"
                     className="w-4 text-white mr-2"
@@ -114,7 +147,10 @@ function AdminApprovalDetailedViewPage() {
               </div>
               <div className="md:w-3/12 text-center md:pl-6">
                 <button
-                  onClick={()=>{navigate(`/adminAcceptExpert/${expertDetails._id}`)}}
+                  // onClick={() => {
+                  //   navigate(`/adminAcceptExpert/${expertDetails._id}`);
+                  // }}
+                  onClick={() => acceptExpertAlert(expertDetails._id)}
                   className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-green-600 py-2 px-4 inline-flex items-center focus:outline-none md:float-right"
                 >
                   <svg

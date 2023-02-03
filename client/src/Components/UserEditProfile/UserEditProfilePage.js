@@ -5,6 +5,7 @@ import { userEditProfileSchema } from '../../Validation/Validation';
 import { useFormik } from 'formik';
 import { updateUserProfile } from '../../Axios/Services/UserServices';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function UserEditProfilePage() {
   const navigate=useNavigate()
@@ -27,8 +28,19 @@ function UserEditProfilePage() {
     const token=localStorage.getItem('userToken')
     const data = await updateUserProfile(token, values);
    if(data.status==='ok'){
+    Swal.fire({         
+      icon: 'success',
+      title: 'Your profile has been updated',
+      showConfirmButton: false,
+      timer: 1500
+    })
     navigate('/userProfile')
    }else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    })
     setError('Update Failed,try again after some time.')
    }
    

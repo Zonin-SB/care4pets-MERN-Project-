@@ -4,6 +4,7 @@ import { selectPlan, viewAllPlan } from '../../Axios/Services/UserServices';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getSelectedPlanDetails } from '../../redux/userReducer';
+import Swal from 'sweetalert2';
 // import './HomePage.css';
 
 function HomePage4(props) {
@@ -20,22 +21,64 @@ function HomePage4(props) {
     }
   }, []);
 
-  async function userSelectPlan(id) {
-    const token = localStorage.getItem('userToken');
-    if(!token){
-      navigate('/userLogin')
-    }else{
-      const data = await selectPlan(token, id);
-      if (data.status === 'ok') {
-        dispatch(getSelectedPlanDetails(data.planDetails[0]));
-        navigate('/userSelectExpert')
-      }else if(data.status==='error'){
-        setError('Something went wrong...please try again after sometimes...')
-      }else{
-        navigate('/userLogin')
-      }
-    }
+  // async function userSelectPlan(id) {
+  //   const token = localStorage.getItem('userToken');
+  //   if(!token){
+  //     navigate('/userLogin')
+  //   }else{
+  //     const data = await selectPlan(token, id);
+  //     if (data.status === 'ok') {
+  //       dispatch(getSelectedPlanDetails(data.planDetails[0]));
+  //       navigate('/userSelectExpert')
+  //     }else if(data.status==='error'){
+  //       setError('Something went wrong...please try again after sometimes...')
+  //     }else{
+  //       navigate('/userLogin')
+  //     }
+  //   }
    
+  // }
+
+  const userSelectPlanAlert=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to select this plan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, select it!'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+          const token = localStorage.getItem('userToken');
+          if(!token){
+            navigate('/userLogin')
+          }else{
+            const data = await selectPlan(token, id);
+            if (data.status === 'ok') {
+              Swal.fire({         
+                icon: 'success',
+                title: 'You selected this plan',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              dispatch(getSelectedPlanDetails(data.planDetails[0]));
+              navigate('/userSelectExpert')
+            }else if(data.status==='error'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              })
+              setError('Something went wrong...please try again after sometimes...')
+            }else{
+              navigate('/userLogin')
+            }
+          }
+         
+        
+      }
+    })
   }
 
   return (
@@ -103,7 +146,8 @@ function HomePage4(props) {
                       </div>
                       <div className="flex justify-center items-end ">
                         <button
-                          onClick={() => userSelectPlan(data._id)}
+                          onClick={() => userSelectPlanAlert(data._id)}
+                          // onClick={() => userSelectPlan(data._id)}
                           type="submit"
                           className="mt-4 rounded-full hover:bg-red-500 bg-slate-300 mb-2 py-2 px-3 text-xs font-bold tracking-wider border-red-500 hover:border-white hover:text-white  border-2 text-red-700"
                         >

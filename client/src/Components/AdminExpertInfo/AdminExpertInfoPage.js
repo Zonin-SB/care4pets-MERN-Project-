@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { getExpertDetails,blockExpert,unblockExpert } from '../../Axios/Services/AdminServices';
+import Swal from 'sweetalert2';
+import {
+  getExpertDetails,
+  blockExpert,
+  unblockExpert,
+} from '../../Axios/Services/AdminServices';
 import verified from '../../images/verified.png';
 import notverified from '../../images/notverified.png';
 
@@ -15,40 +20,76 @@ function AdminExpertInfoPage() {
 
     async function getAllExperts() {
       const response = await getExpertDetails(token);
-      
+
       setExpertDetails(response.expertDetails);
-      
+
       setFilteredExpertDetails(response.expertDetails);
     }
   }, []);
 
   useEffect(() => {
-    const result = expertDetails.filter(expert=>{
-      return expert.email.toLowerCase().match(search.toLowerCase())
+    const result = expertDetails.filter((expert) => {
+      return expert.email.toLowerCase().match(search.toLowerCase());
+    });
+    setFilteredExpertDetails(result);
+  }, [search, expertDetails]);
+
+  const blockAlert=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to block this account!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, block it!'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        // async function block(id) {
+          const token = localStorage.getItem('adminToken');
+          const data = await blockExpert(token, id);
+          if (data.blocked) {
+            setExpertDetails(data.expertDetails);
+            setFilteredExpertDetails(data.expertDetails);
+          // }
+        }
+        Swal.fire(
+          'Blocked!',
+          'This account has been blocked.',
+          'success'
+        )
+      }
     })
-    setFilteredExpertDetails(result)
-   
-  }, [search,expertDetails])
-
-  async function block(id){
-    const token = localStorage.getItem('adminToken');
-    const data = await blockExpert(token, id);
-    if (data.blocked) {
-      setExpertDetails(data.expertDetails);
-      setFilteredExpertDetails(data.expertDetails)
-      
-    }
   }
 
-  async function unblock(id){
-    const token = localStorage.getItem('adminToken');
-    const data = await unblockExpert(token, id);
-    if (data.unblocked) {
-      setExpertDetails(data.expertDetails);
-      setFilteredExpertDetails(data.expertDetails)
-      
-    }
+  const unblockAlert=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to unblock this account!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, unblock it!'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        // async function unblock(id) {
+          const token = localStorage.getItem('adminToken');
+          const data = await unblockExpert(token, id);
+          if (data.unblocked) {
+            setExpertDetails(data.expertDetails);
+            setFilteredExpertDetails(data.expertDetails);
+          }
+        // }
+        Swal.fire(
+          'Unblocked!',
+          'This account has been unblocked.',
+          'success'
+        )
+      }
+    })
   }
+
 
   const columns = [
     {
@@ -86,11 +127,17 @@ function AdminExpertInfoPage() {
         return (
           <div>
             {row.blocked ? (
-              <button onClick={() => unblock(row._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+              <button
+                onClick={() => unblockAlert(row._id)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              >
                 Unblock
               </button>
             ) : (
-              <button onClick={() => block(row._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full">
+              <button
+                onClick={() => blockAlert(row._id)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full"
+              >
                 Block
               </button>
             )}
@@ -116,22 +163,24 @@ function AdminExpertInfoPage() {
     <div>
       <div className="container mx-auto mt-9">
         <DataTable
-         title="All Experts" 
-         columns={columns} 
-         data={filteredExpertDetails}
-         pagination
+          title="All Experts"
+          columns={columns}
+          data={filteredExpertDetails}
+          pagination
           fixedHeader
           fixedHeaderScrollHeight="450px"
           highlightOnHover
           subHeader
           subHeaderComponent={
-            <input type='text' 
-            value={search}
-            onChange={(e)=>setSearch(e.target.value)}
-            placeholder="Search" 
-            className='block w-25 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500'/>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+              className="block w-25 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            />
           }
-         />
+        />
       </div>
     </div>
   );

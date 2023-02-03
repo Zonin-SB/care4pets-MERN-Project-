@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { expertApplyVerification, uploadDocuments } from '../../Axios/Services/ExpertServices';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function ExpertApplyFormPage() {
   const [previewSource1, setPreviewSource1] = useState();
@@ -79,8 +80,19 @@ function ExpertApplyFormPage() {
    const token= localStorage.getItem('expertToken')
    const response=await expertApplyVerification(token,values)
    if (response.status === 'ok') {
+    Swal.fire({          
+      icon: 'success',
+      title: 'Your application has been submitted',
+      showConfirmButton: false,
+      timer: 1500
+    })
     navigate('/expertProfile');
   } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    })
     setError('Documents upload failed');
   }
    }

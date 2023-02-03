@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { getExpertEditProfileDetails, updateExpertProfile } from '../../Axios/Services/ExpertServices';
 import { expertEditProfileSchema } from '../../Validation/Validation';
+import Swal from 'sweetalert2';
 
 function ExpertEditProfilePage() {
   const { id } = useParams();
@@ -36,8 +37,19 @@ function ExpertEditProfilePage() {
     const token=localStorage.getItem('expertToken')
         const data = await updateExpertProfile(token, values);
        if(data.status==='ok'){
+        Swal.fire({          
+          icon: 'success',
+          title: 'Your profile has been updated',
+          showConfirmButton: false,
+          timer: 1500
+        })
         navigate('/expertProfile')
        }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
         setError('Update Failed,try again after some time.')
        }
   };

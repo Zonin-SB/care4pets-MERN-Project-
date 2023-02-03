@@ -849,90 +849,194 @@ module.exports = {
     });
   },
 
-  getPaymentAllDetails:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  getPaymentAllDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
-          {
-            $match:{
-              _id:ObjectId(id)
-            }
-          },
-          {
-            $lookup: {
-              from: collection.EXPERT_COLLECTION,
-              localField: 'expertId',
-              foreignField: '_id',
-              as: 'expert',
-            },
-          },
-          {
-            $lookup: {
-              from: collection.USER_COLLECTION,
-              localField: 'userId',
-              foreignField: '_id',
-              as: 'user',
-            },
-          },
-          {
-            $lookup: {
-              from: collection.PLAN_COLLECTION,
-              localField: 'planId',
-              foreignField: '_id',
-              as: 'plan',
-            },
-          },
-          {
-            $unwind: '$expert',
-          },
-          {
-            $unwind: '$user',
-          },
-          {
-            $unwind: '$plan',
-          },
-          {
-            $project:{
-              _id:1,
-              planId:1,
-              expertId:1,
-              userId:1,
-              validFrom:1,
-              validTill:1,
-              expert:{
-                name:1,
-                email:1,
-                mobile:1,
-                dob:1,
-                gender:1,
-                expertisedIn:1,
-                experience:1,
-                profilePic:1,
+        const data = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(id),
               },
-              user:{
-                name:1,
-                email:1,
-                mobile:1,
-                pet:1,
-                profileImage:1,
+            },
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                localField: 'expertId',
+                foreignField: '_id',
+                as: 'expert',
               },
-              plan:{
-                planName:1,
-                validity:1,
-                currentPrice:1,
-                dietPlan:1,
-                expertAvailability:1,
-                numberOfCheckup:1,
-                tipAvailabilty:1,
-              }
-            }
-          }
-        ]).toArray()
+            },
+            {
+              $lookup: {
+                from: collection.USER_COLLECTION,
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user',
+              },
+            },
+            {
+              $lookup: {
+                from: collection.PLAN_COLLECTION,
+                localField: 'planId',
+                foreignField: '_id',
+                as: 'plan',
+              },
+            },
+            {
+              $unwind: '$expert',
+            },
+            {
+              $unwind: '$user',
+            },
+            {
+              $unwind: '$plan',
+            },
+            {
+              $project: {
+                _id: 1,
+                planId: 1,
+                expertId: 1,
+                userId: 1,
+                validFrom: 1,
+                validTill: 1,
+                expert: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  dob: 1,
+                  gender: 1,
+                  expertisedIn: 1,
+                  experience: 1,
+                  profilePic: 1,
+                },
+                user: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  pet: 1,
+                  profileImage: 1,
+                },
+                plan: {
+                  planName: 1,
+                  validity: 1,
+                  currentPrice: 1,
+                  dietPlan: 1,
+                  expertAvailability: 1,
+                  numberOfCheckup: 1,
+                  tipAvailabilty: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
         // console.log(data);
-        resolve(data)
+        resolve(data);
       } catch (error) {
-        reject()
+        reject();
       }
-    })
-  }
+    });
+  },
+
+  getFeedback: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .find()
+          .toArray();
+
+        resolve(data);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  approveFeedback: (id) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .updateOne({ _id: ObjectId(id) }, { $set: { approved: true } })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.FEEDBACK_COLLECTION)
+              .find()
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  disapproveFeedback: (id) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .updateOne({ _id: ObjectId(id) }, { $set: { approved: false } })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.FEEDBACK_COLLECTION)
+              .find()
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getFeedbackDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .findOne({ _id: ObjectId(id) });
+        resolve(data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  deleteFeedback: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .deleteOne({ _id: ObjectId(id) })
+          .then(async () => {
+            const details = await db
+              .get()
+              .collection(collection.FEEDBACK_COLLECTION)
+              .find()
+              .toArray();
+            resolve(details);
+          })
+          .catch(() => {
+            reject();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
 };
