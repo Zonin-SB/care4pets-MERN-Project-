@@ -317,6 +317,15 @@ const updateExpertProfile = (req, res) => {
     });
 };
 
+const getDetails=(req,res)=>{
+  const id= req.params.id
+  expertUtilities.getDetails(id).then((response)=>{
+res.json({status:true,data:response})
+  }).catch(()=>{
+    res.json({status:false})
+  })
+}
+
 const expertSendOTP = (req, res) => {
   
   expertUtilities
@@ -375,4 +384,5 @@ module.exports = {
   updateExpertProfile,
   expertSendOTP,
   verifyOTP,
+  getDetails,
 };

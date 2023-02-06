@@ -204,9 +204,9 @@ function ExpertEditProfilePage() {
                   stroke="currentColor"
                 ></svg>
                 <select
-                  name="pet"
-                  id="pet"
-                  value={values.pet}
+                  name="expertisedIn"
+                  id="expertisedIn"
+                  value={values.expertisedIn}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
@@ -216,8 +216,8 @@ function ExpertEditProfilePage() {
                   <option value="Exotic-birds">Exotic birds</option>
                 </select>
               </div>
-              {errors.pet && touched.pet && (
-                <p className="red-error">{errors.pet}</p>
+              {errors.expertisedIn && touched.expertisedIn && (
+                <p className="red-error">{errors.expertisedIn}</p>
               )}
 
               <button

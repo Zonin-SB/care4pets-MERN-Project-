@@ -89,7 +89,8 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(messageFrom,'msgs');
+        console.log(messageFrom,'msgs from');
+        // console.log(messageFrom.length);
 
         const messageTo = await db
           .get()
@@ -112,14 +113,15 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(messageTo);
+        console.log(messageTo,'msg to');
+        
 
         if (messageFrom.length === 0) {
           messageFrom = false;
         } else {
-          const id=messageFrom[0].from.toString()
+          // const id=messageFrom[0].from.toString()
           response.from = messageFrom[0]._id;
-          response.sender=id;
+          // response.sender=id;
         }
         if (messageTo.length === 0) {
           messageTo = false;
@@ -128,6 +130,8 @@ module.exports = {
           response.from = messageTo[0]._id;
           response.reciever=id;
         }
+
+        
 
         if (messageFrom && messageTo) {
           let mergedArray = messageFrom.concat(messageTo);
@@ -138,12 +142,17 @@ module.exports = {
           response.message = mergedArray;
         } else if (messageFrom) {
           response.message = messageFrom;
+         
         } else if (messageTo) {
           response.message = messageTo;
         } else {
           response.message = false;
         }
-        // console.log(response, 'merg res');
+        
+
+       
+        console.log('response is');
+        console.log(response, 'merg res');
         resolve(response);
       } catch (error) {
         reject(error);

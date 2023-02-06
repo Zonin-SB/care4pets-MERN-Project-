@@ -12,8 +12,6 @@ function BuyPlanPage() {
   const { selectedPlanDetails } = useSelector((state) => state.user);
   const { selectedExpertDetails } = useSelector((state) => state.user);
   const userId = useSelector((state) => state.admin.userDetails.userId);
-  console.log(selectedPlanDetails, 'plan de red');
-  console.log(selectedExpertDetails, 'plan de red');
 let values={}
 values.planId=selectedPlanDetails._id;
 values.expertId=selectedExpertDetails._id;

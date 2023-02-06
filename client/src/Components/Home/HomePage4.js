@@ -36,50 +36,47 @@ function HomePage4(props) {
   //       navigate('/userLogin')
   //     }
   //   }
-   
+
   // }
 
-  const userSelectPlanAlert=(id)=>{
+  const userSelectPlanAlert = (id) => {
     Swal.fire({
       title: 'Are you sure?',
-      text: "You want to select this plan!",
+      text: 'You want to select this plan!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, select it!'
-    }).then(async(result) => {
+      confirmButtonText: 'Yes, select it!',
+    }).then(async (result) => {
       if (result.isConfirmed) {
-          const token = localStorage.getItem('userToken');
-          if(!token){
-            navigate('/userLogin')
-          }else{
-            const data = await selectPlan(token, id);
-            if (data.status === 'ok') {
-              Swal.fire({         
-                icon: 'success',
-                title: 'You selected this plan',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              dispatch(getSelectedPlanDetails(data.planDetails[0]));
-              navigate('/userSelectExpert')
-            }else if(data.status==='error'){
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-              })
-              setError('Something went wrong...please try again after sometimes...')
-            }else{
-              navigate('/userLogin')
-            }
+        const token = localStorage.getItem('userToken');
+        if (!token) {
+          navigate('/userLogin');
+        } else {
+          const data = await selectPlan(token, id);
+          if (data.status === 'error') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'You already subscribed this plan.!',
+            });
+          } else if (data.status === 'ok') {
+            Swal.fire({
+              icon: 'success',
+              title: 'You selected this plan',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            dispatch(getSelectedPlanDetails(data.planDetails[0]));
+            navigate('/userSelectExpert');
+          } else {
+            navigate('/userLogin');
           }
-         
-        
+        }
       }
-    })
-  }
+    });
+  };
 
   return (
     <div
@@ -94,7 +91,13 @@ function HomePage4(props) {
           <h1 className="pt-9 text-4xl font-sans text-center font-black text-slate-700 ">
             CHOOSE YOUR PLAN
           </h1>
-          {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+          {error ? (
+            <p style={{ color: 'red' }} className="text-center">
+              {error}
+            </p>
+          ) : (
+            ''
+          )}
           <div className="container mx-auto flex justify-evenly flex-wrap mt-9 px-4">
             {plan
               ? plan.map((data, index) => {

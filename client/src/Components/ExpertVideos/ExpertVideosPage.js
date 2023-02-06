@@ -6,6 +6,7 @@ import {
   getAllVideos,
   deleteVideo,
   getRejectedVideoCount,
+  getDetails,
 } from '../../Axios/Services/ExpertServices';
 import verified from '../../images/verified.png';
 import notverified from '../../images/notverified.png';
@@ -19,10 +20,12 @@ function ExpertVideosPage() {
   const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
   const [search, setSearch] = useState('');
   const [count, setCount] = useState('');
+  const [details,setDetails]=useState(false)
 
   useEffect(() => {
     fetchVideos();
     fetchRejectedCount();
+    fetchDetails()
 
     async function fetchVideos() {
       const token = localStorage.getItem('expertToken');
@@ -35,7 +38,14 @@ function ExpertVideosPage() {
       const data = await getRejectedVideoCount(token, expertId);
       setCount(data.videoCount);
     }
+
+    async function fetchDetails(){
+      const token = localStorage.getItem('expertToken');
+      const data=await getDetails(token,expertId)
+      setDetails(data.data[0].verified)
+    }
   }, [expertId]);
+  
 
   const editVideoAlert = (id) => {
     Swal.fire({
@@ -139,6 +149,7 @@ function ExpertVideosPage() {
 
   return (
     <div>
+      {details?(
       <div className="container mx-auto mt-9">
         <div className="flex justify-between p-4">
           <Link to="/expertAddVideos">
@@ -212,6 +223,12 @@ ease-in-out"
           />
         </div>
       </div>
+      ):(
+        <div>
+          <h1 className='font-bold text-2xl text-center mt-16'>Get verified for uploading videos</h1>
+        </div>
+      )}
+
     </div>
   );
 }

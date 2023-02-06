@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const { cloudinary } = require('../middlewares/cloudinary');
 const Stripe = require('stripe');
 const { response } = require('express');
-const { SendOTP, } = require('../middlewares/sendEmail');
+const { SendOTP } = require('../middlewares/sendEmail');
 
 const stripe = Stripe(process.env.STRIPE_KEY);
 
@@ -63,8 +63,6 @@ module.exports = {
       }
     });
   },
-
-  
 
   findUserById: (userId) => {
     return new Promise(async (resolve, reject) => {
@@ -246,16 +244,42 @@ module.exports = {
     });
   },
 
-  selectPlan: (id) => {
+  // selectPlan: (id) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const plan = await db
+  //         .get()
+  //         .collection(collection.PLAN_COLLECTION)
+  //         .find({ _id: ObjectId(id) })
+  //         .toArray();
+
+  //       resolve(plan);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  // },
+
+  selectPlan: (userId, planId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const plan = await db
+        const planFound = await db
           .get()
-          .collection(collection.PLAN_COLLECTION)
-          .find({ _id: ObjectId(id) })
-          .toArray();
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({
+            $and: [{ userId: userId }, { planId: ObjectId(planId) }],
+          });
+        if (planFound == null) {
+          const plan = await db
+            .get()
+            .collection(collection.PLAN_COLLECTION)
+            .find({ _id: ObjectId(planId) })
+            .toArray();
 
-        resolve(plan);
+          resolve(plan);
+        } else {
+          resolve({ planFound: true });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -379,6 +403,7 @@ module.exports = {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         // console.log(session.status,'session status'); // "complete" or "canceled"
         if (session.status === 'complete') {
+          // const planFound=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({})
           db.get()
             .collection(collection.PURCHASE_COLLECTION)
             .insertOne(orderDetails)
@@ -484,7 +509,6 @@ module.exports = {
   },
 
   findPlanById: (id) => {
-
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -514,30 +538,36 @@ module.exports = {
     });
   },
 
-  getUserPlanDetails:(id)=>{
-return new Promise(async(resolve,reject)=>{
-  try {
-    const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
-      {
-        $match:{
-          userId:ObjectId(id)
-        }
-      },{
-        $lookup: {
-          from: collection.PLAN_COLLECTION,
-          localField: 'planId',
-          foreignField: '_id',
-          as: 'plan',
-        },
-      }, {
-        $unwind: '$plan',
-      },
-    ]).toArray()
-    resolve(data)
-  } catch (error) {
-    console.log(error);
-  }
-})
+  getUserPlanDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                userId: ObjectId(id),
+              },
+            },
+            {
+              $lookup: {
+                from: collection.PLAN_COLLECTION,
+                localField: 'planId',
+                foreignField: '_id',
+                as: 'plan',
+              },
+            },
+            {
+              $unwind: '$plan',
+            },
+          ])
+          .toArray();
+        resolve(data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
   },
 
   getPlanVideos: (data) => {
@@ -592,8 +622,7 @@ return new Promise(async(resolve,reject)=>{
   },
 
   sendOTP: (data) => {
-    
-   return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const user = await db
         .get()
         .collection(collection.USER_COLLECTION)
@@ -621,7 +650,6 @@ return new Promise(async(resolve,reject)=>{
                 }
               )
               .then((response) => {
-             
                 SendOTP(otp, email, name).then((data) => {
                   resolve({ status: true });
                 });
@@ -637,11 +665,13 @@ return new Promise(async(resolve,reject)=>{
     });
   },
 
-  verifyOTP:(data)=>{
-    return new Promise(async(resolve,reject)=>{
-      
-      const response={}
-      const user=await db.get().collection(collection.USER_COLLECTION).findOne({email:data.Email})
+  verifyOTP: (data) => {
+    return new Promise(async (resolve, reject) => {
+      const response = {};
+      const user = await db
+        .get()
+        .collection(collection.USER_COLLECTION)
+        .findOne({ email: data.Email });
       if (user) {
         bcrypt.compare(data.OTP, user.otp).then((status) => {
           if (status) {
@@ -655,25 +685,28 @@ return new Promise(async(resolve,reject)=>{
       } else {
         resolve({ status: false });
       }
-    })
+    });
   },
 
-  checkUserPlan:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  checkUserPlan: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       const user= await db.get().collection(collection.PURCHASE_COLLECTION).findOne({userId:ObjectId(id)})
-       if(user){
-        resolve({ status: true })
-       }else{
-        resolve({ status: false });
-       }
+        const user = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({ userId: ObjectId(id) });
+        if (user) {
+          resolve({ status: true });
+        } else {
+          resolve({ status: false });
+        }
       } catch (error) {
         reject(error);
       }
-    })
+    });
   },
 
-  sendFeedback:(data)=>{
+  sendFeedback: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
@@ -690,5 +723,5 @@ return new Promise(async(resolve,reject)=>{
         console.log(error);
       }
     });
-  }
+  },
 };

@@ -373,7 +373,7 @@ export const getAllMessages = async (token, id) => {
 
       config
     );
-    // console.log(data)
+    console.log(data,'msg in axios')
     if (data.status) {
       return data;
     }

@@ -21,9 +21,9 @@ function UserViewPlan() {
   return (
     <div>
         <UserHomeNavPage/>
-        <div>{plan?<UserPlanPage/>:<UserViewPlanPage />}
+        <div>{plan?<UserPlanPage/>:''}
         
-        
+        <UserViewPlanPage />
         </div>
     </div>
   )

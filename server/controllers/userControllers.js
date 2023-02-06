@@ -138,15 +138,6 @@ const getUsersExpert = (req, res) => {
     });
 };
 
-// const selectExpert=(req,res)=>{
-
-// userUtilities.selectExpert(req.body).then(()=>{
-//   res.json({ status: 'ok' });
-// }).catch(()=>{
-//   res.json({ status: 'error' });
-// })
-// }
-
 const selectExpert = (req, res) => {
   const id = req.params.id;
 
@@ -161,16 +152,36 @@ const selectExpert = (req, res) => {
 };
 
 const selectPlan = (req, res) => {
-  const id = req.params.id;
+  const userId = req.user._id;
+  const planId = req.params.id;
   userUtilities
-    .selectPlan(id)
+    .selectPlan(userId, planId)
     .then((response) => {
-      res.json({ status: 'ok', planDetails: response });
+      if (response.planFound) {
+        res.json({
+          status: 'error',
+          error: 'You already subscribed this plan.',
+        });
+      } else {
+        res.json({ status: 'ok', planDetails: response });
+      }
     })
-    .catch(() => {
-      res.json({ status: 'error' });
+    .catch((err) => {
+      console.log(err);
     });
 };
+
+// const selectPlan = (req, res) => {
+//   const id = req.params.id;
+//   userUtilities
+//     .selectPlan(id)
+//     .then((response) => {
+//       res.json({ status: 'ok', planDetails: response });
+//     })
+//     .catch(() => {
+//       res.json({ status: 'error' });
+//     });
+// };
 
 const buyPlan = (req, res) => {
   userUtilities
@@ -261,14 +272,17 @@ const getPlanDetails = (req, res) => {
     });
 };
 
-const getUserPlanDetails=(req,res)=>{
-const id=req.params.id
-userUtilities.getUserPlanDetails(id).then((response)=>{
-  res.json({ status: 'ok', plan: response });
-}).catch(()=>{
-  res.json({ status: false, plan: false });
-})
-}
+const getUserPlanDetails = (req, res) => {
+  const id = req.params.id;
+  userUtilities
+    .getUserPlanDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', plan: response });
+    })
+    .catch(() => {
+      res.json({ status: false, plan: false });
+    });
+};
 
 const getYourExpertDetails = (req, res) => {
   const id = req.params.id;
@@ -309,6 +323,7 @@ const getAllMessages = (req, res) => {
   commonUtilities
     .getAllMessages(to, from)
     .then((response) => {
+      console.log(response, 'in conter');
       res.json({
         status: true,
         to: response.to,
@@ -355,33 +370,37 @@ const checkUserPlan = (req, res) => {
   userUtilities
     .checkUserPlan(id)
     .then((response) => {
-     
       if (response.status) {
         res.json({ status: true, plan: true });
-      } 
+      }
     })
     .catch(() => {
       res.json({ status: false, plan: false });
     });
 };
 
-const sendFeedback=(req,res)=>{
-  const data=req.body
-  userUtilities.sendFeedback(data).then(()=>{
-    res.json({ status: 'ok'});
-  }).catch(()=>{
-    res.json({ status: false });
-  })
+const sendFeedback = (req, res) => {
+  const data = req.body;
+  userUtilities
+    .sendFeedback(data)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
-}
-
-const getHomeFeedback=(req,res)=>{
-  commonUtilities.getHomeFeedback().then((details)=>{
-    res.json({ status: 'ok', feedback: details });
-  }).catch(()=>{
-    res.json({ status: false });
-  })
-}
+const getHomeFeedback = (req, res) => {
+  commonUtilities
+    .getHomeFeedback()
+    .then((details) => {
+      res.json({ status: 'ok', feedback: details });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 module.exports = {
   userSignup,

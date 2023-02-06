@@ -4,7 +4,7 @@ const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
 const { cloudinary } = require('../middlewares/cloudinary');
 const { response } = require('express');
-const { SendOTP, } = require('../middlewares/sendEmail');
+const { SendOTP } = require('../middlewares/sendEmail');
 
 module.exports = {
   doExpertSignup: (data) => {
@@ -462,25 +462,26 @@ module.exports = {
                 email: 1,
                 mobile: 1,
                 profileImage: 1,
-                pet:1,
+                pet: 1,
               },
             },
-          ]).toArray()
-        resolve(userDetails)
+          ])
+          .toArray();
+        resolve(userDetails);
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
 
-  getClientsCount:(id)=>{
+  getClientsCount: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         const count = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
           .countDocuments({
-            expertId:ObjectId(id)
+            expertId: ObjectId(id),
           });
 
         resolve(count);
@@ -490,7 +491,7 @@ module.exports = {
     });
   },
 
-  getExpertEditDetails:(id)=>{
+  getExpertEditDetails: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         const data = await db
@@ -498,21 +499,23 @@ module.exports = {
           .collection(collection.EXPERT_COLLECTION)
           .aggregate([
             {
-              $match:{
-                _id:ObjectId(id)
-              }
-            },{
-              $project:{
-                _id:1,
-                name:1,
-                mobile:1,
-                dob:1,
-                gender:1,
-                expertisedIn:1,
-                experience:1,
-              }
-            }
-          ]).toArray()
+              $match: {
+                _id: ObjectId(id),
+              },
+            },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                mobile: 1,
+                dob: 1,
+                gender: 1,
+                expertisedIn: 1,
+                experience: 1,
+              },
+            },
+          ])
+          .toArray();
 
         resolve(data);
       } catch (error) {
@@ -521,8 +524,7 @@ module.exports = {
     });
   },
 
-  updateExpertProfile:(data)=>{
- 
+  updateExpertProfile: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         await db
@@ -551,57 +553,57 @@ module.exports = {
   },
 
   sendOTP: (data) => {
-   
     return new Promise(async (resolve, reject) => {
-       const expert = await db
-         .get()
-         .collection(collection.EXPERT_COLLECTION)
-         .findOne({ email: data.Email });
-        
-       if (expert) {
-         if (expert.blocked) {
-           const err = 'This account is blocked...';
-           reject(err);
-         } else {
-           try {
-             const { name } = expert;
-             const { email } = expert;
-             const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-             const hashotp = await bcrypt.hash(otp, 10);
-             db.get()
-               .collection(collection.EXPERT_COLLECTION)
-               .updateOne(
-                 {
-                   _id: expert._id,
-                 },
-                 {
-                   $set: {
-                     otp: hashotp,
-                   },
-                 }
-               )
-               .then((response) => {
-              
-                 SendOTP(otp, email, name).then((data) => {
-                   resolve({ status: true });
-                 });
-               });
-           } catch (error) {
-             reject(error);
-           }
-         }
-       } else {
-         const err = 'User not found..';
-         reject(err);
-       }
-     });
-   },
+      const expert = await db
+        .get()
+        .collection(collection.EXPERT_COLLECTION)
+        .findOne({ email: data.Email });
 
-   verifyOTP:(data)=>{
-    return new Promise(async(resolve,reject)=>{
-      
-      const response={}
-      const expert=await db.get().collection(collection.EXPERT_COLLECTION).findOne({email:data.Email})
+      if (expert) {
+        if (expert.blocked) {
+          const err = 'This account is blocked...';
+          reject(err);
+        } else {
+          try {
+            const { name } = expert;
+            const { email } = expert;
+            const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+            const hashotp = await bcrypt.hash(otp, 10);
+            db.get()
+              .collection(collection.EXPERT_COLLECTION)
+              .updateOne(
+                {
+                  _id: expert._id,
+                },
+                {
+                  $set: {
+                    otp: hashotp,
+                  },
+                }
+              )
+              .then((response) => {
+                SendOTP(otp, email, name).then((data) => {
+                  resolve({ status: true });
+                });
+              });
+          } catch (error) {
+            reject(error);
+          }
+        }
+      } else {
+        const err = 'User not found..';
+        reject(err);
+      }
+    });
+  },
+
+  verifyOTP: (data) => {
+    return new Promise(async (resolve, reject) => {
+      const response = {};
+      const expert = await db
+        .get()
+        .collection(collection.EXPERT_COLLECTION)
+        .findOne({ email: data.Email });
       if (expert) {
         bcrypt.compare(data.OTP, expert.otp).then((status) => {
           if (status) {
@@ -615,8 +617,27 @@ module.exports = {
       } else {
         resolve({ status: false });
       }
-    })
+    });
   },
 
- 
+  getDetails: (id) => {
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const data=await db.get().collection(collection.EXPERT_COLLECTION).aggregate([
+          {
+            $match:{
+              _id:ObjectId(id)
+            }
+          },{
+            $project:{
+              verified:1
+            }
+          }
+        ]).toArray()
+        resolve(data)
+      } catch (error) {
+        reject()
+      }
+    })
+  },
 };

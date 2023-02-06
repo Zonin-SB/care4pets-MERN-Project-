@@ -504,3 +504,26 @@ export const updateExpertProfile = async (token, values) => {
     return data;
   }
 };
+
+export const getDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosExpertInstance.get(
+      `/getDetails/${id}`,
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+ 
+
+}
