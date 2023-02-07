@@ -442,27 +442,6 @@ export const getUserPlanDetails=async(token,id)=>{
   }
 }
 
-// export const getUserHomePlan=async(id)=>{
-//   try {
-//     const config = {
-//       headers: {
-        
-//         'Content-Type': 'application/json',
-//       },
-//     };
-//     const { data } = await axiosUserInstance.get(
-//       `/getUserHomePlan/${id}`,
-
-//       config
-//     );
-
-//     if (data.status) {
-//       return data;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 export const sendFeedback=async(token,values)=>{
   try {
@@ -478,7 +457,7 @@ export const sendFeedback=async(token,values)=>{
 values,
       config
     );
-    console.log(data);
+   
     if (data.status) {
       return data;
     }
@@ -508,4 +487,26 @@ export const getHomeFeedback=async()=>{
       } catch (error) {
         console.log(error);
       }
+}
+
+export const userChangeExpert=async(token,values)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.post(
+      '/userChangeExpert',
+      values,
+      config
+    );
+  
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -626,3 +626,47 @@ export const deleteFeedback = async (token, id) => {
     console.log(error);
   }
 };
+
+export const getExpertDetailedView=async (token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getExpertDetailedView/${id}`,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getExpertChangeRequestCount=async(token)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      '/getExpertChangeRequestCount',
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

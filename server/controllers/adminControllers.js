@@ -398,6 +398,24 @@ const deleteFeedback=(req,res)=>{
   });
 }
 
+const getExpertDetailedView=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.getExpertDetailedView(id).then((response)=>{
+    res.json({ status: 'ok', details: response });
+  }).catch(()=>{
+    res.json({ status: false, details: false });
+  })
+  
+}
+
+const getExpertChangeRequestCount=(req,res)=>{
+  adminUtilities.getExpertChangeRequestCount().then((response)=>{
+    res.json({ status: 'ok', count: response });
+  }).catch(()=>{
+    res.json({ status: false});
+  })
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -434,4 +452,6 @@ module.exports = {
   disapproveFeedback,
   getFeedbackDetails,
   deleteFeedback,
+  getExpertDetailedView,
+  getExpertChangeRequestCount,
 };

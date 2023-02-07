@@ -179,3 +179,9 @@ export const userFeedbackSchema=Yup.object({
     feedback:Yup.string().required('This field is required').max(35,'limit exceeded'),
     message: Yup.string().required('This field is required').max(100,'limit exceeded'),
 })
+
+export const expertChangingSchema=Yup.object({
+  reason:Yup.string().required('This field is required').max(100,'limit exceeded'),
+  expertId:Yup.string().required('This field is required'),
+  pet:Yup.string().required('This field is required'),
+})

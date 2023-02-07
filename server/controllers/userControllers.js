@@ -402,6 +402,21 @@ const getHomeFeedback = (req, res) => {
     });
 };
 
+const userChangeExpert=(req,res)=>{
+  userUtilities.userChangeExpert(req.body).then((response)=>{
+    if(response.expertAlreadyChanged){
+      res.json({
+        status: 'error',
+        error: 'You already changed your expert.',
+      });
+    }else{
+      res.json({status:'ok'})
+    }
+  }).catch(()=>{
+    res.json({ status: false });
+  })
+}
+
 module.exports = {
   userSignup,
   userLogin,
@@ -429,4 +444,5 @@ module.exports = {
   sendFeedback,
   getUserPlanDetails,
   getHomeFeedback,
+  userChangeExpert,
 };

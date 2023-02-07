@@ -41,6 +41,8 @@ router.get('/api/approveFeedback/:id',auth.adminAuth,adminController.approveFeed
 router.get('/api/disapproveFeedback/:id',auth.adminAuth,adminController.disapproveFeedback)
 router.get('/api/getFeedbackDetails/:id',auth.adminAuth,adminController.getFeedbackDetails)
 router.get('/api/deleteFeedback/:id',auth.adminAuth,adminController.deleteFeedback)
+router.get('/api/getExpertDetailedView/:id',auth.adminAuth,adminController.getExpertDetailedView)
+router.get('/api/getExpertChangeRequestCount',auth.adminAuth,adminController.getExpertChangeRequestCount)
 
 
 module.exports=router;

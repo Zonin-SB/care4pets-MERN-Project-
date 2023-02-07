@@ -15,7 +15,7 @@ function UserPlanPage() {
       }
     }
   }, [userId]);
-  console.log(plan, 'plan in home');
+ 
 
   return (
     <div>

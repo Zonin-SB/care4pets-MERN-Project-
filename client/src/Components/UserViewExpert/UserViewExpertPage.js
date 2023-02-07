@@ -43,7 +43,9 @@ function UserViewExpertPage() {
                 <h1 className="text-gray-600 font-bold text-xl">
                 {expertDetails.name}
                 </h1>
+                
               </div>
+              <p className='text-gray-500 font-bold text-sm'>ID :{expertDetails._id}</p>
             </div>
           </div>
           <div className="bg-white space-y-6">
@@ -52,13 +54,13 @@ function UserViewExpertPage() {
                 Expert info
               </h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
-                  <p>Name : {expertDetails.name}</p>
-                  <p>Expert : {expertDetails.expertisedIn}</p>
-                  <p>Email : {expertDetails.email}</p>
-                  <p>Mobile : {expertDetails.mobile}</p>
-                  <p>DOB : {expertDetails.dob}</p>
-                  <p>Gender : {expertDetails.gender}</p>
-                  <p>Expert From : {expertDetails.expertFrom}</p>
+                  <p>Name : {expertDetails?expertDetails.name:''}</p>
+                  <p>Expert : {expertDetails?expertDetails.expertisedIn:''}</p>
+                  <p>Email : {expertDetails?expertDetails.email:''}</p>
+                  <p>Mobile : {expertDetails?expertDetails.mobile:''}</p>
+                  <p>DOB : {expertDetails?expertDetails.dob:''}</p>
+                  <p>Gender : {expertDetails?expertDetails.gender:''}</p>
+                  <p>Expert From : {expertDetails?expertDetails.expertFrom:''}</p>
              
               </div>
             </div>

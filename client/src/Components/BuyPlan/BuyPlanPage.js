@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 
-import { buyPlan } from '../../Axios/Services/UserServices';
+import { buyPlan, getUserDetails } from '../../Axios/Services/UserServices';
 import { getPlanOrderValues } from '../../redux/userReducer';
 
 
 function BuyPlanPage() {
+  const [pet,setPet]=useState('')
   const [error,setError]=useState('')
   const dispatch=useDispatch()
 
+  
   const { selectedPlanDetails } = useSelector((state) => state.user);
   const { selectedExpertDetails } = useSelector((state) => state.user);
   const userId = useSelector((state) => state.admin.userDetails.userId);
+
+  useEffect(() => {
+   getUserPet()
+
+   async function getUserPet(){
+    const token=localStorage.getItem('userToken')
+    const data=await getUserDetails(token,userId)
+    setPet(data.userDetails.pet)
+   }
+  }, [userId])
+  // console.log(pet,'pet in buy');
+
 let values={}
 values.planId=selectedPlanDetails._id;
 values.expertId=selectedExpertDetails._id;
@@ -19,6 +33,7 @@ values.userId=userId;
 values.planName=selectedPlanDetails.planName;
 values.planPrice=selectedPlanDetails.currentPrice;
 values.planValidity=selectedPlanDetails.validity;
+values.pet=pet
 // console.log(values,'values after page');
 
 

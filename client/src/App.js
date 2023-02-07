@@ -14,6 +14,7 @@ import {
   AdminApprovalList,
   AdminEditPlan,
   AdminEditVideo,
+  AdminExpertDetailedView,
   AdminExpertInfo,
   AdminFeedback,
   AdminFeedbackExpand,
@@ -48,6 +49,7 @@ import {
   ExpertSignup,
   ExpertVideos,
   Home,
+  UserChangeExpert,
   UserChat,
   UserEditProfile,
   UserEditProfilePic,
@@ -84,6 +86,7 @@ function App() {
           <Route path="/userVideos" element={<UserVideos />} />
           <Route path="/userViewExpert/:id" element={<UserViewExpert />} />
           <Route path="/userChat/:id" element={<UserChat />} />
+          <Route path="/userChangeExpert/:id" element={<UserChangeExpert />} />
         </Route>
 
         <Route path="/admin" element={<AdminLogin />} />
@@ -98,6 +101,7 @@ function App() {
           <Route path="/adminApprovalList" element={<AdminApprovalList />} />
           <Route path="/adminViewFeedback" element={<AdminFeedback />} />
           <Route path="/adminFeedbackExpand/:id" element={<AdminFeedbackExpand />} />
+          <Route path="/adminExpertDetailedView/:id" element={<AdminExpertDetailedView/>} />
           <Route
             path="/expertDetailedView/:id"
             element={<AdminApprovalDetailedView />}

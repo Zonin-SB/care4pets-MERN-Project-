@@ -1039,4 +1039,45 @@ module.exports = {
       }
     });
   },
+
+  getExpertDetailedView:(expertId)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const data=await db.get().collection(collection.EXPERT_COLLECTION).aggregate([
+          {
+            $match:{
+              _id:ObjectId(expertId)
+            }
+          },{
+            $lookup: {
+              from: collection.PURCHASE_COLLECTION,
+              localField: '_id',
+              foreignField: 'expertId',
+              as: 'clients',
+            },
+          },{
+            $addFields:{
+              usersCount:{"$size": "$clients" }
+            }
+          }
+        ]).toArray()
+       
+        resolve(data)
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  },
+
+  getExpertChangeRequestCount:()=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const count=await db.get().collection(collection.PURCHASE_COLLECTION).countDocuments({ expertChangeRequest: { $exists: true } })
+       
+        resolve(count)
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
 };

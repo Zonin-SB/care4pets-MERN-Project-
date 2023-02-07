@@ -317,15 +317,16 @@ module.exports = {
   },
 
   postPlanOrderValues: (data) => {
-    // console.log(data);
+
     return new Promise(async (resolve, reject) => {
       try {
         const orderDetails = {};
+        let valid=parseInt(data.planOrderValues.planValidity)
         let validFrom = new Date();
         let validTill = new Date();
         validTill.setMonth(
-          validFrom.getMonth() + data.planOrderValues.planValidity
-        );
+          validFrom.getMonth() + valid)
+       
         // get current date
         // adjust 0 before single digit date
         let date = ('0' + validFrom.getDate()).slice(-2);
@@ -390,12 +391,15 @@ module.exports = {
           ':' +
           validTillSeconds;
 
-        (orderDetails.planId = ObjectId(data.planOrderValues.planId)),
-          (orderDetails.expertId = ObjectId(data.planOrderValues.expertId)),
-          (orderDetails.userId = ObjectId(data.planOrderValues.userId)),
-          (orderDetails.validFrom = validFrom);
+
+        orderDetails.planId = ObjectId(data.planOrderValues.planId);
+          orderDetails.expertId = ObjectId(data.planOrderValues.expertId);
+        orderDetails.userId = ObjectId(data.planOrderValues.userId);
+          orderDetails.validFrom = validFrom;
+        
         orderDetails.validTill = validTill;
         orderDetails.plan = data.planOrderValues.planName;
+        orderDetails.pet = data.planOrderValues.pet;
         const redirectUrl = data.succesurl;
 
         const url = new URL(redirectUrl);
@@ -403,8 +407,19 @@ module.exports = {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         // console.log(session.status,'session status'); // "complete" or "canceled"
         if (session.status === 'complete') {
-          // const planFound=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({})
-          db.get()
+  
+          const planFound = await db
+            .get()
+            .collection(collection.PURCHASE_COLLECTION)
+            .findOne({
+              $and: [
+                { userId: ObjectId(data.planOrderValues.userId) },
+                { pet: data.planOrderValues.pet },
+              ],
+            });
+     
+          if(planFound===null){
+            db.get()
             .collection(collection.PURCHASE_COLLECTION)
             .insertOne(orderDetails)
             .then(() => {
@@ -413,6 +428,17 @@ module.exports = {
             .catch((error) => {
               reject(error);
             });
+          }else{
+            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:planFound._id},{
+              $set:{
+                planId:ObjectId(data.planOrderValues.planId),
+                expertId:ObjectId(data.planOrderValues.expertId),
+                validTill:validTill,
+                validFrom:validFrom,
+                plan:data.planOrderValues.planName,
+              }
+            })
+          }
         } else {
           console.log('payment failed');
         }
@@ -724,4 +750,37 @@ module.exports = {
       }
     });
   },
+
+  userChangeExpert:(data)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const plan=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({$and:[{userId:ObjectId(data.userId)},{pet:data.pet}]})
+        if(plan.expertChanged){
+          resolve({expertAlreadyChanged:true})
+        }else{
+          if(plan.expertChangeRequest){
+            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$set:{
+              "expertChangeRequest.$[].reason":data.reason,
+              "expertChangeRequest.$[].expertId":data.expertId,
+              "expertChangeRequest.$[].userId":data.userId,
+              "expertChangeRequest.$[].pet":data.pet,
+            }}).then((response)=>{
+              resolve(response)
+            }).catch(()=>{
+              reject()
+            })
+          }else{
+            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$push:{expertChangeRequest:data}}).then((response)=>{
+              resolve(response)
+            }).catch(()=>{
+              reject()
+            })
+          }
+          
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
 };
