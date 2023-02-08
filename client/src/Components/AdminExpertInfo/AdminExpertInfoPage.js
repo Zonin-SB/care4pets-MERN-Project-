@@ -9,7 +9,7 @@ import {
 } from '../../Axios/Services/AdminServices';
 import verified from '../../images/verified.png';
 import notverified from '../../images/notverified.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AdminExpertInfoPage() {
   const navigate=useNavigate();
@@ -165,7 +165,7 @@ function AdminExpertInfoPage() {
     <div>
       <div className='flex justify-between p-4  mt-9 flex-wrap'>
         <h1 className='text-2xl font-bold'>All Experts</h1>
-      <button
+     <Link to={'/adminExpertChangeList'}><button
         type="button"
         className="mt-2 relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
@@ -173,7 +173,7 @@ function AdminExpertInfoPage() {
         <span className="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
           {changeCount?changeCount:0}
         </span>
-      </button>
+      </button></Link> 
       </div>
       <div className="container mx-auto mt-9">
         <DataTable

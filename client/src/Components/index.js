@@ -62,4 +62,6 @@ export {default as AdminViewPaymentDetailsPage} from './AdminViewPaymentDetails/
 export {default as AdminFeedbackPage} from './AdminFeedback/AdminFeedbackPage'
 export {default as AdminFeedbackExpandPage} from './AdminFeedbackExpand/AdminFeedbackExpandPage'
 export {default as AdminExpertDetailedViewPage} from './AdminExpertDetailedView/AdminExpertDetailedViewPage'
+export {default as ExpertChangeListPage} from './AdminViewChangeExpert/ExpertChangeListPage'
+export {default as ExpertChangeViewPage} from './AdminViewChangeExpert/ExpertChangeViewPage'
 export {default as ErrorPage} from './Error/ErrorPage'

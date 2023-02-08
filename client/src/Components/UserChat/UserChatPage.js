@@ -20,11 +20,19 @@ function UserChatPage() {
   useEffect(() => {
     socket.current=io('ws://localhost:3001')
     socket.current.on("getMessage",data=>{
-      setArrivalMessage(data)
-      // console.log(data,'data in socket use');
+      // setArrivalMessage(data)
+      setArrivalMessage({
+        _id:data.from,
+        messages:{
+          message:data.message,
+          time:data.time
+        }
+      })
+      console.log(data,'data in socket use');
+
     })
    }, [])
-  //  console.log(arrivalMessage,'arriv msg in use');
+   console.log(arrivalMessage,'arriv msg in use');
 
    useEffect(() => {
     arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
@@ -255,7 +263,7 @@ function UserChatPage() {
                 </div> */}
 
                 {chat?( chat.map((data,index)=>{
-                  if(data.from===userId){
+                  if(data._id===chatFrom){
                     return(
                       
                 <div key={index} className="col-start-6 col-end-13 p-3 rounded-lg">

@@ -64,101 +64,102 @@ module.exports = {
     });
   },
 
-  getAllMessages: (to, from) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = {};
-        const messageFrom = await db
-          .get()
-          .collection(collection.CHAT_COLLECTION)
-          .aggregate([
-            {
-              $match: {
-                $and: [{ to: ObjectId(to) }, { from: from }],
-              },
-            },
-            {
-              $unwind: '$messages',
-            },
-            {
-              $project: {
-                _id: 1,
-                messages: 1,
-                from:1,
-              },
-            },
-          ])
-          .toArray();
-        console.log(messageFrom,'msgs from');
-        // console.log(messageFrom.length);
+  // getAllMessages: (to, from) => {
+  //    new Promise(async (resolve, reject) => {
+  //     try {
+  //       const response = {};
+  //       const messageFrom = await db
+  //         .get()
+  //         .collection(collection.CHAT_COLLECTION)
+  //         .aggregate([
+  //           {
+  //             $match: {
+  //               $and: [{ to: ObjectId(to) }, { from: from }],
+  //             },
+  //           },
+  //           {
+  //             $unwind: '$messages',
+  //           },
+  //           {
+  //             $project: {
+  //               _id: 1,
+  //               messages: 1,
+  //               // from:1,
+  //             },
+  //           },
+  //         ])
+  //         .toArray();
+  //       console.log(messageFrom,'msgs from');
+       
 
-        const messageTo = await db
-          .get()
-          .collection(collection.CHAT_COLLECTION)
-          .aggregate([
-            {
-              $match: {
-                $and: [{ to: from }, { from: ObjectId(to) }],
-              },
-            },
-            {
-              $unwind: '$messages',
-            },
-            {
-              $project: {
-                _id: 1,
-                messages: 1,
-                from:1,
-              },
-            },
-          ])
-          .toArray();
-        console.log(messageTo,'msg to');
+  //       const messageTo = await db
+  //         .get()
+  //         .collection(collection.CHAT_COLLECTION)
+  //         .aggregate([
+  //           {
+  //             $match: {
+  //               $and: [{ to: from }, { from: ObjectId(to) }],
+  //             },
+  //           },
+  //           {
+  //             $unwind: '$messages',
+  //           },
+  //           {
+  //             $project: {
+  //               _id: 1,
+  //               messages: 1,
+  //               // from:1,
+  //             },
+  //           },
+  //         ])
+  //         .toArray();
+  //       // console.log(messageTo,'msg to');
         
 
-        if (messageFrom.length === 0) {
-          messageFrom = false;
-        } else {
-          // const id=messageFrom[0].from.toString()
-          response.from = messageFrom[0]._id;
-          // response.sender=id;
-        }
-        if (messageTo.length === 0) {
-          messageTo = false;
-        } else {
-          const id=messageTo[0].from.toString()
-          response.from = messageTo[0]._id;
-          response.reciever=id;
-        }
+  //       if (messageFrom.length === 0) {
+  //         messageFrom = false;
+  //       } else {
+  //         // const id=messageFrom[0].from.toString()
+  //         response.from = messageFrom[0]._id;
+  //         // response.sender=id;
+  //       }
+  //       if (messageTo.length === 0) {
+  //         messageTo = false;
+  //       } else {
+  //         // const id=messageTo[0].from.toString()
+  //         // response.from = messageTo[0]._id;
+  //         // response.reciever=id;
+  //         response.to = messageTo[0]._id;
+  //       }
 
         
 
-        if (messageFrom && messageTo) {
-          let mergedArray = messageFrom.concat(messageTo);
-          mergedArray.sort(
-            (a, b) =>
-              new Date(a.messages.realtime) - new Date(b.messages.realtime)
-          );
-          response.message = mergedArray;
-        } else if (messageFrom) {
-          response.message = messageFrom;
+  //       if (messageFrom && messageTo) {
+  //         let mergedArray = messageFrom.concat(messageTo);
+  //         mergedArray.sort(
+  //           (a, b) =>
+  //             new Date(a.messages.realtime) - new Date(b.messages.realtime)
+  //         );
+  //         response.message = mergedArray;
+  //       } else if (messageFrom) {
+  //         response.message = messageFrom;
          
-        } else if (messageTo) {
-          response.message = messageTo;
-        } else {
-          response.message = false;
-        }
+  //       } else if (messageTo) {
+  //         response.message = messageTo;
+  //       } else {
+  //         response.message = false;
+  //       }
         
 
        
-        console.log('response is');
-        console.log(response, 'merg res');
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
+  //       console.log('response is');
+  //       console.log(response, 'merg res');
+  //       resolve(response);
+  //     } catch (error) {
+  //       reject(error);
+  //     }
+  //   });
+  // },
 
   getHomeFeedback:()=>{
     return new Promise(async(resolve,reject)=>{
@@ -169,5 +170,64 @@ module.exports = {
         reject(error);
       }
     })
-  }
+  },
+
+  getAllMessages: (to, from) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const response = {};
+        let fromMessage = await db
+          .get()
+          .collection(collection.CHAT_COLLECTION)
+          .aggregate([
+            { $match: { to: ObjectId(to), from: from } },
+ 
+            { $unwind: '$messages' },
+            { $project: { _id: 1, messages: 1 } },
+          ])
+          .toArray();
+
+        let toMessage = await db
+          .get()
+          .collection(collection.CHAT_COLLECTION)
+          .aggregate([
+            { $match: { to: from, from: ObjectId(to) } },
+            { $unwind: '$messages' },
+            { $project: { _id: 1, messages: 1 } },
+          ])
+          .toArray();
+        // console.log(fromMessage,'from msg');
+        // console.log(toMessage,'to msg');
+        if (fromMessage.length === 0) {
+          fromMessage = false;
+        } else {
+          response.from = fromMessage[0]._id;
+        }
+        if (toMessage.length === 0) {
+          toMessage = false;
+        } else {
+          response.to = toMessage[0]._id;
+        }
+
+        if (fromMessage && toMessage) {
+          let mergedArray = fromMessage.concat(toMessage);
+          mergedArray.sort(
+            (a, b) =>
+              new Date(a.messages.realtime) - new Date(b.messages.realtime)
+          );
+          response.message = mergedArray;
+        } else if (fromMessage) {
+          response.message = fromMessage;
+        } else if (toMessage) {
+          response.message = toMessage;
+        } else {
+          response.message = false;
+        }
+
+        // console.log(response,'resp');
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    }),
 };

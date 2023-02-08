@@ -1040,43 +1040,125 @@ module.exports = {
     });
   },
 
-  getExpertDetailedView:(expertId)=>{
-    return new Promise(async(resolve,reject)=>{
+  getExpertDetailedView: (expertId) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const data=await db.get().collection(collection.EXPERT_COLLECTION).aggregate([
-          {
-            $match:{
-              _id:ObjectId(expertId)
-            }
-          },{
-            $lookup: {
-              from: collection.PURCHASE_COLLECTION,
-              localField: '_id',
-              foreignField: 'expertId',
-              as: 'clients',
+        const data = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(expertId),
+              },
             },
-          },{
-            $addFields:{
-              usersCount:{"$size": "$clients" }
-            }
-          }
-        ]).toArray()
-       
-        resolve(data)
+            {
+              $lookup: {
+                from: collection.PURCHASE_COLLECTION,
+                localField: '_id',
+                foreignField: 'expertId',
+                as: 'clients',
+              },
+            },
+            {
+              $addFields: {
+                usersCount: { $size: '$clients' },
+              },
+            },
+          ])
+          .toArray();
+
+        resolve(data);
       } catch (error) {
         console.log(error);
       }
-    })
+    });
   },
 
-  getExpertChangeRequestCount:()=>{
-    return new Promise(async(resolve,reject)=>{
+  getExpertChangeRequestCount: () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const count=await db.get().collection(collection.PURCHASE_COLLECTION).countDocuments({ expertChangeRequest: { $exists: true } })
-       
-        resolve(count)
+        const count = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .countDocuments({ expertChangeRequest: { $exists: true } });
+
+        resolve(count);
       } catch (error) {
         console.log(error);
+      }
+    });
+  },
+
+  getRequestList: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                expertChangeRequest: { $exists: true },
+              },
+            },
+            {
+              $lookup: {
+                from: collection.USER_COLLECTION,
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user',
+              },
+            },
+            {
+              $unwind: '$user',
+            },
+            {
+              $project: {
+                _id: 1,
+                planId: 1,
+                expertId: 1,
+                userId: 1,
+                validFrom: 1,
+                validTill: 1,
+                plan: 1,
+                pet: 1,
+                // expertChangeRequest:1,
+                user: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  profileImage: 1,
+                },
+                expertChangeRequest: {
+                  $arrayElemAt: ['$expertChangeRequest', 0],
+                },
+              },
+            },
+          ])
+          .toArray();
+        // console.log(data);
+        resolve(data);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  getChangeRequestDetails:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
+          {
+            $match:{
+              _id:ObjectId(id)
+            }
+          }
+        ]).toArray()
+        console.log(data);
+        resolve(data)
+      } catch (error) {
+        reject()
       }
     })
   }

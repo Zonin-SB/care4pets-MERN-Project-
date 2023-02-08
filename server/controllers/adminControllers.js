@@ -416,6 +416,23 @@ const getExpertChangeRequestCount=(req,res)=>{
   })
 }
 
+const getRequestList=(req,res)=>{
+  adminUtilities.getRequestList().then((response)=>{
+    res.json({ status: 'ok', request: response });
+  }).catch(()=>{
+    res.json({ status: false});
+  })
+}
+
+const getChangeRequestDetails=(req,res)=>{
+  const id=req.params.id
+  adminUtilities.getChangeRequestDetails(id).then((response)=>{
+    res.json({ status: 'ok', request: response });
+  }).catch(()=>{
+    res.json({ status: false});
+  })
+}
+
 module.exports = {
   adminLogin,
   getAllUsers,
@@ -454,4 +471,6 @@ module.exports = {
   deleteFeedback,
   getExpertDetailedView,
   getExpertChangeRequestCount,
+  getRequestList,
+  getChangeRequestDetails,
 };

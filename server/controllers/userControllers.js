@@ -226,8 +226,9 @@ const getFreeVideos = (req, res) => {
 
 const getPlanVideos = (req, res) => {
   const id = req.params.id;
+  pet=req.user.pet;
   userUtilities
-    .findPlanById(id)
+    .findPlanById(id,pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getPlanVideos(response).then((data) => {
@@ -256,8 +257,9 @@ const getVideosCount = (req, res) => {
 
 const getPlanDetails = (req, res) => {
   const id = req.params.id;
+  const pet=req.user.pet
   userUtilities
-    .findPlanById(id)
+    .findPlanById(id,pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getPlanDetails(response).then((data) => {
@@ -286,9 +288,9 @@ const getUserPlanDetails = (req, res) => {
 
 const getYourExpertDetails = (req, res) => {
   const id = req.params.id;
-
+  const pet=req.user.pet;
   userUtilities
-    .findPlanById(id)
+    .findPlanById(id,pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getYourExpertDetails(response).then((data) => {
@@ -323,7 +325,7 @@ const getAllMessages = (req, res) => {
   commonUtilities
     .getAllMessages(to, from)
     .then((response) => {
-      console.log(response, 'in conter');
+      // console.log(response, 'in conter');
       res.json({
         status: true,
         to: response.to,
@@ -367,8 +369,9 @@ const verifyOTP = (req, res) => {
 
 const checkUserPlan = (req, res) => {
   const id = req.params.id;
+  const pet=req.user.pet;
   userUtilities
-    .checkUserPlan(id)
+    .checkUserPlan(id,pet)
     .then((response) => {
       if (response.status) {
         res.json({ status: true, plan: true });

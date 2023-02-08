@@ -2,24 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { getAllMessages, getClientDetails, sendMessage } from '../../Axios/Services/ExpertServices';
-import {io} from 'socket.io-client';
+import {
+  getAllMessages,
+  getClientDetails,
+  sendMessage,
+} from '../../Axios/Services/ExpertServices';
+import { io } from 'socket.io-client';
 import userProfilePic from '../../images/proImg.jpg';
-
 
 function ExpertChatPage() {
   const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   const [clientDetails, setClientDetails] = useState([]);
   const { id } = useParams();
-  const [chatFrom,setChatFrom]=useState('')
-  const [arrivalMessage,setArrivalMessage]=useState('');
-  const [chat,setChat]=useState('')
-  const socket=useRef();
+  const [chatFrom, setChatFrom] = useState('');
+  const [arrivalMessage, setArrivalMessage] = useState('');
+  const [chat, setChat] = useState('');
+  const socket = useRef();
   const scrollRef = useRef();
   const [message, setMessage] = useState('');
   useEffect(() => {
     fetchUserDetails();
-    if(id){
+    if (id) {
       fetchMessage();
     }
 
@@ -31,48 +34,54 @@ function ExpertChatPage() {
   }, [id]);
 
   useEffect(() => {
-    socket.current=io('ws://localhost:3001')
-    socket.current.on("getMessage",data=>{
+    socket.current = io('ws://localhost:3001');
+    socket.current.on('getMessage', (data) => {
       // console.log(data,'data in sock exp');
-      setArrivalMessage(data)
-    })
-   }, [])
+      // setArrivalMessage(data)
+      setArrivalMessage({
+        _id: data.from,
+        messages: {
+          message: data.message,
+          time: data.time,
+        },
+      });
+    });
+  }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
-   
 
-   useEffect(() => {
-    socket.current.emit("addUser",expertId)
-   }, [expertId])
+  useEffect(() => {
+    socket.current.emit('addUser', expertId);
+  }, [expertId]);
 
- async function fetchMessage(){
-  const token = localStorage.getItem('expertToken');
-  const data=await getAllMessages(token,id)
-  if(data.messages){
-    setChatFrom(data.from);
-    setChat(data.messages);
+  async function fetchMessage() {
+    const token = localStorage.getItem('expertToken');
+    const data = await getAllMessages(token, id);
+    if (data.messages) {
+      setChatFrom(data.from);
+      setChat(data.messages);
+    }
   }
-  }
 
-  async function sendChat(){
-    const token=localStorage.getItem('expertToken')
+  async function sendChat() {
+    const token = localStorage.getItem('expertToken');
     const currentDate = new Date();
     const time = currentDate.toLocaleString('en-US', {
       hour: 'numeric',
       minute: 'numeric',
       hour12: true,
     });
-    socket.current.emit("sendMessage",{
-      from:expertId,
-      to:id,
-      message:message,
-      time:time,
-    })
-    await sendMessage(token,id,message).then(()=>{
-      fetchMessage()
-    })
+    socket.current.emit('sendMessage', {
+      from: expertId,
+      to: id,
+      message: message,
+      time: time,
+    });
+    await sendMessage(token, id, message).then(() => {
+      fetchMessage();
+    });
     setMessage('');
   }
   useEffect(() => {
@@ -253,59 +262,52 @@ function ExpertChatPage() {
                         </div>
                       </div> */}
 
-                       
-                {chat?( chat.map((data,index)=>{
-                  if(data.from===expertId){
-                    return(
-                      
-                <div key={index} className="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div className="flex items-center justify-start flex-row-reverse">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                      
-                    </div>
-                    <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                      <div>
-                        {data.messages.message}
-                      </div>
-                      <div className="absolute text-xs bottom-0 right-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
-                       {data.messages.time}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                      {chat ? (
+                        chat.map((data, index) => {
+                          if (data._id === chatFrom) {
+                            return (
+                              <div
+                                key={index}
+                                className="col-start-6 col-end-13 p-3 rounded-lg"
+                              >
+                                <div className="flex items-center justify-start flex-row-reverse">
+                                  <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"></div>
+                                  <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                                    <div>{data.messages.message}</div>
+                                    <div className="absolute text-xs bottom-0 right-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
+                                      {data.messages.time}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          } else {
+                            return (
+                              <div
+                                key={index}
+                                className="col-start-1 col-end-8 p-3 rounded-lg"
+                              >
+                                <div className="flex flex-row items-center">
+                                  <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                                    {/* <img src={expertDetails?expertDetails.profilePic:''} alt="" /> */}
+                                  </div>
+                                  <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                                    <div>{data.messages.message}</div>
+                                    <div className="absolute text-xs bottom-0 left-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
+                                      {data.messages.time}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          }
+                        })
+                      ) : (
+                        <div>
+                          {/* <h1 className='text-center font-semibold text-lg'>No messages found...Start chatting now..!</h1> */}
+                        </div>
+                      )}
 
-                
-                    )
-                  }else{
-                    return(
-                   
-                <div key={index} className="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div className="flex flex-row items-center">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                      {/* <img src={expertDetails?expertDetails.profilePic:''} alt="" /> */}
-                    </div>
-                    <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                      <div>
-                      {data.messages.message}
-                      </div>
-                      <div className="absolute text-xs bottom-0 left-0 -mb-5 mr-2 whitespace-nowrap text-gray-500">
-                      {data.messages.time}
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-
-                   
-                    )
-                  }
-                })) : (
-                  <div >
-                    {/* <h1 className='text-center font-semibold text-lg'>No messages found...Start chatting now..!</h1> */}
-                  </div>
-                )}
-
-                      
                       {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
                         <div className="flex flex-row items-center">
                           <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
@@ -372,7 +374,7 @@ function ExpertChatPage() {
                           </div>
                         </div>
                       </div> */}
-                       <div ref={scrollRef}></div>
+                      <div ref={scrollRef}></div>
                     </div>
                   </div>
                 </div>
@@ -425,7 +427,10 @@ function ExpertChatPage() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <button onClick={sendChat}  className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0">
+                    <button
+                      onClick={sendChat}
+                      className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                    >
                       <span>Send</span>
                       <span className="ml-2">
                         <svg

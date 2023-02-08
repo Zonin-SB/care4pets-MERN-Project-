@@ -77,13 +77,18 @@ io.on('connection', (socket) => {
     const sendUserSocket = onlineUsers.get(to);
     // console.log(sendUserSocket,'user sock');
     if(sendUserSocket){
-      // const message = { message: message, time: time };
-      const messages={message:message,time:time}
-      let values={}
-      values.from=from,
-      values.to=to,
-      values.messages=messages
-      io.to(sendUserSocket).emit("getMessage",values)
+
+      // const messages={message:message,time:time}
+      // let values={}
+      // values.from=from,
+      // values.to=to,
+      // values.messages=messages
+      // io.to(sendUserSocket).emit("getMessage",values)
+      io.to(sendUserSocket).emit("getMessage",{
+        from,
+        message,
+        time
+      })
     }else{
       console.log('user is offline');
     }

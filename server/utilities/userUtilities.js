@@ -213,20 +213,7 @@ module.exports = {
     });
   },
 
-  // selectExpert:(id)=>{
-  //   console.log(id);
-  //   return new Promise(async(resolve,reject)=>{
-  //     try {
-  //       await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectId(id.userId)},{$set:{expertId:id.expertId}}).then((response)=>{
-  //         resolve(response)
-  //       }).catch((error)=>{
-  //         reject()
-  //       })
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })
-  // }
+  
 
   selectExpert: (id) => {
     return new Promise(async (resolve, reject) => {
@@ -244,21 +231,7 @@ module.exports = {
     });
   },
 
-  // selectPlan: (id) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       const plan = await db
-  //         .get()
-  //         .collection(collection.PLAN_COLLECTION)
-  //         .find({ _id: ObjectId(id) })
-  //         .toArray();
-
-  //       resolve(plan);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  // },
+ 
 
   selectPlan: (userId, planId) => {
     return new Promise(async (resolve, reject) => {
@@ -534,14 +507,13 @@ module.exports = {
     });
   },
 
-  findPlanById: (id) => {
+  findPlanById: (id,pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
-          .findOne({ userId: ObjectId(id) });
-
+          .findOne({ $and:[{userId: ObjectId(id)},{pet:pet}] });
         resolve(details);
       } catch (error) {
         console.log(error);
@@ -714,13 +686,13 @@ module.exports = {
     });
   },
 
-  checkUserPlan: (id) => {
+  checkUserPlan: (id,pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const user = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
-          .findOne({ userId: ObjectId(id) });
+          .findOne({ $and:[{userId: ObjectId(id)},{pet,pet}] });
         if (user) {
           resolve({ status: true });
         } else {

@@ -627,7 +627,7 @@ export const deleteFeedback = async (token, id) => {
   }
 };
 
-export const getExpertDetailedView=async (token,id)=>{
+export const getExpertDetailedView = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -647,9 +647,9 @@ export const getExpertDetailedView=async (token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getExpertChangeRequestCount=async(token)=>{
+export const getExpertChangeRequestCount = async (token) => {
   try {
     const config = {
       headers: {
@@ -669,4 +669,45 @@ export const getExpertChangeRequestCount=async(token)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const getRequestList = async (token) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get('/getRequestList', config);
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getChangeRequestDetails = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getChangeRequestDetails/${id}`,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

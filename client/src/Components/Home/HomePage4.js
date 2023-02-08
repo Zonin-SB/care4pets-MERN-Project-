@@ -21,23 +21,7 @@ function HomePage4(props) {
     }
   }, []);
 
-  // async function userSelectPlan(id) {
-  //   const token = localStorage.getItem('userToken');
-  //   if(!token){
-  //     navigate('/userLogin')
-  //   }else{
-  //     const data = await selectPlan(token, id);
-  //     if (data.status === 'ok') {
-  //       dispatch(getSelectedPlanDetails(data.planDetails[0]));
-  //       navigate('/userSelectExpert')
-  //     }else if(data.status==='error'){
-  //       setError('Something went wrong...please try again after sometimes...')
-  //     }else{
-  //       navigate('/userLogin')
-  //     }
-  //   }
-
-  // }
+  
 
   const userSelectPlanAlert = (id) => {
     Swal.fire({

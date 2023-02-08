@@ -14,6 +14,8 @@ import {
   AdminApprovalList,
   AdminEditPlan,
   AdminEditVideo,
+  AdminExpertChangeList,
+  AdminExpertChangeView,
   AdminExpertDetailedView,
   AdminExpertInfo,
   AdminFeedback,
@@ -102,6 +104,8 @@ function App() {
           <Route path="/adminViewFeedback" element={<AdminFeedback />} />
           <Route path="/adminFeedbackExpand/:id" element={<AdminFeedbackExpand />} />
           <Route path="/adminExpertDetailedView/:id" element={<AdminExpertDetailedView/>} />
+          <Route path="/adminExpertChangeList" element={<AdminExpertChangeList/>} />
+          <Route path="/adminExpertChangeView/:id" element={<AdminExpertChangeView/>} />
           <Route
             path="/expertDetailedView/:id"
             element={<AdminApprovalDetailedView />}
