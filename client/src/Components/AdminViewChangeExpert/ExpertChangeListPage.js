@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getRequestList } from '../../Axios/Services/AdminServices';
 import userProfile from '../../images/proImg.jpg';
+import { expertChangeDetails } from '../../redux/adminReducer';
 
 function ExpertChangeListPage() {
+  const dispatch = useDispatch();
+  
   const [requestDetails, setRequestDetails] = useState([]);
   const navigate=useNavigate();
   useEffect(() => {
@@ -79,7 +83,7 @@ function ExpertChangeListPage() {
                 </dl>
                 
                 <button
-                onClick={()=>navigate(`/adminExpertChangeView/${data._id}`)}
+                onClick={()=>{dispatch(expertChangeDetails(data.expertChangeRequest.expertId)); navigate(`/adminExpertChangeView/${data._id}`)}}
                   type="button"
                   class="absolute right-0 bottom-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
                 >

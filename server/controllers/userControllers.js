@@ -273,6 +273,70 @@ const getPlanDetails = (req, res) => {
       console.log(err);
     });
 };
+const getExpertChangeRejected=(req,res)=>{
+  const id = req.params.id;
+  const pet=req.user.pet
+  userUtilities
+    .getExpertChangeRejected(id,pet)
+    .then((response) => {
+      // console.log(response,'in 282');
+      res.json({ status: 'ok', details: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+const getExpertChangeApproved=(req,res)=>{
+  const id = req.params.id;
+  const pet=req.user.pet
+  userUtilities
+    .getExpertChangeApproved(id,pet)
+    .then((response) => {
+      // console.log(response,'in 282');
+      res.json({ status: 'ok', details: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+const getExpertChangeNotification=(req,res)=>{
+  const id = req.params.id;
+  userUtilities
+    .findPurchaseById(id)
+    .then((response) => {
+      // console.log(response,'in 294');
+      res.json({ status: 'ok', details: response });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+const userExpertRejectionAccepted=(req,res)=>{
+  const id=req.params.id
+  userUtilities
+  .userExpertRejectionAccepted(id)
+  .then((response) => {
+    res.json({ status: 'ok' });
+  })
+  .catch(() => {
+    res.json({ status: false });
+  });
+}
+
+const userExpertChangeAccepted=(req,res)=>{
+  const id=req.params.id
+  userUtilities
+  .userExpertChangeAccepted(id)
+  .then((response) => {
+    res.json({ status: 'ok' });
+  })
+  .catch(() => {
+    res.json({ status: false });
+  });
+}
 
 const getUserPlanDetails = (req, res) => {
   const id = req.params.id;
@@ -448,4 +512,9 @@ module.exports = {
   getUserPlanDetails,
   getHomeFeedback,
   userChangeExpert,
+  getExpertChangeRejected,
+  getExpertChangeNotification,
+  userExpertRejectionAccepted,
+  getExpertChangeApproved,
+  userExpertChangeAccepted,
 };

@@ -12,6 +12,7 @@ import {
   AdminAddPlans,
   AdminApprovalDetailedView,
   AdminApprovalList,
+  AdminApproveExpertChange,
   AdminEditPlan,
   AdminEditVideo,
   AdminExpertChangeList,
@@ -24,6 +25,7 @@ import {
   AdminLogin,
   AdminManageVideos,
   AdminRejectExpert,
+  AdminRejectExpertChange,
   AdminRejectVideo,
   AdminUserInfo,
   AdminVideoApprovalDetails,
@@ -51,6 +53,8 @@ import {
   ExpertSignup,
   ExpertVideos,
   Home,
+  UserAcceptExpChangeApprove,
+  UserAcceptExpChangeReject,
   UserChangeExpert,
   UserChat,
   UserEditProfile,
@@ -89,6 +93,8 @@ function App() {
           <Route path="/userViewExpert/:id" element={<UserViewExpert />} />
           <Route path="/userChat/:id" element={<UserChat />} />
           <Route path="/userChangeExpert/:id" element={<UserChangeExpert />} />
+          <Route path="/userAceptExpChangeApprove/:id" element={<UserAcceptExpChangeApprove />} />
+          <Route path="/userAceptExpChangeReject/:id" element={<UserAcceptExpChangeReject />} />
         </Route>
 
         <Route path="/admin" element={<AdminLogin />} />
@@ -106,6 +112,9 @@ function App() {
           <Route path="/adminExpertDetailedView/:id" element={<AdminExpertDetailedView/>} />
           <Route path="/adminExpertChangeList" element={<AdminExpertChangeList/>} />
           <Route path="/adminExpertChangeView/:id" element={<AdminExpertChangeView/>} />
+          <Route path="/adminRejectExpertChange/:id" element={<AdminRejectExpertChange/>} />
+          {/* <Route path="/adminApproveExpertChange/:id/:id" element={<AdminApproveExpertChange/>} /> */}
+          <Route path="/adminApproveExpertChange" element={<AdminApproveExpertChange/>} />
           <Route
             path="/expertDetailedView/:id"
             element={<AdminApprovalDetailedView />}

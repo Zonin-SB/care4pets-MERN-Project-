@@ -185,3 +185,13 @@ export const expertChangingSchema=Yup.object({
   expertId:Yup.string().required('This field is required'),
   pet:Yup.string().required('This field is required'),
 })
+
+export const rejectionExpertChangeSchema = Yup.object({
+  reason: Yup.string().required('This field is required'),
+  message: Yup.string().required('This field is required'),
+});
+
+export const approveExpertChangeSchema = Yup.object({
+  reason: Yup.string().required('This field is required'),
+  message: Yup.string().required('This field is required'),
+});

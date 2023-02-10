@@ -45,6 +45,9 @@ router.get('/api/getExpertDetailedView/:id',auth.adminAuth,adminController.getEx
 router.get('/api/getExpertChangeRequestCount',auth.adminAuth,adminController.getExpertChangeRequestCount)
 router.get('/api/getRequestList',auth.adminAuth,adminController.getRequestList)
 router.get('/api/getChangeRequestDetails/:id',auth.adminAuth,adminController.getChangeRequestDetails)
+router.get('/api/getNewExpertDetails/:id',auth.adminAuth,adminController.getNewExpertDetails)
+router.post('/api/adminRejectExpertChange/:id',auth.adminAuth,adminController.adminRejectExpertChange)
+router.post('/api/adminApproveExpertChange/:id',auth.adminAuth,adminController.adminApproveExpertChange)
 
 
 module.exports=router;

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   userAllDetails:'',
   userToken:'',
   planDetails:'',
+  changeExpertId:'',
 };
 
 const loginSlice = createSlice({
@@ -66,6 +67,10 @@ const loginSlice = createSlice({
     planData:(state,action)=>{ 
     const  planDetails=action.payload
       return{...state,planDetails}
+    },
+    expertChangeDetails:(state,action)=>{
+      const changeExpertId=action.payload;
+      return{...state,changeExpertId}
     }
     
     
@@ -85,6 +90,7 @@ export const {
   userToken,
   clearUserToken,
   planData,
+  expertChangeDetails,
 } = loginSlice.actions;
 
 // this is for configureStore

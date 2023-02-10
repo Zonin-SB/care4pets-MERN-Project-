@@ -521,6 +521,59 @@ module.exports = {
     });
   },
 
+  getExpertChangeRejected:(id,pet)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match:{
+                $and:[{userId: ObjectId(id)},{pet:pet}] 
+              }
+            },{
+              $project:{
+                expertChangeRejected: {
+                  $arrayElemAt: ['$expertChangeRejected', 0],
+                },
+              }
+            }
+          ]).toArray()
+          // console.log(details);
+        resolve(details);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  getExpertChangeApproved:(id,pet)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match:{
+                $and:[{userId: ObjectId(id)},{pet:pet}] 
+              }
+            },{
+              $project:{
+                expertChangeAccepted: {
+                  $arrayElemAt: ['$expertChangeAccepted', 0],
+                },
+              }
+            }
+          ]).toArray()
+        resolve(details);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
   getPlanDetails: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -534,6 +587,64 @@ module.exports = {
         console.log(error);
       }
     });
+  },
+
+  findPurchaseById:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({ _id: ObjectId(id) });
+        resolve(details);
+      } catch (error) {
+        reject(error)
+      }
+    });
+  },
+
+  userExpertRejectionAccepted:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+       await db.get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $unset: {
+                expertChangeRejected: '',
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject(error)
+      }
+    })
+  },
+
+  userExpertChangeAccepted:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+       await db.get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $unset: {
+                expertChangeAccepted: '',
+              },
+            }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      } catch (error) {
+        reject(error)
+      }
+    })
   },
 
   getUserPlanDetails: (id) => {
@@ -731,7 +842,7 @@ module.exports = {
           resolve({expertAlreadyChanged:true})
         }else{
           if(plan.expertChangeRequest){
-            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$set:{
+           await db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$set:{
               "expertChangeRequest.$[].reason":data.reason,
               "expertChangeRequest.$[].expertId":data.expertId,
               "expertChangeRequest.$[].userId":data.userId,
@@ -742,7 +853,7 @@ module.exports = {
               reject()
             })
           }else{
-            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$push:{expertChangeRequest:data}}).then((response)=>{
+           await db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$push:{expertChangeRequest:data}}).then((response)=>{
               resolve(response)
             }).catch(()=>{
               reject()

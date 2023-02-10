@@ -96,25 +96,7 @@ function AdminAcceptExpertPage() {
               <p className="red-error">{errors.name}</p>
             )}
           </div>
-          {/* <div>
-            <label htmlFor="email" className="block mb-1 ml-1">
-              Reason
-            </label>
-            <input
-              id="reason"
-              name="reason"
-              type="text"
-              value={values.reason}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder="Enter Reason"
-              required=""
-              className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-rose-600 bg-gray-100"
-            />
-            {errors.reason && touched.reason && (
-              <p className="red-error">{errors.reason}</p>
-            )}
-          </div> */}
+       
           <div>
             <label className="block mb-1 ml-1">Message</label>
             <textarea

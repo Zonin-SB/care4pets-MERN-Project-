@@ -315,6 +315,114 @@ export const getPlanDetails = async (token, id) => {
   }
 };
 
+export const getExpertChangeRejected=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getExpertChangeRejected/${id}`,
+
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getExpertChangeApproved=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getExpertChangeApproved/${id}`,
+
+      config
+    );
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getExpertChangeNotification=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/getExpertChangeNotification/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const userExpertRejectionAccepted=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/userExpertRejectionAccepted/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const userExpertChangeAccepted=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      `/userExpertChangeAccepted/${id}`,
+
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getYourExpertDetails = async (token, id) => {
   try {
     const config = {

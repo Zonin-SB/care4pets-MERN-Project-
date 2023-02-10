@@ -339,31 +339,6 @@ module.exports = {
     });
   },
 
-  // approveExpert: (expertId) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       await db
-  //         .get()
-  //         .collection(collection.EXPERT_COLLECTION)
-  //         .updateOne(
-  //           { _id: ObjectId(expertId) },
-  //           {
-  //             $set: {
-  //               applied: false,
-  //               verified: true,
-  //               expertFrom: new Date(),
-  //             },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           resolve(response);
-  //         });
-  //     } catch (error) {
-  //       reject();
-  //     }
-  //   });
-  // },
-
   rejectExpert: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -1145,21 +1120,216 @@ module.exports = {
     });
   },
 
-  getChangeRequestDetails:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  getChangeRequestDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const data=await db.get().collection(collection.PURCHASE_COLLECTION).aggregate([
-          {
-            $match:{
-              _id:ObjectId(id)
-            }
-          }
-        ]).toArray()
-        console.log(data);
-        resolve(data)
+        const data = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(id),
+              },
+            },
+            {
+              $lookup: {
+                from: collection.USER_COLLECTION,
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user',
+              },
+            },
+            {
+              $unwind: '$user',
+            },
+            {
+              $lookup: {
+                from: collection.EXPERT_COLLECTION,
+                localField: 'expertId',
+                foreignField: '_id',
+                as: 'currentExpert',
+              },
+            },
+            {
+              $unwind: '$currentExpert',
+            },
+            {
+              $project: {
+                _id: 1,
+                planId: 1,
+                expertId: 1,
+                userId: 1,
+                validFrom: 1,
+                validTill: 1,
+                plan: 1,
+                pet: 1,
+                expertChangeRequest: {
+                  $arrayElemAt: ['$expertChangeRequest', 0],
+                },
+                user: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  profileImage: 1,
+                },
+                currentExpert: {
+                  name: 1,
+                  email: 1,
+                  mobile: 1,
+                  dob: 1,
+                  gender: 1,
+                  expertisedIn: 1,
+                  experience: 1,
+                  expertFrom: 1,
+                },
+              },
+            },
+          ])
+          .toArray();
+        // console.log(data);
+        resolve(data);
       } catch (error) {
-        reject()
+        reject();
       }
-    })
-  }
+    });
+  },
+
+  getExpertById: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(id),
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                email: 1,
+                mobile: 1,
+                dob: 1,
+                gender: 1,
+                expertisedIn: 1,
+                experience: 1,
+                expertFrom: 1,
+              },
+            },
+          ])
+          .toArray();
+        // console.log(data);
+        resolve(data);
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  adminRejectExpertChange: (id, data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const purchase = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({ _id: ObjectId(id) });
+        if (purchase.expertChangeRejected) {
+          await db
+            .get()
+            .collection(collection.PURCHASE_COLLECTION)
+            .updateOne(
+              { _id: ObjectId(id) },
+              {
+                $set: {
+                  'expertChangeRejected.$[].reason': data.reason,
+                  'expertChangeRejected.$[].message': data.message,
+                  'expertChangeRejected.$[].id': id,
+                },
+                $unset: {
+                  expertChangeRequest: '',
+                },
+              }
+            )
+            .then((response) => {
+              resolve(response);
+            })
+            .catch(() => {
+              reject();
+            });
+        } else {
+          await db
+            .get()
+            .collection(collection.PURCHASE_COLLECTION)
+            .updateOne(
+              { _id: ObjectId(id) },
+              {
+                $unset: {
+                  expertChangeRequest: '',
+                },
+                $push: {
+                  expertChangeRejected: {
+                    id: id,
+                    reason: data.reason,
+                    message: data.message,
+                  },
+                },
+              }
+            )
+            .then((response) => {
+              resolve(response);
+            });
+        }
+      } catch (error) {
+        reject();
+      }
+    });
+  },
+
+  adminApproveExpertChange: (id, data) => {
+    //  console.log(data);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const purchase = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({ _id: ObjectId(id) });
+        // console.log(purchase);
+        if (purchase) {
+          await db
+            .get()
+            .collection(collection.PURCHASE_COLLECTION)
+            .updateOne(
+              { _id: ObjectId(id) },
+              {
+                $set: {
+                  expertChanged: true,
+                  previousExpertId: purchase.expertId,
+                  expertId: ObjectId(data.expertId),
+                },
+                $push: {
+                  expertChangeAccepted: {
+                    id:id,
+                    reason: data.reason,
+                    message: data.message,
+                  },
+                },
+                $unset: {
+                  expertChangeRequest: '',
+                },
+              }
+            )
+            .then((response) => {
+              resolve(response);
+            });
+        } else {
+          resolve({purchaseNotFound:true})
+        }
+      } catch (error) {
+        reject();
+      }
+    });
+  },
 };

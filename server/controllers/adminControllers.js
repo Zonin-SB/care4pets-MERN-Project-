@@ -331,107 +331,178 @@ const adminRejectVideo = (req, res) => {
     });
 };
 
-const getPaymentDetails=(req,res)=>{
+const getPaymentDetails = (req, res) => {
   adminUtilities
     .getPaymentDetails()
     .then((response) => {
-      res.json({ status: 'ok',details:response });
+      res.json({ status: 'ok', details: response });
     })
     .catch(() => {
       res.json({ status: 'error' });
     });
-}
+};
 
-const getPaymentAllDetails=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.getPaymentAllDetails(id).then((response)=>{
-    res.json({ status: 'ok',details:response });
-  }).catch(()=>{
-    res.json({ status: 'error' });
-  })
-}
-
-const getFeedback=(req,res)=>{
-  adminUtilities.getFeedback().then((data)=>{
-    res.json({ status: 'ok', feedback: data });
-  }).catch(()=>{
-    res.json({ status: false, feedback: false });
-  })
-}
-
-const approveFeedback=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.approveFeedback(id).then((details)=>{
-    res.json({ status: 'ok', approved: true, feedback: details });
-  }).catch(()=>{
-    res.json({ status: false, feedback: false });
-  })
-}
-
-const disapproveFeedback=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.disapproveFeedback(id).then((details)=>{
-    res.json({ status: 'ok', disapproved: true, feedback: details });
-  }).catch(()=>{
-    res.json({ status: false, feedback: false });
-  })
-}
-
-const getFeedbackDetails=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.getFeedbackDetails(id).then((data)=>{
-    res.json({ status: 'ok', feedback: data });
-  }).catch(()=>{
-    res.json({ status: false, feedback: false });
-  })
-}
-
-const deleteFeedback=(req,res)=>{
-  const id=req.params.id
+const getPaymentAllDetails = (req, res) => {
+  const id = req.params.id;
   adminUtilities
-  .deleteFeedback(id)
-  .then((details) => {
-    res.json({ status: 'ok', feedback: details });
-  })
-  .catch(() => {
-    res.json({ status: false, feedback: false });
-  });
-}
+    .getPaymentAllDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', details: response });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
 
-const getExpertDetailedView=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.getExpertDetailedView(id).then((response)=>{
-    res.json({ status: 'ok', details: response });
-  }).catch(()=>{
-    res.json({ status: false, details: false });
-  })
-  
-}
+const getFeedback = (req, res) => {
+  adminUtilities
+    .getFeedback()
+    .then((data) => {
+      res.json({ status: 'ok', feedback: data });
+    })
+    .catch(() => {
+      res.json({ status: false, feedback: false });
+    });
+};
 
-const getExpertChangeRequestCount=(req,res)=>{
-  adminUtilities.getExpertChangeRequestCount().then((response)=>{
-    res.json({ status: 'ok', count: response });
-  }).catch(()=>{
-    res.json({ status: false});
-  })
-}
+const approveFeedback = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .approveFeedback(id)
+    .then((details) => {
+      res.json({ status: 'ok', approved: true, feedback: details });
+    })
+    .catch(() => {
+      res.json({ status: false, feedback: false });
+    });
+};
 
-const getRequestList=(req,res)=>{
-  adminUtilities.getRequestList().then((response)=>{
-    res.json({ status: 'ok', request: response });
-  }).catch(()=>{
-    res.json({ status: false});
-  })
-}
+const disapproveFeedback = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .disapproveFeedback(id)
+    .then((details) => {
+      res.json({ status: 'ok', disapproved: true, feedback: details });
+    })
+    .catch(() => {
+      res.json({ status: false, feedback: false });
+    });
+};
 
-const getChangeRequestDetails=(req,res)=>{
-  const id=req.params.id
-  adminUtilities.getChangeRequestDetails(id).then((response)=>{
-    res.json({ status: 'ok', request: response });
-  }).catch(()=>{
-    res.json({ status: false});
-  })
-}
+const getFeedbackDetails = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getFeedbackDetails(id)
+    .then((data) => {
+      res.json({ status: 'ok', feedback: data });
+    })
+    .catch(() => {
+      res.json({ status: false, feedback: false });
+    });
+};
+
+const deleteFeedback = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .deleteFeedback(id)
+    .then((details) => {
+      res.json({ status: 'ok', feedback: details });
+    })
+    .catch(() => {
+      res.json({ status: false, feedback: false });
+    });
+};
+
+const getExpertDetailedView = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getExpertDetailedView(id)
+    .then((response) => {
+      res.json({ status: 'ok', details: response });
+    })
+    .catch(() => {
+      res.json({ status: false, details: false });
+    });
+};
+
+const getExpertChangeRequestCount = (req, res) => {
+  adminUtilities
+    .getExpertChangeRequestCount()
+    .then((response) => {
+      res.json({ status: 'ok', count: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
+
+const getRequestList = (req, res) => {
+  adminUtilities
+    .getRequestList()
+    .then((response) => {
+      res.json({ status: 'ok', request: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
+
+const getChangeRequestDetails = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getChangeRequestDetails(id)
+    .then((response) => {
+      res.json({ status: 'ok', request: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
+
+const getNewExpertDetails = (req, res) => {
+  const id = req.params.id;
+  adminUtilities
+    .getExpertById(id)
+    .then((response) => {
+      res.json({ status: 'ok', expert: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
+
+const adminRejectExpertChange = (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  adminUtilities
+    .adminRejectExpertChange(id, data)
+    .then(() => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: 'error' });
+    });
+};
+
+const adminApproveExpertChange = (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  adminUtilities
+    .adminApproveExpertChange(id, data)
+    .then((response) => {
+      if (response.purchaseNotFound) {
+        res.json({
+          status: 'error',
+          error: 'No purchase found for this account.',
+        });
+      } else {
+        res.json({ status: 'ok' });
+      }
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 module.exports = {
   adminLogin,
@@ -473,4 +544,7 @@ module.exports = {
   getExpertChangeRequestCount,
   getRequestList,
   getChangeRequestDetails,
+  getNewExpertDetails,
+  adminRejectExpertChange,
+  adminApproveExpertChange,
 };

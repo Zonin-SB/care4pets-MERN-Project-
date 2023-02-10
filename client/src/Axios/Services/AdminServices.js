@@ -711,3 +711,71 @@ export const getChangeRequestDetails = async (token, id) => {
     console.log(error);
   }
 };
+
+export const getNewExpertDetails=async(token,id)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get(
+      `/getNewExpertDetails/${id}`,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const adminRejectExpertChange=async(token,id,values)=>{
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.post(
+      `/adminRejectExpertChange/${id}`,
+      values,
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const adminApproveExpertChange=async (token,id,values)=>{
+try {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.post(
+    `/adminApproveExpertChange/${id}`,
+    values,
+    config
+  );
+
+  if (data.status) {
+    return data;
+  }
+} catch (error) {
+  console.log(error);
+}
+}

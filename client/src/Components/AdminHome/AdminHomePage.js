@@ -12,7 +12,7 @@ function AdminHomePage() {
   const [usersCount, setUsersCount] = useState('');
   const [expertsCount, setExpertsCount] = useState('');
   const [videoApprovalCount, setVideoApprovalCount] = useState('');
-  const [showModal, setShowModal] = useState(false);
+ 
 
   useEffect(() => {
     fetchPendingApproval();
