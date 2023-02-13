@@ -42,7 +42,7 @@ function AdminNav() {
                           type="button"
                           className="rounded-full py-2 px-3 text-xs font-bold cursor-pointer tracking-wider border-blue-900 border-2 text-blue-900 hover:bg-blue-900 hover:text-white"
                         >
-                          <Link to="/adminLogin"> Login</Link>
+                          <Link to="/admin"> Login</Link>
                         </button>
                       </div>
                     </div>
