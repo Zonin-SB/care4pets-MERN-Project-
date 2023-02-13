@@ -1,13 +1,12 @@
-import React from 'react'
-import HomePage4 from '../Home/HomePage4'
-import './UserViewPlanPage.css'
+import React from 'react';
+import HomePage4 from '../Home/HomePage4';
+import './UserViewPlanPage.css';
 function UserViewPlanPage() {
-    
   return (
     <div>
-        <HomePage4 userplan/>
+      <HomePage4 userplan />
     </div>
-  )
+  );
 }
 
-export default UserViewPlanPage
+export default UserViewPlanPage;

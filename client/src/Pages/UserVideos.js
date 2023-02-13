@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserHomeNavPage, UserVideosPage } from '../Components'
+import React from 'react';
+import { UserHomeNavPage, UserVideosPage } from '../Components';
 
 function UserVideos() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserVideosPage/>
+      <UserHomeNavPage />
+      <UserVideosPage />
     </div>
-  )
+  );
 }
 
-export default UserVideos
+export default UserVideos;

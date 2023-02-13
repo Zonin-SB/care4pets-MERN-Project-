@@ -1,55 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { buyPlan, getUserDetails } from '../../Axios/Services/UserServices';
 import { getPlanOrderValues } from '../../redux/userReducer';
 
-
 function BuyPlanPage() {
-  const [pet,setPet]=useState('')
-  const [error,setError]=useState('')
-  const dispatch=useDispatch()
+  const [pet, setPet] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
-  
   const { selectedPlanDetails } = useSelector((state) => state.user);
   const { selectedExpertDetails } = useSelector((state) => state.user);
   const userId = useSelector((state) => state.admin.userDetails.userId);
 
   useEffect(() => {
-   getUserPet()
+    getUserPet();
 
-   async function getUserPet(){
-    const token=localStorage.getItem('userToken')
-    const data=await getUserDetails(token,userId)
-    setPet(data.userDetails.pet)
-   }
-  }, [userId])
-  // console.log(pet,'pet in buy');
+    async function getUserPet() {
+      const token = localStorage.getItem('userToken');
+      const data = await getUserDetails(token, userId);
+      setPet(data.userDetails.pet);
+    }
+  }, [userId]);
 
-let values={}
-values.planId=selectedPlanDetails._id;
-values.expertId=selectedExpertDetails._id;
-values.userId=userId;
-values.planName=selectedPlanDetails.planName;
-values.planPrice=selectedPlanDetails.currentPrice;
-values.planValidity=selectedPlanDetails.validity;
-values.pet=pet
-// console.log(values,'values after page');
+  let values = {};
+  values.planId = selectedPlanDetails._id;
+  values.expertId = selectedExpertDetails._id;
+  values.userId = userId;
+  values.planName = selectedPlanDetails.planName;
+  values.planPrice = selectedPlanDetails.currentPrice;
+  values.planValidity = selectedPlanDetails.validity;
+  values.pet = pet;
+ 
 
-
-  const handleCheckout=async()=>{
-    
-    const token=localStorage.getItem('userToken')
-   const response=await buyPlan(token,values)
-   if(response){
-   dispatch(getPlanOrderValues(values))
-    window.location.href=response.data;
-   
-   }else{
-    setError('Something went wrong...please try again after sometimes...')
-   }
-
-  }
+  const handleCheckout = async () => {
+    const token = localStorage.getItem('userToken');
+    const response = await buyPlan(token, values);
+    if (response) {
+      dispatch(getPlanOrderValues(values));
+      window.location.href = response.data;
+    } else {
+      setError('Something went wrong...please try again after sometimes...');
+    }
+  };
 
   return (
     <div>
@@ -123,7 +116,6 @@ values.pet=pet
                 Selected Expert
               </p>
               <div className="mt-6 md:mt-0 flex justify-start flex-col md:flex-row items-start md:items-center space-y-4 md:space-x-6 xl:space-x-8 w-full">
-              
                 <div className="w-full md:w-40">
                   <img
                     className="w-full hidden md:block"
@@ -146,8 +138,7 @@ values.pet=pet
                         <span className="dark:text-gray-400 text-gray-300">
                           Expert:{' '}
                         </span>{' '}
-                        {selectedExpertDetails.expertisedIn
-}
+                        {selectedExpertDetails.expertisedIn}
                       </p>
                       <p className="text-sm dark:text-white leading-none text-gray-800">
                         <span className="dark:text-gray-400 text-gray-300">
@@ -157,15 +148,13 @@ values.pet=pet
                       </p>
                       <p className="text-sm dark:text-white leading-none text-gray-800">
                         <span className="dark:text-gray-400 text-gray-300">
-                        Gender:{' '}
+                          Gender:{' '}
                         </span>{' '}
                         {selectedExpertDetails.gender}
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-between space-x-8 items-start w-full">
-                  
-                  </div>
+                  <div className="flex justify-between space-x-8 items-start w-full"></div>
                 </div>
               </div>
             </div>
@@ -180,7 +169,7 @@ values.pet=pet
                       Subtotal
                     </p>
                     <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
-                    ₹{selectedPlanDetails.currentPrice}
+                      ₹{selectedPlanDetails.currentPrice}
                     </p>
                   </div>
                   <div className="flex justify-between items-center w-full">
@@ -208,7 +197,7 @@ values.pet=pet
                     Total
                   </p>
                   <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                  ₹{selectedPlanDetails.currentPrice}
+                    ₹{selectedPlanDetails.currentPrice}
                   </p>
                 </div>
               </div>
@@ -226,13 +215,17 @@ values.pet=pet
                       />
                     </div>
                     <div className="flex flex-col justify-start items-center">
-                    {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+                      {error ? (
+                        <p style={{ color: 'red' }} className="text-center">
+                          {error}
+                        </p>
+                      ) : (
+                        ''
+                      )}
                       <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">
                         Become a member
                         <br />
-                        <span className="font-normal">
-                          Buy your plan
-                        </span>
+                        <span className="font-normal">Buy your plan</span>
                       </p>
                     </div>
                   </div>
@@ -241,7 +234,10 @@ values.pet=pet
                   </p> */}
                 </div>
                 <div className="w-full flex justify-center items-center">
-                  <button onClick={()=>handleCheckout()} className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">
+                  <button
+                    onClick={() => handleCheckout()}
+                    className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white"
+                  >
                     Buy Plan
                   </button>
                 </div>

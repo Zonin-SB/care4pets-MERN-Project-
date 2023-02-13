@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postPlanOrderValues } from '../../Axios/Services/UserServices';
 import {
@@ -10,27 +10,21 @@ import {
 
 function BuyPlanSuccessPage() {
   const { planOrderValues } = useSelector((state) => state.user);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
- 
+
   useEffect(() => {
     const token = localStorage.getItem('userToken');
     postOrderValues();
     async function postOrderValues() {
       try {
         const succesurl = window.location.href;
-      
-        // planOrderValues.succesurl=succesurl
-        // console.log(planOrderValues,'with url');
+
         const data = await postPlanOrderValues(token, {
           succesurl,
           planOrderValues,
         });
         if (data.status === 'ok') {
-          //   // setTimeout(() => {
-          //     // navigate('/userHome')
-          //   // }, 5000);
         } else {
           setError(
             'Something went wrong...please try again after sometimes...'
@@ -46,7 +40,7 @@ function BuyPlanSuccessPage() {
       dispatch(getSelectedPlanDetails(false));
       dispatch(getPlanOrderValues(false));
     };
-  }, []);
+  }, [planOrderValues, dispatch]);
 
   return (
     <div>
@@ -68,7 +62,7 @@ function BuyPlanSuccessPage() {
                   Payment Failed!
                 </h3>
                 <p className="text-gray-600 my-2">
-                Something went wrong...please try again after sometimes...
+                  Something went wrong...please try again after sometimes...
                 </p>
                 <p> Have a great day!</p>
                 {/* {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''} */}

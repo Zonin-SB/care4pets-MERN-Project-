@@ -10,9 +10,9 @@ const initialValues = {
   title: '',
   type: '',
   link: '',
-  category:'',
+  category: '',
   description: '',
-  uploaded:true,
+  uploaded: true,
 };
 
 function ExpertAddVideosPage() {
@@ -22,24 +22,24 @@ function ExpertAddVideosPage() {
 
   const onSubmit = async (values, action) => {
     values.approved = false;
-    values.expertId =expertId;
+    values.expertId = expertId;
     const token = localStorage.getItem('expertToken');
     const data = await expertVideoUpload(token, values);
-    if(data.status==='ok'){
-      Swal.fire({          
+    if (data.status === 'ok') {
+      Swal.fire({
         icon: 'success',
         title: 'New video has been added',
         showConfirmButton: false,
-        timer: 1500
-      })
-      navigate('/expertVideos')
-    }else{
+        timer: 1500,
+      });
+      navigate('/expertVideos');
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
-      setError('Something went wrong...please try again after sometimes...')
+      });
+      setError('Something went wrong...please try again after sometimes...');
     }
   };
 
@@ -49,7 +49,6 @@ function ExpertAddVideosPage() {
       validationSchema: videoUploadSchema,
       onSubmit,
     });
-  // console.log(errors,'err');
 
   return (
     <div>
@@ -119,7 +118,6 @@ function ExpertAddVideosPage() {
                   <option value="Dog">Dog</option>
                   <option value="Cat">Cat</option>
                   <option value="Exotic-birds">Exotic-birds</option>
-               
                 </select>
                 {errors.category && touched.category && (
                   <p className="red-error">{errors.category}</p>

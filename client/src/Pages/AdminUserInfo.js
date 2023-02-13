@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, AdminUserInfoPage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, AdminUserInfoPage } from '../Components';
 
 function AdminUserInfo() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminUserInfoPage/>
+      <AdminHomeNavPage />
+      <AdminUserInfoPage />
     </div>
-  )
+  );
 }
 
-export default AdminUserInfo
+export default AdminUserInfo;

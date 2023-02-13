@@ -1,12 +1,12 @@
-import React from 'react'
-import { ErrorPage } from '../Components'
+import React from 'react';
+import { ErrorPage } from '../Components';
 
 function Error() {
   return (
     <div>
-        <ErrorPage/>
+      <ErrorPage />
     </div>
-  )
+  );
 }
 
-export default Error
+export default Error;

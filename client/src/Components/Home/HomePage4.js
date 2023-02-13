@@ -21,8 +21,6 @@ function HomePage4(props) {
     }
   }, []);
 
-  
-
   const userSelectPlanAlert = (id) => {
     Swal.fire({
       title: 'Are you sure?',

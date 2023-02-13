@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, ExpertChangeViewPage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, ExpertChangeViewPage } from '../Components';
 
 function AdminExpertChangeView() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <ExpertChangeViewPage/>
+      <AdminHomeNavPage />
+      <ExpertChangeViewPage />
     </div>
-  )
+  );
 }
 
-export default AdminExpertChangeView
+export default AdminExpertChangeView;

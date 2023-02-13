@@ -11,7 +11,6 @@ function HomePage5() {
       setFeedback(data.feedback);
     }
   }, []);
-  
 
   return (
     <div className="home-background max-w-screen-2xl mx-auto">
@@ -78,7 +77,7 @@ function HomePage5() {
                                 {data.feedback}
                               </h5>
                               <p class="text-gray-700 text-base mb-4 p-1">
-                               {data.message}
+                                {data.message}
                               </p>
                               <h1 className="text-center">
                                 Name : {data.name}
@@ -88,8 +87,6 @@ function HomePage5() {
                         );
                       })
                     : ''}
-
-             
                 </div>
               </div>
             </div>

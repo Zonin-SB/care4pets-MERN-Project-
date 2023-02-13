@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminApprovalListPage, AdminHomeNavPage } from '../Components'
+import React from 'react';
+import { AdminApprovalListPage, AdminHomeNavPage } from '../Components';
 
 function AdminApprovalList() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminApprovalListPage/>
+      <AdminHomeNavPage />
+      <AdminApprovalListPage />
     </div>
-  )
+  );
 }
 
-export default AdminApprovalList
+export default AdminApprovalList;

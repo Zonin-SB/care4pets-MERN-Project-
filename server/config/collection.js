@@ -6,5 +6,5 @@ module.exports = {
   PURCHASE_COLLECTION: 'purchase',
   VIDEO_COLLECTION: 'video',
   CHAT_COLLECTION: 'chat',
-  FEEDBACK_COLLECTION:'feedback',
+  FEEDBACK_COLLECTION: 'feedback',
 };

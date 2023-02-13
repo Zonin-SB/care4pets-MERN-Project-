@@ -5,7 +5,7 @@ import { getPaymentDetails } from '../../Axios/Services/AdminServices';
 
 function AdminViewPaymentPage() {
   const [paymentDetails, setPaymentDetails] = useState([]);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     fetchPaymentDetails();
 
@@ -15,7 +15,6 @@ function AdminViewPaymentPage() {
       setPaymentDetails(data.details);
     }
   }, []);
-  console.log(paymentDetails);
 
   const columns = [
     {
@@ -55,9 +54,7 @@ function AdminViewPaymentPage() {
           <div>
             <button
               type="button"
-              onClick={() =>
-                navigate(`/adminViewPaymentDetails/${row._id}`)
-              }
+              onClick={() => navigate(`/adminViewPaymentDetails/${row._id}`)}
               class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
             >
               <svg

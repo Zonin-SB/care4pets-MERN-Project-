@@ -317,17 +317,19 @@ const updateExpertProfile = (req, res) => {
     });
 };
 
-const getDetails=(req,res)=>{
-  const id= req.params.id
-  expertUtilities.getDetails(id).then((response)=>{
-res.json({status:true,data:response})
-  }).catch(()=>{
-    res.json({status:false})
-  })
-}
+const getDetails = (req, res) => {
+  const id = req.params.id;
+  expertUtilities
+    .getDetails(id)
+    .then((response) => {
+      res.json({ status: true, data: response });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 const expertSendOTP = (req, res) => {
-  
   expertUtilities
     .sendOTP(req.body)
     .then(() => {
@@ -338,24 +340,27 @@ const expertSendOTP = (req, res) => {
     });
 };
 
-const verifyOTP=(req,res)=>{
-  expertUtilities.verifyOTP(req.body).then((response)=>{
-    if (response.status) {
-      const token = jwt.sign(
-        {
-          expertId: response.expert._id,
-          name: response.expert.name,
-          email: response.expert.email,
-        },
-        process.env.JWT_SECRET_KEY
-      );
-      return res.json({ status: 'ok', expert: token });
-    }
-    return res.json({ status: false, expert: false });
-  }).catch((err)=>{
-    res.json({ status: false, expert: false })
-  })
-}
+const verifyOTP = (req, res) => {
+  expertUtilities
+    .verifyOTP(req.body)
+    .then((response) => {
+      if (response.status) {
+        const token = jwt.sign(
+          {
+            expertId: response.expert._id,
+            name: response.expert.name,
+            email: response.expert.email,
+          },
+          process.env.JWT_SECRET_KEY
+        );
+        return res.json({ status: 'ok', expert: token });
+      }
+      return res.json({ status: false, expert: false });
+    })
+    .catch((err) => {
+      res.json({ status: false, expert: false });
+    });
+};
 
 module.exports = {
   expertSignup,

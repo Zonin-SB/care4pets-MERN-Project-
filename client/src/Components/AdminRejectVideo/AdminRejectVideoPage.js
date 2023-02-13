@@ -1,64 +1,64 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { adminRejectVideo, getVideoDetails } from '../../Axios/Services/AdminServices';
+import {
+  adminRejectVideo,
+  getVideoDetails,
+} from '../../Axios/Services/AdminServices';
 import { rejectionVideoSchema } from '../../Validation/Validation';
 import Swal from 'sweetalert2';
 
 function AdminRejectVideoPage() {
-    const navigate=useNavigate();
-    const [error,setError]=useState('')
-    const [videoDetails,setVideoDetails]=useState([])
-    const [expertDetails,setExpertDetails]=useState([])
-    
-    const { id } = useParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [videoDetails, setVideoDetails] = useState([]);
+  const [expertDetails, setExpertDetails] = useState([]);
 
-    useEffect(() => {
-        const token = localStorage.getItem('adminToken');
-        fetchDetails();
-    
-        async function fetchDetails() {
-          const data = await getVideoDetails(token, id);
-          setVideoDetails(data.videoDetails[0]);
-          setExpertDetails(data.videoDetails[0].expert)
-        }
-      }, [id]);
+  const { id } = useParams();
 
-      console.log(videoDetails,'vid det');
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    fetchDetails();
 
-    const initialValues = {
-        id: videoDetails._id,
-        name:expertDetails.name,
-        title: videoDetails.title,
-        expertId:videoDetails.expertId,
-        reason: '',
-        message: '',
-      };
-
-      const onSubmit = async (values, action) => {
-        const token = localStorage.getItem('adminToken');
-        const data = await adminRejectVideo(token, values);
-        if (data.status === 'ok') {
-          Swal.fire({
-           
-            icon: 'success',
-            title: 'This video has been rejected',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          navigate('/adminVideoApproval');
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-          setError('Something went wrong....try again after some time...');
-        }
-      };
+    async function fetchDetails() {
+      const data = await getVideoDetails(token, id);
+      setVideoDetails(data.videoDetails[0]);
+      setExpertDetails(data.videoDetails[0].expert);
+    }
+  }, [id]);
 
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const initialValues = {
+    id: videoDetails._id,
+    name: expertDetails.name,
+    title: videoDetails.title,
+    expertId: videoDetails.expertId,
+    reason: '',
+    message: '',
+  };
+
+  const onSubmit = async (values, action) => {
+    const token = localStorage.getItem('adminToken');
+    const data = await adminRejectVideo(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({
+        icon: 'success',
+        title: 'This video has been rejected',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate('/adminVideoApproval');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      setError('Something went wrong....try again after some time...');
+    }
+  };
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
       validationSchema: rejectionVideoSchema,
@@ -67,7 +67,7 @@ function AdminRejectVideoPage() {
     });
   return (
     <div className="mt-9">
-        <section className="p-6 text-gray-800">
+      <section className="p-6 text-gray-800">
         <form
           onSubmit={handleSubmit}
           className="container w-full max-w-xl p-8 mx-auto space-y-6 rounded-md shadow ng-untouched ng-pristine ng-valid bg-gray-50"
@@ -83,9 +83,7 @@ function AdminRejectVideoPage() {
             ''
           )}
           <div>
-            <label className="block mb-1 ml-1">
-              Name
-            </label>
+            <label className="block mb-1 ml-1">Name</label>
             <input
               id="name"
               name="name"
@@ -102,9 +100,7 @@ function AdminRejectVideoPage() {
             )}
           </div>
           <div>
-            <label className="block mb-1 ml-1">
-              Video Title
-            </label>
+            <label className="block mb-1 ml-1">Video Title</label>
             <input
               id="title"
               name="title"
@@ -121,9 +117,7 @@ function AdminRejectVideoPage() {
             )}
           </div>
           <div>
-            <label  className="block mb-1 ml-1">
-              Reason
-            </label>
+            <label className="block mb-1 ml-1">Reason</label>
             <input
               id="reason"
               name="reason"
@@ -166,7 +160,7 @@ function AdminRejectVideoPage() {
         </form>
       </section>
     </div>
-  )
+  );
 }
 
-export default AdminRejectVideoPage
+export default AdminRejectVideoPage;

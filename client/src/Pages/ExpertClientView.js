@@ -1,13 +1,13 @@
-import React from 'react'
-import { ExpertClientViewPage, ExpertHomeNavPage } from '../Components'
+import React from 'react';
+import { ExpertClientViewPage, ExpertHomeNavPage } from '../Components';
 
 function ExpertClientView() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertClientViewPage/>
+      <ExpertHomeNavPage />
+      <ExpertClientViewPage />
     </div>
-  )
+  );
 }
 
-export default ExpertClientView
+export default ExpertClientView;

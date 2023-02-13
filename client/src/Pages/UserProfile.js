@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserHomeNavPage, UserProfilePage } from '../Components'
+import React from 'react';
+import { UserHomeNavPage, UserProfilePage } from '../Components';
 
 function UserProfile() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserProfilePage/>
+      <UserHomeNavPage />
+      <UserProfilePage />
     </div>
-  )
+  );
 }
 
-export default UserProfile
+export default UserProfile;

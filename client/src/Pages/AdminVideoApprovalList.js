@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, AdminVideoApprovalListPage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, AdminVideoApprovalListPage } from '../Components';
 
 function AdminVideoApprovalList() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminVideoApprovalListPage/>
+      <AdminHomeNavPage />
+      <AdminVideoApprovalListPage />
     </div>
-  )
+  );
 }
 
-export default AdminVideoApprovalList
+export default AdminVideoApprovalList;

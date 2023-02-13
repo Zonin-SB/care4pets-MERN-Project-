@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getPendingApprovalDetails } from '../../Axios/Services/AdminServices';
 
 function AdminApprovalListPage() {
   const [approvalDetails, setApprovalDetails] = useState([]);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -15,57 +15,59 @@ function AdminApprovalListPage() {
       const response = await getPendingApprovalDetails(token);
 
       setApprovalDetails(response.approvalDetails);
-      
     }
   }, []);
 
-  const columns=[
+  const columns = [
     {
-        name:'Name',
-        sortable: true,
+      name: 'Name',
+      sortable: true,
       selector: (row) => row.name,
     },
     {
-        name: 'Email',
+      name: 'Email',
       sortable: true,
       selector: (row) => row.email,
     },
     {
-        name: 'Mobile',
+      name: 'Mobile',
       selector: (row) => row.mobile,
     },
     {
-        name: 'Experience',
+      name: 'Experience',
       selector: (row) => row.experience,
     },
     {
-        name:'Gender',
-        selector: (row) => row.gender,
+      name: 'Gender',
+      selector: (row) => row.gender,
     },
     {
-        name: 'More Details',
+      name: 'More Details',
       selector: (row) => {
         return (
           <div>
-            <button onClick={()=>navigate(`/expertDetailedView/${row._id}`)} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            <button
+              onClick={() => navigate(`/expertDetailedView/${row._id}`)}
+              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            >
               Details
             </button>
           </div>
         );
       },
-    }
-  ]
+    },
+  ];
 
   return (
     <div className="container mx-auto mt-9">
-      <DataTable 
-      title="Pending Requests"
-      columns={columns} 
-      data={approvalDetails}
-      pagination
-          fixedHeader
-          fixedHeaderScrollHeight="450px"
-          highlightOnHover
+      <DataTable
+        title="Pending Requests"
+        columns={columns}
+        data={approvalDetails}
+        pagination
+        fixedHeader
+        fixedHeaderScrollHeight="450px"
+        highlightOnHover
       />
     </div>
   );

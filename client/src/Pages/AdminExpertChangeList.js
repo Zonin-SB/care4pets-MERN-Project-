@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, ExpertChangeListPage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, ExpertChangeListPage } from '../Components';
 
 function AdminExpertChangeList() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <ExpertChangeListPage/>
+      <AdminHomeNavPage />
+      <ExpertChangeListPage />
     </div>
-  )
+  );
 }
 
-export default AdminExpertChangeList
+export default AdminExpertChangeList;

@@ -10,10 +10,9 @@ function UserHome() {
   const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem('userToken');
-  
+
     if (token) {
       const user = jwt(token);
-     
       dispatch(userLoginDetails(user));
       if (user) {
         navigate('/userHome');

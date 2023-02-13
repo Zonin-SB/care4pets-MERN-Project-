@@ -621,23 +621,28 @@ module.exports = {
   },
 
   getDetails: (id) => {
-    return new Promise(async(resolve,reject)=>{
+    return new Promise(async (resolve, reject) => {
       try {
-        const data=await db.get().collection(collection.EXPERT_COLLECTION).aggregate([
-          {
-            $match:{
-              _id:ObjectId(id)
-            }
-          },{
-            $project:{
-              verified:1
-            }
-          }
-        ]).toArray()
-        resolve(data)
+        const data = await db
+          .get()
+          .collection(collection.EXPERT_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: ObjectId(id),
+              },
+            },
+            {
+              $project: {
+                verified: 1,
+              },
+            },
+          ])
+          .toArray();
+        resolve(data);
       } catch (error) {
-        reject()
+        reject();
       }
-    })
+    });
   },
 };

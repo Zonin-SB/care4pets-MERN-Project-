@@ -11,7 +11,6 @@ const userSignup = (req, res) => {
   userUtilities
     .doUserSignup(data)
     .then((response) => {
-      console.log(response);
       if (response.emailFound) {
         res.json({
           status: 'error',
@@ -226,9 +225,9 @@ const getFreeVideos = (req, res) => {
 
 const getPlanVideos = (req, res) => {
   const id = req.params.id;
-  pet=req.user.pet;
+  pet = req.user.pet;
   userUtilities
-    .findPlanById(id,pet)
+    .findPlanById(id, pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getPlanVideos(response).then((data) => {
@@ -257,9 +256,9 @@ const getVideosCount = (req, res) => {
 
 const getPlanDetails = (req, res) => {
   const id = req.params.id;
-  const pet=req.user.pet
+  const pet = req.user.pet;
   userUtilities
-    .findPlanById(id,pet)
+    .findPlanById(id, pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getPlanDetails(response).then((data) => {
@@ -273,70 +272,67 @@ const getPlanDetails = (req, res) => {
       console.log(err);
     });
 };
-const getExpertChangeRejected=(req,res)=>{
+const getExpertChangeRejected = (req, res) => {
   const id = req.params.id;
-  const pet=req.user.pet
+  const pet = req.user.pet;
   userUtilities
-    .getExpertChangeRejected(id,pet)
+    .getExpertChangeRejected(id, pet)
     .then((response) => {
-      // console.log(response,'in 282');
       res.json({ status: 'ok', details: response });
     })
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
-const getExpertChangeApproved=(req,res)=>{
+const getExpertChangeApproved = (req, res) => {
   const id = req.params.id;
-  const pet=req.user.pet
+  const pet = req.user.pet;
   userUtilities
-    .getExpertChangeApproved(id,pet)
+    .getExpertChangeApproved(id, pet)
     .then((response) => {
-      // console.log(response,'in 282');
       res.json({ status: 'ok', details: response });
     })
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
-const getExpertChangeNotification=(req,res)=>{
+const getExpertChangeNotification = (req, res) => {
   const id = req.params.id;
   userUtilities
     .findPurchaseById(id)
     .then((response) => {
-      // console.log(response,'in 294');
       res.json({ status: 'ok', details: response });
     })
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
-const userExpertRejectionAccepted=(req,res)=>{
-  const id=req.params.id
+const userExpertRejectionAccepted = (req, res) => {
+  const id = req.params.id;
   userUtilities
-  .userExpertRejectionAccepted(id)
-  .then((response) => {
-    res.json({ status: 'ok' });
-  })
-  .catch(() => {
-    res.json({ status: false });
-  });
-}
+    .userExpertRejectionAccepted(id)
+    .then((response) => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
-const userExpertChangeAccepted=(req,res)=>{
-  const id=req.params.id
+const userExpertChangeAccepted = (req, res) => {
+  const id = req.params.id;
   userUtilities
-  .userExpertChangeAccepted(id)
-  .then((response) => {
-    res.json({ status: 'ok' });
-  })
-  .catch(() => {
-    res.json({ status: false });
-  });
-}
+    .userExpertChangeAccepted(id)
+    .then((response) => {
+      res.json({ status: 'ok' });
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 const getUserPlanDetails = (req, res) => {
   const id = req.params.id;
@@ -352,9 +348,9 @@ const getUserPlanDetails = (req, res) => {
 
 const getYourExpertDetails = (req, res) => {
   const id = req.params.id;
-  const pet=req.user.pet;
+  const pet = req.user.pet;
   userUtilities
-    .findPlanById(id,pet)
+    .findPlanById(id, pet)
     .then((response) => {
       if (response !== null) {
         userUtilities.getYourExpertDetails(response).then((data) => {
@@ -389,7 +385,6 @@ const getAllMessages = (req, res) => {
   commonUtilities
     .getAllMessages(to, from)
     .then((response) => {
-      // console.log(response, 'in conter');
       res.json({
         status: true,
         to: response.to,
@@ -433,9 +428,9 @@ const verifyOTP = (req, res) => {
 
 const checkUserPlan = (req, res) => {
   const id = req.params.id;
-  const pet=req.user.pet;
+  const pet = req.user.pet;
   userUtilities
-    .checkUserPlan(id,pet)
+    .checkUserPlan(id, pet)
     .then((response) => {
       if (response.status) {
         res.json({ status: true, plan: true });
@@ -469,20 +464,23 @@ const getHomeFeedback = (req, res) => {
     });
 };
 
-const userChangeExpert=(req,res)=>{
-  userUtilities.userChangeExpert(req.body).then((response)=>{
-    if(response.expertAlreadyChanged){
-      res.json({
-        status: 'error',
-        error: 'You already changed your expert.',
-      });
-    }else{
-      res.json({status:'ok'})
-    }
-  }).catch(()=>{
-    res.json({ status: false });
-  })
-}
+const userChangeExpert = (req, res) => {
+  userUtilities
+    .userChangeExpert(req.body)
+    .then((response) => {
+      if (response.expertAlreadyChanged) {
+        res.json({
+          status: 'error',
+          error: 'You already changed your expert.',
+        });
+      } else {
+        res.json({ status: 'ok' });
+      }
+    })
+    .catch(() => {
+      res.json({ status: false });
+    });
+};
 
 module.exports = {
   userSignup,

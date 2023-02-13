@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserChatPage, UserHomeNavPage } from '../Components'
+import React from 'react';
+import { UserChatPage, UserHomeNavPage } from '../Components';
 
 function UserChat() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserChatPage/>
+      <UserHomeNavPage />
+      <UserChatPage />
     </div>
-  )
+  );
 }
 
-export default UserChat
+export default UserChat;

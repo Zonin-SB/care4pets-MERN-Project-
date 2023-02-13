@@ -61,46 +61,24 @@ app.use((err, req, res, next) => {
 global.onlineUsers = new Map(); // holds all active sockets
 
 io.on('connection', (socket) => {
-  console.log('user connected');
   //take userId and socketId from user
   socket.on('addUser', (userId) => {
-    console.log('add user');
-    onlineUsers.set(userId,socket.id)
-  //  console.log(global.onlineUsers);
+    onlineUsers.set(userId, socket.id);
   });
 
   socket.on('sendMessage', ({ from, to, message, time }) => {
-    // console.log(from);
-    // console.log(to);
-    // console.log(message);
-    // console.log(time);
     const sendUserSocket = onlineUsers.get(to);
-    // console.log(sendUserSocket,'user sock');
-    if(sendUserSocket){
-
-      // const messages={message:message,time:time}
-      // let values={}
-      // values.from=from,
-      // values.to=to,
-      // values.messages=messages
-      // io.to(sendUserSocket).emit("getMessage",values)
-      io.to(sendUserSocket).emit("getMessage",{
+    if (sendUserSocket) {
+      io.to(sendUserSocket).emit('getMessage', {
         from,
         message,
-        time
-      })
-    }else{
+        time,
+      });
+    } else {
       console.log('user is offline');
     }
   });
 });
-
-// socket.current.emit("sendMessage",{
-//   from:userId,
-//   to:id,
-//   message:message,
-//   time:time,
-// })
 
 db.connect((err) => {
   if (err) console.log('Connection Error' + err);
@@ -110,7 +88,3 @@ db.connect((err) => {
 server.listen(3001, () => {
   console.log('Server started on 3001');
 });
-
-// app.listen(3001, () => {
-//   console.log('Server started on 3001');
-// });

@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserHomeNavPage, UserEditProfilePage } from '../Components'
+import React from 'react';
+import { UserHomeNavPage, UserEditProfilePage } from '../Components';
 
 function UserEditProfile() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserEditProfilePage/>
+      <UserHomeNavPage />
+      <UserEditProfilePage />
     </div>
-  )
+  );
 }
 
-export default UserEditProfile
+export default UserEditProfile;

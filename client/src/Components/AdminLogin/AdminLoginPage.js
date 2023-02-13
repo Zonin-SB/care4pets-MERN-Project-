@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { adminLoginSchema } from '../../Validation/Validation';
 import { useNavigate } from 'react-router-dom';
@@ -10,20 +10,20 @@ const initialValues = {
   password: '',
 };
 function AdminLoginPage() {
-	const [error,setError]=useState('')
-	const navigate=useNavigate()
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const onSubmit = async (values, action) => {
-	const response = await adminLogin(values);
-  if (response.admin) {
-    localStorage.setItem('adminToken', response.admin);
-    const admin = jwt(response.admin);
-   
-    localStorage.setItem('adminDetails', admin.email);
-    navigate('/adminHome')
-  }else{
-      setError('Incorrect email or password')
-  }
+    const response = await adminLogin(values);
+    if (response.admin) {
+      localStorage.setItem('adminToken', response.admin);
+      const admin = jwt(response.admin);
+
+      localStorage.setItem('adminDetails', admin.email);
+      navigate('/adminHome');
+    } else {
+      setError('Incorrect email or password');
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -33,7 +33,7 @@ function AdminLoginPage() {
       onSubmit,
     });
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className="max-w-screen-2xl mx-auto">
       <form onSubmit={handleSubmit}>
         <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
           <div className="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -58,13 +58,10 @@ function AdminLoginPage() {
                         className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                         placeholder="Email address"
                       />
-					   {errors.email && touched.email && (
-                <p className="red-error">{errors.email}</p>
-              )}
-                      <label
-                     
-                        className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                      >
+                      {errors.email && touched.email && (
+                        <p className="red-error">{errors.email}</p>
+                      )}
+                      <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
                         Email Address
                       </label>
                     </div>
@@ -72,26 +69,32 @@ function AdminLoginPage() {
                       <input
                         id="password"
                         name="password"
-						value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         type="password"
                         className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                         placeholder="Password"
                       />
-					   {errors.password && touched.password && (
-                <p className="red-error">{errors.password}</p>
-              )}
-                      <label
-                        
-                        className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                      >
+                      {errors.password && touched.password && (
+                        <p className="red-error">{errors.password}</p>
+                      )}
+                      <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
                         Password
                       </label>
                     </div>
-					{error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+                    {error ? (
+                      <p style={{ color: 'red' }} className="text-center">
+                        {error}
+                      </p>
+                    ) : (
+                      ''
+                    )}
                     <div className="relative">
-                      <button type='submit' className="bg-blue-500 text-white rounded-md px-2 py-1">
+                      <button
+                        type="submit"
+                        className="bg-blue-500 text-white rounded-md px-2 py-1"
+                      >
                         Login
                       </button>
                     </div>

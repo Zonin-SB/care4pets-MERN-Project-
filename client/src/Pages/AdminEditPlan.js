@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminEditPlanPage, AdminHomeNavPage } from '../Components'
+import React from 'react';
+import { AdminEditPlanPage, AdminHomeNavPage } from '../Components';
 
 function AdminEditPlan() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminEditPlanPage/>
+      <AdminHomeNavPage />
+      <AdminEditPlanPage />
     </div>
-  )
+  );
 }
 
-export default AdminEditPlan
+export default AdminEditPlan;

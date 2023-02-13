@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { getPaymentAllDetails } from '../../Axios/Services/AdminServices';
 
 function AdminViewPaymentDetailsPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [details, setDetails] = useState([]);
   useEffect(() => {
     fetchData();
@@ -15,7 +14,6 @@ function AdminViewPaymentDetailsPage() {
       setDetails(data.details);
     }
   }, [id]);
-  console.log(details);
 
   return (
     <div>
@@ -48,19 +46,15 @@ function AdminViewPaymentDetailsPage() {
                       </div>
                       <hr />
                       <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
-                        <h2 className="md:w-1/3 mx-auto max-w-sm">
-                          Plan Info
-                        </h2>
+                        <h2 className="md:w-1/3 mx-auto max-w-sm">Plan Info</h2>
                         <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                           <div>
-                          <p>Plan : {data.plan.planName}</p>
-                          <p>Amount : ₹ {data.plan.currentPrice}</p>
-                          <p>Validity : {data.plan.validity} months</p>
-                          <p>Valid From : {data.validFrom}</p>
-                          <p>Valid Till : {data.validTill}</p>
-                           
+                            <p>Plan : {data.plan.planName}</p>
+                            <p>Amount : ₹ {data.plan.currentPrice}</p>
+                            <p>Validity : {data.plan.validity} months</p>
+                            <p>Valid From : {data.validFrom}</p>
+                            <p>Valid Till : {data.validTill}</p>
                           </div>
-                          
                         </div>
                       </div>
                       <hr />
@@ -70,22 +64,18 @@ function AdminViewPaymentDetailsPage() {
                         </h2>
                         <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                           <div>
-                          <p>Name : {data.expert.name}</p>
-                          <p>Expert in : {data.expert.expertisedIn}</p>
-                          <p>Experience : {data.expert.experience} Yrs</p>
-                          <p>DOB : {data.expert.dob} Yrs</p>
-                          <p>Email : {data.expert.email}</p>
-                          <p>Mobile : {data.expert.mobile}</p>
-                          <p>Gender : {data.expert.gender}</p>
-                          <p>Mobile : {data.expert.mobile}</p>
-                         
-                           
+                            <p>Name : {data.expert.name}</p>
+                            <p>Expert in : {data.expert.expertisedIn}</p>
+                            <p>Experience : {data.expert.experience} Yrs</p>
+                            <p>DOB : {data.expert.dob} Yrs</p>
+                            <p>Email : {data.expert.email}</p>
+                            <p>Mobile : {data.expert.mobile}</p>
+                            <p>Gender : {data.expert.gender}</p>
+                            <p>Mobile : {data.expert.mobile}</p>
                           </div>
-                          
                         </div>
                       </div>
 
-                      
                       <hr />
                       {/* <div className="w-full p-4 text-right text-gray-500">
                         <button className="inline-flex items-center focus:outline-none mr-4">

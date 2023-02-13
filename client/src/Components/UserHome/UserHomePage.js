@@ -1,32 +1,16 @@
-import React from 'react'
+import React from 'react';
 // import {  getUserHomePlan } from '../../Axios/Services/UserServices'
 // import { useSelector } from 'react-redux';
-import userHome from '../../images/userHome.jpg'
-
+import userHome from '../../images/userHome.jpg';
 
 function UserHomePage() {
-//   const [plan,setPlan]=useState([])
-//   const userId = useSelector((state) => state.admin.userDetails.userId);
-//   useEffect(() => {
-//    getPlan()
-// console.log(userId,'user id in home');
-//    async function getPlan(){
-   
-//     const data=await getUserHomePlan(userId)
-//     setPlan(data.plan)
-//    }
-   
-//   }, [userId])
-//   console.log(plan,'plan in home');
-  
+
   return (
-    <div className='max-w-screen-2xl mx-auto'>
-       <div className='relative'>
-       
-       <img src={userHome} className="max-w-full h-auto" alt="..." />
-       
-       </div>
-{/* {plan?(
+    <div className="max-w-screen-2xl mx-auto">
+      <div className="relative">
+        <img src={userHome} className="max-w-full h-auto" alt="..." />
+      </div>
+      {/* {plan?(
   <div>
 <h1 className='font-bold text-2xl mt-9 ml-4'>Your Plan</h1>
       <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full mt-9 p-4">
@@ -101,11 +85,8 @@ function UserHomePage() {
     <h1 className=''>You have no plan...Buy one for additional features</h1>
   </div>
 )} */}
-
-
-
     </div>
-  )
+  );
 }
 
-export default UserHomePage
+export default UserHomePage;

@@ -34,12 +34,15 @@ function AdminHomeNavPage() {
                 <div className="hidden lg:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                  <Link to={'/adminHome'}> <button
-                      className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium"
-                      aria-current="page"
-                    >
-                      Dashboard
-                    </button></Link> 
+                    <Link to={'/adminHome'}>
+                      {' '}
+                      <button
+                        className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Dashboard
+                      </button>
+                    </Link>
 
                     <Link to="/expertinfo">
                       {' '}
@@ -55,21 +58,32 @@ function AdminHomeNavPage() {
                       </button>
                     </Link>
 
-                   <Link to={'/adminManageVideos'}> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Videos
-                    </button></Link>
+                    <Link to={'/adminManageVideos'}>
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Videos
+                      </button>
+                    </Link>
 
-                    <Link to={'/adminViewPayment'}>  <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Payments
-                    </button></Link>
-                   <Link to='/adminViewPlans'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Plans
-                    </button></Link>
+                    <Link to={'/adminViewPayment'}>
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Payments
+                      </button>
+                    </Link>
+                    <Link to="/adminViewPlans">
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Plans
+                      </button>
+                    </Link>
 
-                    <Link to='/adminViewFeedback'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Feedback
-                    </button></Link>
-                    
+                    <Link to="/adminViewFeedback">
+                      {' '}
+                      <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Feedback
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -155,40 +169,53 @@ function AdminHomeNavPage() {
               <div className="lg:hidden" id="mobile-menu">
                 <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                   {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                  <Link to={'/adminHome'}><button
-                    className=" text-gray-300 block hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium"
-                    aria-current="page"
-                  >
-                    Dashboard
-                  </button></Link> 
+                  <Link to={'/adminHome'}>
+                    <button
+                      className=" text-black-300 block hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                      aria-current="page"
+                    >
+                      Dashboard
+                    </button>
+                  </Link>
 
                   <Link to="/expertinfo">
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Experts
                     </button>
                   </Link>
 
                   <Link to="/userinfo">
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Users
                     </button>
                   </Link>
 
-                  <Link to={'/adminManageVideos'}>  <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Videos
-                  </button> </Link>
+                  <Link to={'/adminManageVideos'}>
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Videos
+                    </button>{' '}
+                  </Link>
 
-                 <Link to={'/adminViewPayment'}> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Payments
-                  </button></Link>
-                 <Link to='/adminViewPlans'><button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Plans
-                  </button></Link> 
-                  <Link to='/adminViewFeedback'> <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <Link to={'/adminViewPayment'}>
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Payments
+                    </button>
+                  </Link>
+                  <Link to="/adminViewPlans">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Plans
+                    </button>
+                  </Link>
+                  <Link to="/adminViewFeedback">
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Feedback
-                    </button></Link>
+                    </button>
+                  </Link>
                 </div>
                 <div className="border-t border-gray-700 pt-4 pb-3">
                   <div className="flex items-center px-5">

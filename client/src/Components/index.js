@@ -1,71 +1,71 @@
-export {default as UserNav} from './UserNav/UserNav'
-export {default as UserLoginPage} from './UserLogin/UserLoginPage'
-export {default as UserSignupPage} from './UserSignup/UserSignupPage'
-export {default as ExpertLoginPage} from './ExpertLogin/ExpertLoginPage'
-export {default as UserHomePage} from './UserHome/UserHomePage'
-export {default as UserProfilePage} from './UserProfile/UserProfilePage'
-export {default as UserEditProfilePage} from './UserEditProfile/UserEditProfilePage'
-export {default as UserEditProfilePicPage} from './UserEditProfile/UserEditProfilePicPage'
-export {default as UserSelectExpertPage} from './UserSelectExpert/UserSelectExpertPage'
-export {default as UserVideosPage} from './UserVideos/UserVideosPage'
-export {default as UserViewPlanPage} from './UserViewPlan/UserViewPlanPage'
-export {default as UserViewExpertPage} from './UserViewExpert/UserViewExpertPage'
-export {default as UserChatPage} from './UserChat/UserChatPage'
-export {default as UserFeedbackPage} from './UserFeedbackPage/UserFeedbackPage'
-export {default as UserOTPLoginPage} from './UserOTP/UserOTPLoginPage'
-export {default as UserPlanPage} from './UserPlan/UserPlanPage'
-export {default as UserChangeExpertPage} from './UserChangeExpert/UserChangeExpertPage'
-export {default as UserAcceptExpChangeApproved} from './UserAcceptExpChangeApproved/UserAcceptExpChangeApproved'
-export {default as UserAcceptExpChangeRejection} from './UserAcceptExpChangeRejection/UserAcceptExpChangeRejection'
-export {default as BuyPlanPage} from './BuyPlan/BuyPlanPage'
-export {default as BuyPlanSuccessPage} from './BuyPlanStatusPage/BuyPlanSuccessPage'
-export {default as ExpertSignupPage} from './ExpertSignup/ExpertSignupPage'
-export {default as AdminLoginPage} from './AdminLogin/AdminLoginPage'
-export {default as ExpertHomePage} from './ExpertHome/ExpertHomePage'
-export {default as ExpertHomeNavPage} from './ExpertHomeNav/ExpertHomeNavPage'
-export {default as ExpertProfilePage} from './ExpertProfile/ExpertProfilePage'
-export {default as ExpertApplyFormPage} from './ExpertApplyForm/ExpertApplyFormPage'
-export {default as ExpertRejectedReasonPage} from './ExpertRejectedReasonPage/ExpertRejectedReasonPage'
-export {default as ExpertAcceptedNotificationPage} from './ExpertAcceptedNotification/ExpertAcceptedNotificationPage'
-export {default as ExpertVideosPage} from './ExpertVideos/ExpertVideosPage'
-export {default as ExpertAddVideosPage} from './ExpertAddVideos/ExpertAddVideosPage'
-export {default as ExpertEditVideoPage} from './ExpertEditVideo/ExpertEditVideoPage'
-export {default as ExpertRejectedVideoListPage} from './ExpertRejectedVideoList/ExpertRejectedVideoListPage'
-export {default as ExpertRejectedVideoDetailedViewPage} from './ExpertedRejectedVideoDetailedView/ExpertRejectedVideoDetailedViewPage'
-export {default as ExpertChatPage} from './ExpertChat/ExpertChatPage'
-export {default as ExpertClientViewPage} from './ExpertClientView/ExpertClientViewPage'
-export {default as ExpertEditProfilePage} from './ExpertEditProfile/ExpertEditProfilePage'
-export {default as ExpertOTPLoginPage} from './ExpertOTP/ExpertOTPLoginPage'
-export {default as UserHomeNavPage} from './UserHomeNav/UserHomeNavPage'
-export {default as HomePage} from './Home/HomePage'
-export {default as HomePage2} from './Home/HomePage2'
-export {default as HomePage3} from './Home/HomePage3'
-export {default as HomePage4} from './Home/HomePage4'
-export {default as HomePage5} from './Home/HomePage5'
-export {default as AdminUserInfoPage} from './AdminUserInfo/AdminUserInfoPage'
-export {default as AdminExpertInfoPage} from './AdminExpertInfo/AdminExpertInfoPage'
-export {default as HomeFooterPage} from './HomeFooter/HomeFooterPage'
-export {default as AdminHomeNavPage} from './AdminHomeNav/AdminHomeNavPage'
-export {default as AdminHomePage} from './AdminHome/AdminHomePage'
-export {default as ViewPlansPage} from './Plans/ViewPlansPage'
-export {default as AdminAddPlansPage} from './AdminAddPlans/AdminAddPlansPage'
-export {default as AdminEditPlanPage} from './AdminEditPlan/AdminEditPlanPage'
-export {default as AdminApprovalListPage} from './AdminApprovalListPage/AdminApprovalListPage'
-export {default as AdminApprovalDetailedViewPage} from './AdminApprovalDetailedViewPage/AdminApprovalDetailedViewPage'
-export {default as AdminRejectExpertPage} from './AdminRejectExpertPage/AdminRejectExpertPage'
-export {default as AdminAcceptExpertPage} from './AdminAcceptExpertPage/AdminAcceptExpertPage'
-export {default as AdminVideoApprovalListPage} from './AdminVideoApprovalList/AdminVideoApprovalListPage'
-export {default as AdminVideoApprovalDetailsPage} from './AdminVideoApprovalDetails/AdminVideoApprovalDetailsPage'
-export {default as AdminManageVideosPage} from './AdminManageVideos/AdminManageVideosPage'
-export {default as AdminEditVideoPage}from  './AdminEditVideo/AdminEditVideoPage'
-export {default as AdminRejectVideoPage} from './AdminRejectVideo/AdminRejectVideoPage'
-export {default as AdminViewPaymentPage} from './AdminViewPaymentPage/AdminViewPaymentPage'
-export {default as AdminViewPaymentDetailsPage} from './AdminViewPaymentDetails/AdminViewPaymentDetailsPage'
-export {default as AdminFeedbackPage} from './AdminFeedback/AdminFeedbackPage'
-export {default as AdminFeedbackExpandPage} from './AdminFeedbackExpand/AdminFeedbackExpandPage'
-export {default as AdminExpertDetailedViewPage} from './AdminExpertDetailedView/AdminExpertDetailedViewPage'
-export {default as ExpertChangeListPage} from './AdminViewChangeExpert/ExpertChangeListPage'
-export {default as ExpertChangeViewPage} from './AdminViewChangeExpert/ExpertChangeViewPage'
-export {default as AdminApproveExpertChangePage} from './AdminApproveExpertChange/AdminApproveExpertChangePage'
-export {default as AdminRejectExpertChangePage} from './AdminRejectExpertChange/AdminRejectExpertChangePage'
-export {default as ErrorPage} from './Error/ErrorPage'
+export { default as UserNav } from './UserNav/UserNav';
+export { default as UserLoginPage } from './UserLogin/UserLoginPage';
+export { default as UserSignupPage } from './UserSignup/UserSignupPage';
+export { default as ExpertLoginPage } from './ExpertLogin/ExpertLoginPage';
+export { default as UserHomePage } from './UserHome/UserHomePage';
+export { default as UserProfilePage } from './UserProfile/UserProfilePage';
+export { default as UserEditProfilePage } from './UserEditProfile/UserEditProfilePage';
+export { default as UserEditProfilePicPage } from './UserEditProfile/UserEditProfilePicPage';
+export { default as UserSelectExpertPage } from './UserSelectExpert/UserSelectExpertPage';
+export { default as UserVideosPage } from './UserVideos/UserVideosPage';
+export { default as UserViewPlanPage } from './UserViewPlan/UserViewPlanPage';
+export { default as UserViewExpertPage } from './UserViewExpert/UserViewExpertPage';
+export { default as UserChatPage } from './UserChat/UserChatPage';
+export { default as UserFeedbackPage } from './UserFeedbackPage/UserFeedbackPage';
+export { default as UserOTPLoginPage } from './UserOTP/UserOTPLoginPage';
+export { default as UserPlanPage } from './UserPlan/UserPlanPage';
+export { default as UserChangeExpertPage } from './UserChangeExpert/UserChangeExpertPage';
+export { default as UserAcceptExpChangeApproved } from './UserAcceptExpChangeApproved/UserAcceptExpChangeApproved';
+export { default as UserAcceptExpChangeRejection } from './UserAcceptExpChangeRejection/UserAcceptExpChangeRejection';
+export { default as BuyPlanPage } from './BuyPlan/BuyPlanPage';
+export { default as BuyPlanSuccessPage } from './BuyPlanStatusPage/BuyPlanSuccessPage';
+export { default as ExpertSignupPage } from './ExpertSignup/ExpertSignupPage';
+export { default as AdminLoginPage } from './AdminLogin/AdminLoginPage';
+export { default as ExpertHomePage } from './ExpertHome/ExpertHomePage';
+export { default as ExpertHomeNavPage } from './ExpertHomeNav/ExpertHomeNavPage';
+export { default as ExpertProfilePage } from './ExpertProfile/ExpertProfilePage';
+export { default as ExpertApplyFormPage } from './ExpertApplyForm/ExpertApplyFormPage';
+export { default as ExpertRejectedReasonPage } from './ExpertRejectedReasonPage/ExpertRejectedReasonPage';
+export { default as ExpertAcceptedNotificationPage } from './ExpertAcceptedNotification/ExpertAcceptedNotificationPage';
+export { default as ExpertVideosPage } from './ExpertVideos/ExpertVideosPage';
+export { default as ExpertAddVideosPage } from './ExpertAddVideos/ExpertAddVideosPage';
+export { default as ExpertEditVideoPage } from './ExpertEditVideo/ExpertEditVideoPage';
+export { default as ExpertRejectedVideoListPage } from './ExpertRejectedVideoList/ExpertRejectedVideoListPage';
+export { default as ExpertRejectedVideoDetailedViewPage } from './ExpertedRejectedVideoDetailedView/ExpertRejectedVideoDetailedViewPage';
+export { default as ExpertChatPage } from './ExpertChat/ExpertChatPage';
+export { default as ExpertClientViewPage } from './ExpertClientView/ExpertClientViewPage';
+export { default as ExpertEditProfilePage } from './ExpertEditProfile/ExpertEditProfilePage';
+export { default as ExpertOTPLoginPage } from './ExpertOTP/ExpertOTPLoginPage';
+export { default as UserHomeNavPage } from './UserHomeNav/UserHomeNavPage';
+export { default as HomePage } from './Home/HomePage';
+export { default as HomePage2 } from './Home/HomePage2';
+export { default as HomePage3 } from './Home/HomePage3';
+export { default as HomePage4 } from './Home/HomePage4';
+export { default as HomePage5 } from './Home/HomePage5';
+export { default as AdminUserInfoPage } from './AdminUserInfo/AdminUserInfoPage';
+export { default as AdminExpertInfoPage } from './AdminExpertInfo/AdminExpertInfoPage';
+export { default as HomeFooterPage } from './HomeFooter/HomeFooterPage';
+export { default as AdminHomeNavPage } from './AdminHomeNav/AdminHomeNavPage';
+export { default as AdminHomePage } from './AdminHome/AdminHomePage';
+export { default as ViewPlansPage } from './Plans/ViewPlansPage';
+export { default as AdminAddPlansPage } from './AdminAddPlans/AdminAddPlansPage';
+export { default as AdminEditPlanPage } from './AdminEditPlan/AdminEditPlanPage';
+export { default as AdminApprovalListPage } from './AdminApprovalListPage/AdminApprovalListPage';
+export { default as AdminApprovalDetailedViewPage } from './AdminApprovalDetailedViewPage/AdminApprovalDetailedViewPage';
+export { default as AdminRejectExpertPage } from './AdminRejectExpertPage/AdminRejectExpertPage';
+export { default as AdminAcceptExpertPage } from './AdminAcceptExpertPage/AdminAcceptExpertPage';
+export { default as AdminVideoApprovalListPage } from './AdminVideoApprovalList/AdminVideoApprovalListPage';
+export { default as AdminVideoApprovalDetailsPage } from './AdminVideoApprovalDetails/AdminVideoApprovalDetailsPage';
+export { default as AdminManageVideosPage } from './AdminManageVideos/AdminManageVideosPage';
+export { default as AdminEditVideoPage } from './AdminEditVideo/AdminEditVideoPage';
+export { default as AdminRejectVideoPage } from './AdminRejectVideo/AdminRejectVideoPage';
+export { default as AdminViewPaymentPage } from './AdminViewPaymentPage/AdminViewPaymentPage';
+export { default as AdminViewPaymentDetailsPage } from './AdminViewPaymentDetails/AdminViewPaymentDetailsPage';
+export { default as AdminFeedbackPage } from './AdminFeedback/AdminFeedbackPage';
+export { default as AdminFeedbackExpandPage } from './AdminFeedbackExpand/AdminFeedbackExpandPage';
+export { default as AdminExpertDetailedViewPage } from './AdminExpertDetailedView/AdminExpertDetailedViewPage';
+export { default as ExpertChangeListPage } from './AdminViewChangeExpert/ExpertChangeListPage';
+export { default as ExpertChangeViewPage } from './AdminViewChangeExpert/ExpertChangeViewPage';
+export { default as AdminApproveExpertChangePage } from './AdminApproveExpertChange/AdminApproveExpertChangePage';
+export { default as AdminRejectExpertChangePage } from './AdminRejectExpertChange/AdminRejectExpertChangePage';
+export { default as ErrorPage } from './Error/ErrorPage';

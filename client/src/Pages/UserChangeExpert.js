@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserChangeExpertPage, UserHomeNavPage } from '../Components'
+import React from 'react';
+import { UserChangeExpertPage, UserHomeNavPage } from '../Components';
 
 function UserChangeExpert() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserChangeExpertPage/>
+      <UserHomeNavPage />
+      <UserChangeExpertPage />
     </div>
-  )
+  );
 }
 
-export default UserChangeExpert
+export default UserChangeExpert;

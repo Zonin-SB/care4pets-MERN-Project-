@@ -9,17 +9,13 @@ function AdminExpertDetailedViewPage() {
 
   useEffect(() => {
     getExpertDetails();
-    
 
     async function getExpertDetails() {
       const token = localStorage.getItem('adminToken');
       const data = await getExpertDetailedView(token, id);
       setExpertDetails(data.details[0]);
     }
-
-   
   }, [id]);
- 
 
   return (
     <div>

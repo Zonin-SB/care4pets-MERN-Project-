@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserFeedbackPage, UserHomeNavPage } from '../Components'
+import React from 'react';
+import { UserFeedbackPage, UserHomeNavPage } from '../Components';
 
 function UserFeedback() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserFeedbackPage/>
+      <UserHomeNavPage />
+      <UserFeedbackPage />
     </div>
-  )
+  );
 }
 
-export default UserFeedback
+export default UserFeedback;

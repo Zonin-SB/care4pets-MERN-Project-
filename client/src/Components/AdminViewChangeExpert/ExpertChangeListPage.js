@@ -7,9 +7,9 @@ import { expertChangeDetails } from '../../redux/adminReducer';
 
 function ExpertChangeListPage() {
   const dispatch = useDispatch();
-  
+
   const [requestDetails, setRequestDetails] = useState([]);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     fetchRequestList();
 
@@ -19,10 +19,9 @@ function ExpertChangeListPage() {
       setRequestDetails(data.request);
     }
   }, []);
-  console.log(requestDetails, 'da i n ch');
 
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className="max-w-screen-2xl mx-auto">
       <h1 className="text-2xl font-bold text-center mt-9">
         Expert Change Request Lists
       </h1>
@@ -81,9 +80,14 @@ function ExpertChangeListPage() {
                     <dd className="text-xs text-gray-500">{data.validTill}</dd>
                   </div>
                 </dl>
-                
+
                 <button
-                onClick={()=>{dispatch(expertChangeDetails(data.expertChangeRequest.expertId)); navigate(`/adminExpertChangeView/${data._id}`)}}
+                  onClick={() => {
+                    dispatch(
+                      expertChangeDetails(data.expertChangeRequest.expertId)
+                    );
+                    navigate(`/adminExpertChangeView/${data._id}`);
+                  }}
                   type="button"
                   class="absolute right-0 bottom-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
                 >

@@ -1,31 +1,28 @@
-import React,{useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
-import jwt from 'jwt-decode'
-import {  UserNav, UserOTPLoginPage } from '../Components'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt from 'jwt-decode';
+import { UserNav, UserOTPLoginPage } from '../Components';
 
 function UserOTPLogin() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    const token=localStorage.getItem('userToken')
-    if(token){
-      const user=jwt(token)
-     
-      if(user){
-        navigate('/userHome')
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      const user = jwt(token);
+
+      if (user) {
+        navigate('/userHome');
       }
-    }else{
-      navigate('/userOTPLogin')
+    } else {
+      navigate('/userOTPLogin');
     }
-  
-  
-    
-  }, [navigate])
+  }, [navigate]);
   return (
     <div>
-        <UserNav/>
-        <UserOTPLoginPage/>
+      <UserNav />
+      <UserOTPLoginPage />
     </div>
-  )
+  );
 }
 
-export default UserOTPLogin
+export default UserOTPLogin;

@@ -47,12 +47,15 @@ function UserNav() {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                   <Link to={'/userHome'}> <button
-                      className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium"
-                      aria-current="page"
-                    >
-                      Home
-                    </button></Link>
+                    <Link to={'/userHome'}>
+                      {' '}
+                      <button
+                        className=" hover:bg-gray-700 hover:text-white text-black-300 px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Home
+                      </button>
+                    </Link>
 
                     <Link to={'/userVideos'}>
                       {' '}
@@ -172,23 +175,26 @@ function UserNav() {
               <div className="md:hidden" id="mobile-menu">
                 <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                   {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  */}
-                  <Link to={'/userHome'}> <button
-                    className=" text-gray-300 block hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium"
-                    aria-current="page"
-                  >
-                    Home
-                  </button> </Link>
+                  <Link to={'/userHome'}>
+                    {' '}
+                    <button
+                      className=" text-black-300 block hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                      aria-current="page"
+                    >
+                      Home
+                    </button>{' '}
+                  </Link>
 
                   <Link to={'/userVideos'}>
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Videos
                     </button>{' '}
                   </Link>
 
                   <Link to={'/userSelectExpert'}>
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Experts
                     </button>{' '}
                   </Link>
@@ -197,9 +203,12 @@ function UserNav() {
                     Chat
                   </button> */}
 
-                 <Link to="/userProfile"> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Profile
-                  </button></Link>
+                  <Link to="/userProfile">
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Profile
+                    </button>
+                  </Link>
 
                   {/* <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reports</button> */}
                 </div>

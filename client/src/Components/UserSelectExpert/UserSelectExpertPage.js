@@ -19,8 +19,8 @@ function UserSelectExpertPage() {
   const id = useSelector((state) => state.admin.userDetails.userId);
   const [expertDetails, setExpertDetails] = useState([]);
   const [yourExpertDetails, setYourExpertDetails] = useState([]);
-  const [rejected,setRejected]=useState(false)
-  const [accepted,setAccepted]=useState(false)
+  const [rejected, setRejected] = useState(false);
+  const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState('');
   const [filteredExpertDetails, setFilteredExpertDetails] = useState([]);
   const [search, setSearch] = useState('');
@@ -28,40 +28,33 @@ function UserSelectExpertPage() {
     fetchExpert();
     fetchYourExpert();
     fetchRejected();
-    fetchAccepted()
+    fetchAccepted();
 
-    async function fetchRejected(){
+    async function fetchRejected() {
       const token = localStorage.getItem('userToken');
       const response = await getExpertChangeRejected(token, id);
       if (response.status === 'ok') {
-  
         setRejected(response.details[0]);
-        
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
     }
 
-    async function fetchAccepted(){
+    async function fetchAccepted() {
       const token = localStorage.getItem('userToken');
       const response = await getExpertChangeApproved(token, id);
-     
+
       if (response.status === 'ok') {
         setAccepted(response.details[0]);
-        
-        
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
     }
-
-
 
     async function fetchExpert() {
       const token = localStorage.getItem('userToken');
       const response = await getUsersExpert(token, id);
       if (response.status === 'ok') {
-        // console.log(response.expertDetails[0].experts);
         setExpertDetails(response.expertDetails);
         setFilteredExpertDetails(response.expertDetails);
       } else {
@@ -75,9 +68,6 @@ function UserSelectExpertPage() {
       setYourExpertDetails(response.expert[0]);
     }
   }, [id]);
-  // console.log(expertDetails, 'in exp');
-  console.log(rejected,'rej');
-  // console.log(accepted,'acep');
 
   useEffect(() => {
     const result = expertDetails.filter((expert) => {
@@ -121,8 +111,6 @@ function UserSelectExpertPage() {
       }
     });
   };
-
- 
 
   const columns = [
     {
@@ -195,57 +183,71 @@ function UserSelectExpertPage() {
             Your Expert
           </h1>
           <div>
-          {accepted.expertChangeAccepted?(
+            {accepted.expertChangeAccepted ? (
+              <button
+                onClick={() =>
+                  navigate(
+                    `/userAceptExpChangeApprove/${accepted.expertChangeAccepted.id}`
+                  )
+                }
+                type="button"
+                className="ml-4 mt-4 relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                <svg
+                  className="w-6 h-6"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <span className="sr-only">Notifications</span>
+                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+                  {/* {count ? count : 0} */}1
+                </div>
+              </button>
+            ) : (
+              ''
+            )}
+          </div>
+
+          <div>
+            {rejected.expertChangeRejected ? (
+              <button
+                onClick={() =>
+                  navigate(
+                    `/userAceptExpChangeReject/${rejected.expertChangeRejected.id}`
+                  )
+                }
+                type="button"
+                className="ml-4  relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                <svg
+                  className="w-6 h-6"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <span className="sr-only">Notifications</span>
+                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+                  {/* {count ? count : 0} */}1
+                </div>
+              </button>
+            ) : (
+              ''
+            )}
+          </div>
+
           <button
-          onClick={()=>navigate(`/userAceptExpChangeApprove/${accepted.expertChangeAccepted.id}`)}
-              type="button"
-              className="ml-4 mt-4 relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-              </svg>
-              <span className="sr-only">Notifications</span>
-              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
-                {/* {count ? count : 0} */}1
-              </div>
-            </button>
-):('')}
-</div>
-
-
-            <div>
-            {rejected.expertChangeRejected?(
-            <button
-            onClick={()=>navigate(`/userAceptExpChangeReject/${rejected.expertChangeRejected.id}`)}
-              type="button"
-              className="ml-4  relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-              </svg>
-              <span className="sr-only">Notifications</span>
-              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
-                {/* {count ? count : 0} */}1
-              </div>
-            </button>
-            ):('')}
-            </div>
-
-          <button onClick={()=>navigate(`/userChangeExpert/${id}`)} className="absolute right-0 mt-4 inline-flex items-center justify-center p-0.5 mb-2 mr-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+            onClick={() => navigate(`/userChangeExpert/${id}`)}
+            className="absolute right-0 mt-4 inline-flex items-center justify-center p-0.5 mb-2 mr-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+          >
             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               Request Expert Change
             </span>

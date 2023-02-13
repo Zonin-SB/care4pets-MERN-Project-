@@ -12,7 +12,6 @@ function HomePage2() {
       setExperts(data.experts);
     }
   }, []);
-  console.log(experts);
   return (
     <div className="home-background max-w-screen-2xl mx-auto">
       <div className="home-background">

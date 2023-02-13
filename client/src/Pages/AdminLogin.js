@@ -1,34 +1,31 @@
-import React,{useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
-import jwt from 'jwt-decode'
-import { AdminLoginPage } from '../Components'
-import AdminNav from '../Components/AdminNav/AdminNav'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt from 'jwt-decode';
+import { AdminLoginPage } from '../Components';
+import AdminNav from '../Components/AdminNav/AdminNav';
 
 function AdminLogin() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    const token=localStorage.getItem('adminToken')
-    if(token){
-      const admin=jwt(token)
-      console.log(admin);
-      if(admin){
-        navigate('/adminHome')
-      }else{
-        navigate('/admin')
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      const admin = jwt(token);
+      if (admin) {
+        navigate('/adminHome');
+      } else {
+        navigate('/admin');
       }
-    }else{
-      navigate('/admin')
+    } else {
+      navigate('/admin');
     }
-  
-    
-  }, [navigate])
-  
+  }, [navigate]);
+
   return (
     <div>
-        <AdminNav/>
-        <AdminLoginPage/>
+      <AdminNav />
+      <AdminLoginPage />
     </div>
-  )
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;

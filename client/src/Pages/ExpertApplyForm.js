@@ -1,13 +1,13 @@
-import React from 'react'
-import { ExpertApplyFormPage, ExpertHomeNavPage } from '../Components'
+import React from 'react';
+import { ExpertApplyFormPage, ExpertHomeNavPage } from '../Components';
 
 function ExpertApplyForm() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertApplyFormPage/>
+      <ExpertHomeNavPage />
+      <ExpertApplyFormPage />
     </div>
-  )
+  );
 }
 
-export default ExpertApplyForm
+export default ExpertApplyForm;

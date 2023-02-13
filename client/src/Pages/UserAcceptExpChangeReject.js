@@ -1,13 +1,13 @@
-import React from 'react'
-import { UserAcceptExpChangeRejection, UserHomeNavPage } from '../Components'
+import React from 'react';
+import { UserAcceptExpChangeRejection, UserHomeNavPage } from '../Components';
 
 function UserAcceptExpChangeReject() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <UserAcceptExpChangeRejection/>
+      <UserHomeNavPage />
+      <UserAcceptExpChangeRejection />
     </div>
-  )
+  );
 }
 
-export default UserAcceptExpChangeReject
+export default UserAcceptExpChangeReject;

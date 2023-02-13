@@ -12,24 +12,24 @@ function UserChangeExpertPage() {
 
   const onSubmit = async (values, action) => {
     const token = localStorage.getItem('userToken');
-    const data = await userChangeExpert(token, values)
-    if(data.status==='ok'){
-      Swal.fire({         
+    const data = await userChangeExpert(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({
         icon: 'success',
         title: 'Your request has beed submitted',
         showConfirmButton: false,
-        timer: 1500
-      })
-      navigate('/userSelectExpert')
-    }else if(data.status==='error'){
+        timer: 1500,
+      });
+      navigate('/userSelectExpert');
+    } else if (data.status === 'error') {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'You already changed your expert once !',
-      })
-      navigate('/userSelectExpert')
-    }else{
-      setError('Something went wrong...Please try after sometimes.')
+      });
+      navigate('/userSelectExpert');
+    } else {
+      setError('Something went wrong...Please try after sometimes.');
     }
   };
 
@@ -37,7 +37,7 @@ function UserChangeExpertPage() {
     reason: '',
     expertId: '',
     userId: id,
-    pet:'',
+    pet: '',
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -70,7 +70,7 @@ function UserChangeExpertPage() {
             >
               <p className="text-lg font-medium">Change your Expert?</p>
               <div>
-                <label  className="text-sm font-medium">
+                <label className="text-sm font-medium">
                   Reason for changing
                 </label>
                 <div className="relative mt-1">
@@ -89,21 +89,20 @@ function UserChangeExpertPage() {
                 </div>
               </div>
               <div>
-                <label  className="text-sm font-medium">
-                  Select Your Pet
-                </label>
+                <label className="text-sm font-medium">Select Your Pet</label>
                 <div className="relative mt-1">
-                 
-                    <select
-                      name='pet' id='pet' onChange={handleChange} onBlur={handleBlur}
-                      className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                    >
-                     <option>Select a pet</option>
-                    <option  value='Dog' >Dog</option>
-                    <option value='Cat'>Cat</option>
-                    <option value='Exotic-birds'>Exotic birds</option>
-                    </select>
-                  
+                  <select
+                    name="pet"
+                    id="pet"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                  >
+                    <option>Select a pet</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Exotic-birds">Exotic birds</option>
+                  </select>
 
                   {errors.pet && touched.pet && (
                     <p className="red-error">{errors.pet}</p>
@@ -111,7 +110,7 @@ function UserChangeExpertPage() {
                 </div>
               </div>
               <div>
-                <label  className="text-sm font-medium">
+                <label className="text-sm font-medium">
                   ID of Expert you want
                 </label>
                 <div className="relative mt-1">

@@ -12,14 +12,15 @@ function AdminApproveExpertChangePage() {
   const packId = location.state.id1;
   const expertId = location.state.id2;
   const initialValues = {
-    expertId:expertId,
+    expertId: expertId,
     reason: 'Application approved',
-    message: 'It is to inform you that your application is approved and your expert is changed as per your request.',
+    message:
+      'It is to inform you that your application is approved and your expert is changed as per your request.',
   };
 
   const onSubmit = async (values, action) => {
     const token = localStorage.getItem('adminToken');
-    const data = await adminApproveExpertChange(token,packId, values);
+    const data = await adminApproveExpertChange(token, packId, values);
     if (data.status === 'ok') {
       Swal.fire({
         icon: 'success',

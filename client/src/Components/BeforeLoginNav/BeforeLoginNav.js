@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function BeforeLoginNav() {
-  return (
-    <div>BeforeLoginNav</div>
-  )
+  return <div>BeforeLoginNav</div>;
 }
 
-export default BeforeLoginNav
+export default BeforeLoginNav;

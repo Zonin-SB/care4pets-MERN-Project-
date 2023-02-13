@@ -7,8 +7,8 @@ import userProfilePic from '../../images/proImg.jpg';
 function ExpertClientViewPage() {
   const expertId = useSelector((state) => state.admin.expertDetails.expertId);
   const [clients, setClients] = useState([]);
-  const navigate=useNavigate();
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchClients();
 
@@ -135,7 +135,7 @@ function ExpertClientViewPage() {
                       </div>
                       <div className="grid grid-cols-2 mt-8">
                         <button
-                        onClick={()=>navigate(`/expertChat/${data.userId}`)}
+                          onClick={() => navigate(`/expertChat/${data.userId}`)}
                           type="button"
                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
@@ -154,8 +154,6 @@ function ExpertClientViewPage() {
                             ></path>
                           </svg>
                         </button>
-
-                     
                       </div>
                     </div>
                   </button>

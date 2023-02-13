@@ -70,24 +70,24 @@ function AdminFeedbackPage() {
     });
   };
 
-  const deleteFedAlert=(id)=>{
+  const deleteFedAlert = (id) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You want to delete this feedback!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-         const token=localStorage.getItem('adminToken')
-         const data=await deleteFeedback(token,id)
-         setFeedback(data.feedback)
-          Swal.fire('Deleted!', 'This feedback has been deleted.', 'success');
-        }
-      });
-  }
+      title: 'Are you sure?',
+      text: 'You want to delete this feedback!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const token = localStorage.getItem('adminToken');
+        const data = await deleteFeedback(token, id);
+        setFeedback(data.feedback);
+        Swal.fire('Deleted!', 'This feedback has been deleted.', 'success');
+      }
+    });
+  };
 
   const columns = [
     {
@@ -144,15 +144,15 @@ function AdminFeedbackPage() {
       },
     },
     {
-        name: 'Delete',
-        selector: (row) => {
-          return (
-            <div>
-              <button onClick={() => deleteFedAlert(row._id)}>🗑️</button>
-            </div>
-          );
-        },
+      name: 'Delete',
+      selector: (row) => {
+        return (
+          <div>
+            <button onClick={() => deleteFedAlert(row._id)}>🗑️</button>
+          </div>
+        );
       },
+    },
     {
       name: 'Expand',
       selector: (row) => {

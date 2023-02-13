@@ -36,8 +36,6 @@ function ExpertChatPage() {
   useEffect(() => {
     socket.current = io('ws://localhost:3001');
     socket.current.on('getMessage', (data) => {
-      // console.log(data,'data in sock exp');
-      // setArrivalMessage(data)
       setArrivalMessage({
         _id: data.from,
         messages: {

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { getExpertEditProfileDetails, updateExpertProfile } from '../../Axios/Services/ExpertServices';
+import {
+  getExpertEditProfileDetails,
+  updateExpertProfile,
+} from '../../Axios/Services/ExpertServices';
 import { expertEditProfileSchema } from '../../Validation/Validation';
 import Swal from 'sweetalert2';
 
@@ -21,7 +24,6 @@ function ExpertEditProfilePage() {
       setExpertDetails(data.expertDetails[0]);
     }
   }, [id]);
-  
 
   const initialValues = {
     id: id,
@@ -34,24 +36,24 @@ function ExpertEditProfilePage() {
   };
 
   const onSubmit = async (values, action) => {
-    const token=localStorage.getItem('expertToken')
-        const data = await updateExpertProfile(token, values);
-       if(data.status==='ok'){
-        Swal.fire({          
-          icon: 'success',
-          title: 'Your profile has been updated',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        navigate('/expertProfile')
-       }else{
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-        })
-        setError('Update Failed,try again after some time.')
-       }
+    const token = localStorage.getItem('expertToken');
+    const data = await updateExpertProfile(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Your profile has been updated',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate('/expertProfile');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      setError('Update Failed,try again after some time.');
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -136,9 +138,8 @@ function ExpertEditProfilePage() {
               {errors.mobile && touched.mobile && (
                 <p className="red-error">{errors.mobile}</p>
               )}
+              <label>Experience</label>
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-                
-
                 <input
                   className="pl-2 outline-none border-none"
                   id="experience"
@@ -154,8 +155,6 @@ function ExpertEditProfilePage() {
               )}
 
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-             
-
                 <input
                   className="pl-2 outline-none border-none"
                   id="dob"

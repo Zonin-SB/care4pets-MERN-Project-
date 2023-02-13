@@ -1,13 +1,13 @@
-import React from 'react'
-import { ExpertChatPage, ExpertHomeNavPage } from '../Components'
+import React from 'react';
+import { ExpertChatPage, ExpertHomeNavPage } from '../Components';
 
 function ExpertChat() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertChatPage/>
+      <ExpertHomeNavPage />
+      <ExpertChatPage />
     </div>
-  )
+  );
 }
 
-export default ExpertChat
+export default ExpertChat;

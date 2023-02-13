@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { sendverificationOTP, verifyOTP } from '../../Axios/Services/UserServices';
+import {
+  sendverificationOTP,
+  verifyOTP,
+} from '../../Axios/Services/UserServices';
 import { userToken } from '../../redux/adminReducer';
 import jwt from 'jwt-decode';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function UserOTPLoginPage() {
   const [email, setEmail] = useState('');
   const [OTP, setOTP] = useState('');
   const [otpSend, setOtpSend] = useState('');
   const [error, setError] = useState('');
-  const navigate=useNavigate();
-  const dispatch=useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function sendOTP(event) {
     event.preventDefault();
     const values = { Email: email };
     const data = await sendverificationOTP(values);
-   
+
     if (data.status) {
       setOtpSend('OTP send successfully. Please check your Email.');
     } else {
@@ -25,20 +28,20 @@ function UserOTPLoginPage() {
     }
   }
 
-  async function Login(event){
+  async function Login(event) {
     event.preventDefault();
-    const values = { Email: email , OTP: OTP };
-    const response=await verifyOTP(values)
-    if(response.status){
+    const values = { Email: email, OTP: OTP };
+    const response = await verifyOTP(values);
+    if (response.status) {
       localStorage.setItem('userToken', response.user);
-   
-    dispatch(userToken(response.user))
-		const user = jwt(response.user);
-		
-		localStorage.setItem('userDetails', user.name);
-	
-		navigate('/userHome')
-    }else{
+
+      dispatch(userToken(response.user));
+      const user = jwt(response.user);
+
+      localStorage.setItem('userDetails', user.name);
+
+      navigate('/userHome');
+    } else {
       setError('Please enter valid OTP..');
     }
   }
@@ -53,7 +56,7 @@ function UserOTPLoginPage() {
                 Hello Again!
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-7">
-              {otpSend ? <p>{otpSend}</p> : ''}
+                {otpSend ? <p>{otpSend}</p> : ''}
               </p>
               {error ? (
                 <p style={{ color: 'red' }} className="red-error">
@@ -62,7 +65,6 @@ function UserOTPLoginPage() {
               ) : (
                 ' '
               )}
-              
 
               {/* <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
           <svg
@@ -167,7 +169,7 @@ function UserOTPLoginPage() {
 
               {otpSend ? (
                 <button
-                onClick={Login}
+                  onClick={Login}
                   type="submit"
                   className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
                 >
@@ -179,7 +181,7 @@ function UserOTPLoginPage() {
                   type="submit"
                   className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
                 >
-                 Send OTP
+                  Send OTP
                 </button>
               )}
               {/* <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">

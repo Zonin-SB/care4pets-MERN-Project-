@@ -1,13 +1,13 @@
-import React from 'react'
-import { ExpertEditProfilePage, ExpertHomeNavPage } from '../Components'
+import React from 'react';
+import { ExpertEditProfilePage, ExpertHomeNavPage } from '../Components';
 
 function ExpertEditProfile() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertEditProfilePage/>
+      <ExpertHomeNavPage />
+      <ExpertEditProfilePage />
     </div>
-  )
+  );
 }
 
-export default ExpertEditProfile
+export default ExpertEditProfile;

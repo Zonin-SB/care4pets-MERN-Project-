@@ -6,42 +6,40 @@ import { userFeedbackSchema } from '../../Validation/Validation';
 import { sendFeedback } from '../../Axios/Services/UserServices';
 import Swal from 'sweetalert2';
 
-
-
 function UserFeedbackPage() {
-    const id = useSelector((state) => state.admin.userDetails.userId);
+  const id = useSelector((state) => state.admin.userDetails.userId);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const onSubmit = async (values, action) => {
-    const token=localStorage.getItem('userToken')
-    if(!token){
-        navigate('/userLogin')
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/userLogin');
     }
-    const response=await sendFeedback(token,values)
-    if(response.status==='ok'){
-      Swal.fire({         
+    const response = await sendFeedback(token, values);
+    if (response.status === 'ok') {
+      Swal.fire({
         icon: 'success',
         title: 'Your feedback has been submitted',
         showConfirmButton: false,
-        timer: 1500
-      })
-        navigate('/')
-    }else{
+        timer: 1500,
+      });
+      navigate('/');
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
-        setError('Something went wrong...Please try again after some time.')
+      });
+      setError('Something went wrong...Please try again after some time.');
     }
   };
 
   const initialValues = {
     name: '',
     feedback: '',
-    message:'',
-    userId:id,
-    approved:false,
+    message: '',
+    userId: id,
+    approved: false,
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -50,12 +48,14 @@ function UserFeedbackPage() {
       validationSchema: userFeedbackSchema,
       onSubmit,
     });
-    
 
   return (
     <div>
       <section className="p-6 text-gray-800">
-        <form onSubmit={handleSubmit} className="container w-full max-w-xl p-8 mx-auto space-y-6 rounded-md shadow bg-gray-50 ng-untouched ng-pristine ng-valid">
+        <form
+          onSubmit={handleSubmit}
+          className="container w-full max-w-xl p-8 mx-auto space-y-6 rounded-md shadow bg-gray-50 ng-untouched ng-pristine ng-valid"
+        >
           {error ? (
             <p style={{ color: 'red' }} className="text-center">
               {error}
@@ -76,7 +76,6 @@ function UserFeedbackPage() {
               id="name"
               type="text"
               placeholder="Your name"
-             
               className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-rose-600 bg-gray-100"
             />
             {errors.name && touched.name && (
@@ -93,7 +92,6 @@ function UserFeedbackPage() {
               name="feedback"
               type="text"
               placeholder="Type feedback"
-              
               className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-rose-600 bg-gray-100"
             />
             {errors.feedback && touched.feedback && (

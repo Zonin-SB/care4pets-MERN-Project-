@@ -17,7 +17,7 @@ const persistConfig = {
   key: 'admin',
   storage,
 };
-const reducers = combineReducers({ admin: adminReducer,user:userReducer });
+const reducers = combineReducers({ admin: adminReducer, user: userReducer });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({

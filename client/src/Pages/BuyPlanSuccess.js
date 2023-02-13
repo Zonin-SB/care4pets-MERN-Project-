@@ -1,13 +1,13 @@
-import React from 'react'
-import { BuyPlanSuccessPage, UserHomeNavPage } from '../Components'
+import React from 'react';
+import { BuyPlanSuccessPage, UserHomeNavPage } from '../Components';
 
 function BuyPlanSuccess() {
   return (
     <div>
-        <UserHomeNavPage/>
-        <BuyPlanSuccessPage/>
+      <UserHomeNavPage />
+      <BuyPlanSuccessPage />
     </div>
-  )
+  );
 }
 
-export default BuyPlanSuccess
+export default BuyPlanSuccess;

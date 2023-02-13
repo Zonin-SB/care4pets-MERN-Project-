@@ -30,7 +30,6 @@ function ExpertChangeViewPage() {
       setExpertDetails(data.expert[0]);
     }
   }, [id, expertId]);
-  console.log(expertDetails);
 
   const rejectExpertChangeAlert = (id) => {
     Swal.fire({
@@ -43,12 +42,12 @@ function ExpertChangeViewPage() {
       confirmButtonText: 'Yes, reject it!',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        navigate(`/adminRejectExpertChange/${id}`)
+        navigate(`/adminRejectExpertChange/${id}`);
       }
     });
   };
 
-  const acceptExpertChangeAlert = (id1,id2) => {
+  const acceptExpertChangeAlert = (id1, id2) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You want to accept this application!',
@@ -59,10 +58,7 @@ function ExpertChangeViewPage() {
       confirmButtonText: 'Yes, accept it!',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // console.log(id1,'id');
-        // console.log(id2,'ex id');
-        // navigate(`/adminApproveExpertChange/${id1}/${id2}`);
-        navigate('/adminApproveExpertChange',{state:{id1,id2}})
+        navigate('/adminApproveExpertChange', { state: { id1, id2 } });
       }
     });
   };
@@ -224,7 +220,10 @@ function ExpertChangeViewPage() {
 
                 <div className="md:inline-flex w-full space-y-4 md:space-y-0 p-8 text-gray-500 items-center">
                   <div className="md:w-3/12 text-center md:pl-6">
-                    <button onClick={() => rejectExpertChangeAlert(details._id)} className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
+                    <button
+                      onClick={() => rejectExpertChangeAlert(details._id)}
+                      className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-red-400 py-2 px-4 inline-flex items-center focus:outline-none md:float-right"
+                    >
                       <svg
                         fill="none"
                         className="w-4 text-white mr-2"
@@ -239,7 +238,12 @@ function ExpertChangeViewPage() {
                     <div className="w-full inline-flex border-b"></div>
                   </div>
                   <div className="md:w-3/12 text-center md:pl-6">
-                    <button onClick={() => acceptExpertChangeAlert(details._id,expertDetails._id)} className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-green-600 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
+                    <button
+                      onClick={() =>
+                        acceptExpertChangeAlert(details._id, expertDetails._id)
+                      }
+                      className="text-white w-full mx-auto max-w-sm rounded-md text-center bg-green-600 py-2 px-4 inline-flex items-center focus:outline-none md:float-right"
+                    >
                       <svg
                         fill="none"
                         className="w-4 text-white mr-2"

@@ -1,10 +1,10 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import jwt from 'jwt-decode';
 import { userLoginSchema } from '../../Validation/Validation';
 import { userLogin } from '../../Axios/Services/UserServices';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '../UserLogin/UserLoginPage.css';
 import { userToken } from '../../redux/adminReducer';
 
@@ -13,31 +13,29 @@ const initialValues = {
   password: '',
 };
 
-
 function UserLoginPage() {
-  const dispatch=useDispatch()
-	const [error,setError]=useState('')
-	const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
   const onSubmit = async (values, action) => {
-	const response = await userLogin(values);
-	
-if(response.blocked){
-  setError('This account is blocked !')
-}else{
-	if (response.user) {
-		localStorage.setItem('userToken', response.user);
-   
-    dispatch(userToken(response.user))
-		const user = jwt(response.user);
-		
-		localStorage.setItem('userDetails', user.name);
-	
-		navigate('/userHome')
-	  }else{
-		  setError('Incorrect email or password')
-	  }
-}
+    const response = await userLogin(values);
 
+    if (response.blocked) {
+      setError('This account is blocked !');
+    } else {
+      if (response.user) {
+        localStorage.setItem('userToken', response.user);
+
+        dispatch(userToken(response.user));
+        const user = jwt(response.user);
+
+        localStorage.setItem('userDetails', user.name);
+
+        navigate('/userHome');
+      } else {
+        setError('Incorrect email or password');
+      }
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -48,11 +46,11 @@ if(response.blocked){
     });
 
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className="max-w-screen-2xl mx-auto">
       <body className="font-mono bg-gray-400 h-full">
         <div className="container mx-auto">
-        {/* my-12 */}
-          <div className="flex justify-center px-6 py-6"> 
+          {/* my-12 */}
+          <div className="flex justify-center px-6 py-6">
             <div className="w-full xl:w-3/4 lg:w-11/12 flex">
               <div
                 className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
@@ -68,7 +66,13 @@ if(response.blocked){
                   onSubmit={handleSubmit}
                 >
                   <div className="mb-4">
-                  {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+                    {error ? (
+                      <p style={{ color: 'red' }} className="text-center">
+                        {error}
+                      </p>
+                    ) : (
+                      ''
+                    )}
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Email
                     </label>
@@ -106,29 +110,30 @@ if(response.blocked){
                   </div>
                   <div className="mb-4">
                     <br />
-					
                   </div>
                   <div>
-                  <div className="mb-6 text-center">
-                    <button
-                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                      type="submit"
-                    >
-                      Login
-                    </button>
+                    <div className="mb-6 text-center">
+                      <button
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                        type="submit"
+                      >
+                        Login
+                      </button>
+                    </div>
+                    <h1 className="font-bold text-center mb-2">OR</h1>
+                    <div className="mb-6 text-center">
+                      <Link to={'/userOTPLogin'}>
+                        {' '}
+                        <button
+                          className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                          type="submit"
+                        >
+                          Login with OTP
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                     <h1 className='font-bold text-center mb-2'>OR</h1>
-                  <div className="mb-6 text-center">
-                   <Link to={'/userOTPLogin'}> <button
-                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                      type="submit"
-                    >
-                      Login with OTP
-                    </button></Link>
-                  </div>
-                  </div>
-           
-                  
+
                   <hr className="mb-6 border-t" />
                   <div className="text-center">
                     <p className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">

@@ -34,19 +34,19 @@ function AdminRejectExpertPage() {
     const token = localStorage.getItem('adminToken');
     const data = await rejectExpert(token, values);
     if (data.status === 'ok') {
-      Swal.fire({          
+      Swal.fire({
         icon: 'success',
         title: 'This application has been rejected',
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       navigate('/adminApprovalList');
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
+      });
       setError('Something went wrong....try again after some time...');
     }
   };

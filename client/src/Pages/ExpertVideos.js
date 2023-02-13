@@ -1,13 +1,13 @@
-import React from 'react'
-import { ExpertHomeNavPage, ExpertVideosPage } from '../Components'
+import React from 'react';
+import { ExpertHomeNavPage, ExpertVideosPage } from '../Components';
 
 function ExpertVideos() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertVideosPage/>
+      <ExpertHomeNavPage />
+      <ExpertVideosPage />
     </div>
-  )
+  );
 }
 
-export default ExpertVideos
+export default ExpertVideos;

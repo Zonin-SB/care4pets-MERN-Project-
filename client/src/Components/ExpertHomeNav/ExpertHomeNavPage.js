@@ -159,7 +159,7 @@ function UserNav() {
 
                   <Link to={'/expertClientView'}>
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Clients
                     </button>
                   </Link>
@@ -169,14 +169,17 @@ function UserNav() {
                   </button> */}
                   <Link to="/expertVideos">
                     {' '}
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                       Videos
                     </button>
                   </Link>
 
-                <Link to="/expertProfile"> <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Profile
-                  </button></Link> 
+                  <Link to="/expertProfile">
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Profile
+                    </button>
+                  </Link>
 
                   {/* <button  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reports</button> */}
                 </div>

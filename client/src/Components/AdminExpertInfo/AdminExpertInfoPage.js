@@ -12,16 +12,16 @@ import notverified from '../../images/notverified.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 function AdminExpertInfoPage() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [expertDetails, setExpertDetails] = useState([]);
   const [filteredExpertDetails, setFilteredExpertDetails] = useState([]);
   const [search, setSearch] = useState('');
-  const [changeCount,setChangeCount]=useState('')
+  const [changeCount, setChangeCount] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     getAllExperts();
-    getExpertChangeRequest()
+    getExpertChangeRequest();
 
     async function getAllExperts() {
       const response = await getExpertDetails(token);
@@ -30,13 +30,12 @@ function AdminExpertInfoPage() {
 
       setFilteredExpertDetails(response.expertDetails);
     }
-    async function getExpertChangeRequest(){
+    async function getExpertChangeRequest() {
       const token = localStorage.getItem('adminToken');
-      const data=await getExpertChangeRequestCount(token)
-      setChangeCount(data.count)
-  }
+      const data = await getExpertChangeRequestCount(token);
+      setChangeCount(data.count);
+    }
   }, []);
- 
 
   useEffect(() => {
     const result = expertDetails.filter((expert) => {
@@ -152,7 +151,10 @@ function AdminExpertInfoPage() {
       selector: (row) => {
         return (
           <div>
-            <button onClick={()=>navigate(`/adminExpertDetailedView/${row._id}`)} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            <button
+              onClick={() => navigate(`/adminExpertDetailedView/${row._id}`)}
+              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            >
               Details
             </button>
           </div>
@@ -163,17 +165,19 @@ function AdminExpertInfoPage() {
 
   return (
     <div>
-      <div className='flex justify-between p-4  mt-9 flex-wrap'>
-        <h1 className='text-2xl font-bold'>All Experts</h1>
-     <Link to={'/adminExpertChangeList'}><button
-        type="button"
-        className="mt-2 relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Expert Change Requests
-        <span className="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-          {changeCount?changeCount:0}
-        </span>
-      </button></Link> 
+      <div className="flex justify-between p-4  mt-9 flex-wrap">
+        <h1 className="text-2xl font-bold">All Experts</h1>
+        <Link to={'/adminExpertChangeList'}>
+          <button
+            type="button"
+            className="mt-2 relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Expert Change Requests
+            <span className="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+              {changeCount ? changeCount : 0}
+            </span>
+          </button>
+        </Link>
       </div>
       <div className="container mx-auto mt-9">
         <DataTable

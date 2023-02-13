@@ -1,13 +1,16 @@
-import React from 'react'
-import { ExpertAcceptedNotificationPage, ExpertHomeNavPage } from '../Components'
+import React from 'react';
+import {
+  ExpertAcceptedNotificationPage,
+  ExpertHomeNavPage,
+} from '../Components';
 
 function ExpertAcceptedMessage() {
   return (
     <div>
-        <ExpertHomeNavPage/>
-        <ExpertAcceptedNotificationPage/>
+      <ExpertHomeNavPage />
+      <ExpertAcceptedNotificationPage />
     </div>
-  )
+  );
 }
 
-export default ExpertAcceptedMessage
+export default ExpertAcceptedMessage;

@@ -10,58 +10,50 @@ function AdminUserInfoPage() {
   const [userDetails, setUserDetails] = useState([]);
   const [filteredUserDetails, setFilteredUserDetails] = useState([]);
   const [search, setSearch] = useState('');
-  
-const blockAlert=(id)=>{
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You want to block this account!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, block it!'
-  }).then(async(result) => {
-    if (result.isConfirmed) {
+
+  const blockAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to block this account!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, block it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
         const token = localStorage.getItem('adminToken');
         const data = await blockUser(token, id);
         if (data.blocked) {
           setUserDetails(data.userDetails);
           setFilteredUserDetails(data.userDetails);
         }
-      Swal.fire(
-        'Blocked!',
-        'This account has been blocked.',
-        'success'
-      )
-    }
-  })
-}
+        Swal.fire('Blocked!', 'This account has been blocked.', 'success');
+      }
+    });
+  };
 
-const unblockAlert=(id)=>{
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You want to unblock this account!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, unblock it!'
-  }).then(async(result) => {
-    if (result.isConfirmed) {
+  const unblockAlert = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to unblock this account!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, unblock it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
         const token = localStorage.getItem('adminToken');
         const data = await unblockUser(token, id);
         if (data.unblocked) {
           setUserDetails(data.userDetails);
           setFilteredUserDetails(data.userDetails);
         }
-      Swal.fire(
-        'Unblocked!',
-        'This account has been unblocked.',
-        'success'
-      )
-    }
-  })
-}
+        Swal.fire('Unblocked!', 'This account has been unblocked.', 'success');
+      }
+    });
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -82,7 +74,6 @@ const unblockAlert=(id)=>{
     });
     setFilteredUserDetails(result);
   }, [search, userDetails]);
-
 
   const columns = [
     {
@@ -106,24 +97,21 @@ const unblockAlert=(id)=>{
           <div>
             {row.blocked ? (
               <div>
-              <button
-                onClick={() => unblockAlert(row._id)}
-                
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              >
-                Unblock
-              </button>
+                <button
+                  onClick={() => unblockAlert(row._id)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                >
+                  Unblock
+                </button>
               </div>
             ) : (
               <div>
                 <button
                   onClick={() => blockAlert(row._id)}
-                  
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full"
                 >
                   Block
                 </button>
-               
               </div>
             )}
           </div>

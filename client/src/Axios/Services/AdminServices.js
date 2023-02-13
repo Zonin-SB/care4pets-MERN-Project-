@@ -376,7 +376,9 @@ export const getAllVideos = async (token) => {
     if (data.status) {
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteVideo = async (token, id) => {
@@ -712,7 +714,7 @@ export const getChangeRequestDetails = async (token, id) => {
   }
 };
 
-export const getNewExpertDetails=async(token,id)=>{
+export const getNewExpertDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -732,9 +734,9 @@ export const getNewExpertDetails=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const adminRejectExpertChange=async(token,id,values)=>{
+export const adminRejectExpertChange = async (token, id, values) => {
   try {
     const config = {
       headers: {
@@ -755,27 +757,27 @@ export const adminRejectExpertChange=async(token,id,values)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const adminApproveExpertChange=async (token,id,values)=>{
-try {
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-  };
-  const { data } = await axiosAdminInstance.post(
-    `/adminApproveExpertChange/${id}`,
-    values,
-    config
-  );
+export const adminApproveExpertChange = async (token, id, values) => {
+  try {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.post(
+      `/adminApproveExpertChange/${id}`,
+      values,
+      config
+    );
 
-  if (data.status) {
-    return data;
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
   }
-} catch (error) {
-  console.log(error);
-}
-}
+};

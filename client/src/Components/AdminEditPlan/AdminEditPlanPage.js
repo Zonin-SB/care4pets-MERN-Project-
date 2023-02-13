@@ -26,19 +26,19 @@ function AdminEditPlanPage() {
     const token = localStorage.getItem('adminToken');
     const data = await editPlan(token, values);
     if (data.status === 'ok') {
-      Swal.fire({          
+      Swal.fire({
         icon: 'success',
         title: 'This plan has been edited',
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       navigate('/adminViewPlans');
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
+      });
       setError('Update Failed,try again after some time.');
     }
   };

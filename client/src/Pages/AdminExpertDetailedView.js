@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminExpertDetailedViewPage, AdminHomeNavPage } from '../Components'
+import React from 'react';
+import { AdminExpertDetailedViewPage, AdminHomeNavPage } from '../Components';
 
 function AdminExpertDetailedView() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminExpertDetailedViewPage/>
+      <AdminHomeNavPage />
+      <AdminExpertDetailedViewPage />
     </div>
-  )
+  );
 }
 
-export default AdminExpertDetailedView
+export default AdminExpertDetailedView;

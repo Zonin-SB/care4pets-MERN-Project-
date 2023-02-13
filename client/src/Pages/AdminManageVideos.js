@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, AdminManageVideosPage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, AdminManageVideosPage } from '../Components';
 
 function AdminManageVideos() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminManageVideosPage/>
+      <AdminHomeNavPage />
+      <AdminManageVideosPage />
     </div>
-  )
+  );
 }
 
-export default AdminManageVideos
+export default AdminManageVideos;

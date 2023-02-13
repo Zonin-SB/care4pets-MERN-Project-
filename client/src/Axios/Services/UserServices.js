@@ -269,8 +269,6 @@ export const getPlanVideos = async (token, id) => {
   }
 };
 
-
-
 export const getVideosCount = async (token, id) => {
   try {
     const config = {
@@ -315,7 +313,7 @@ export const getPlanDetails = async (token, id) => {
   }
 };
 
-export const getExpertChangeRejected=async(token,id)=>{
+export const getExpertChangeRejected = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -334,9 +332,9 @@ export const getExpertChangeRejected=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getExpertChangeApproved=async(token,id)=>{
+export const getExpertChangeApproved = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -355,9 +353,9 @@ export const getExpertChangeApproved=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getExpertChangeNotification=async(token,id)=>{
+export const getExpertChangeNotification = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -377,9 +375,9 @@ export const getExpertChangeNotification=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const userExpertRejectionAccepted=async(token,id)=>{
+export const userExpertRejectionAccepted = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -399,9 +397,9 @@ export const userExpertRejectionAccepted=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const userExpertChangeAccepted=async(token,id)=>{
+export const userExpertChangeAccepted = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -411,7 +409,6 @@ export const userExpertChangeAccepted=async(token,id)=>{
     };
     const { data } = await axiosUserInstance.get(
       `/userExpertChangeAccepted/${id}`,
-
       config
     );
 
@@ -421,7 +418,7 @@ export const userExpertChangeAccepted=async(token,id)=>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getYourExpertDetails = async (token, id) => {
   try {
@@ -483,7 +480,7 @@ export const getAllMessages = async (token, id) => {
 
       config
     );
-    console.log(data,'msg in axios')
+    console.log(data, 'msg in axios');
     if (data.status) {
       return data;
     }
@@ -528,7 +525,7 @@ export const checkUserPlan = async (token, id) => {
   }
 };
 
-export const getUserPlanDetails=async(token,id)=>{
+export const getUserPlanDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -542,7 +539,7 @@ export const getUserPlanDetails=async(token,id)=>{
 
       config
     );
-  
+
     if (data.status) {
       return data;
     }
@@ -550,10 +547,9 @@ export const getUserPlanDetails=async(token,id)=>{
     console.log(error);
     return error;
   }
-}
+};
 
-
-export const sendFeedback=async(token,values)=>{
+export const sendFeedback = async (token, values) => {
   try {
     const config = {
       headers: {
@@ -564,10 +560,10 @@ export const sendFeedback=async(token,values)=>{
 
     const { data } = await axiosUserInstance.post(
       '/sendFeedback',
-values,
+      values,
       config
     );
-   
+
     if (data.status) {
       return data;
     }
@@ -575,31 +571,30 @@ values,
     console.log(error);
     return error;
   }
-}
+};
 
-export const getHomeFeedback=async()=>{
+export const getHomeFeedback = async () => {
   try {
-        const config = {
-          headers: {
-            
-            'Content-Type': 'application/json',
-          },
-        };
-        const { data } = await axiosUserInstance.get(
-          '/getHomeFeedback',
-    
-          config
-        );
-    
-        if (data.status) {
-          return data;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-}
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosUserInstance.get(
+      '/getHomeFeedback',
 
-export const userChangeExpert=async(token,values)=>{
+      config
+    );
+
+    if (data.status) {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const userChangeExpert = async (token, values) => {
   try {
     const config = {
       headers: {
@@ -612,11 +607,11 @@ export const userChangeExpert=async(token,values)=>{
       values,
       config
     );
-  
+
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
-}
+};

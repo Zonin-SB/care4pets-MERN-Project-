@@ -246,7 +246,9 @@ export const deleteVideo = async (token, values) => {
     if (data.status) {
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getRejectedVideoCount = async (token, id) => {
@@ -505,7 +507,7 @@ export const updateExpertProfile = async (token, values) => {
   }
 };
 
-export const getDetails=async(token,id)=>{
+export const getDetails = async (token, id) => {
   try {
     const config = {
       headers: {
@@ -514,16 +516,11 @@ export const getDetails=async(token,id)=>{
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axiosExpertInstance.get(
-      `/getDetails/${id}`,
-      config
-    );
+    const { data } = await axiosExpertInstance.get(`/getDetails/${id}`, config);
     if (data.status) {
       return data;
     }
   } catch (error) {
     console.log(error);
   }
- 
-
-}
+};

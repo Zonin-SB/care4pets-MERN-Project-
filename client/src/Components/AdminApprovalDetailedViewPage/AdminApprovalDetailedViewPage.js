@@ -30,7 +30,7 @@ function AdminApprovalDetailedViewPage() {
       confirmButtonText: 'Yes, reject it!',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        navigate(`/adminRejectExpert/${id}`)
+        navigate(`/adminRejectExpert/${id}`);
       }
     });
   };

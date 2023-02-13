@@ -5,8 +5,8 @@ import { getVideoApprovalList } from '../../Axios/Services/AdminServices';
 
 function AdminVideoApprovalListPage() {
   const [approvalDetails, setApprovalDetails] = useState([]);
-const [search,setSearch]=useState('')
-const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
+  const [search, setSearch] = useState('');
+  const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -17,14 +17,13 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
       setApprovalDetails(response.videoDetails);
     }
   }, []);
-  console.log(approvalDetails);
+
   useEffect(() => {
-    const result = approvalDetails.filter(video=>{
-      return video.title.toLowerCase().match(search.toLowerCase())
-    })
-    setFilteredVideoDetails(result)
-   
-  }, [search,approvalDetails])
+    const result = approvalDetails.filter((video) => {
+      return video.title.toLowerCase().match(search.toLowerCase());
+    });
+    setFilteredVideoDetails(result);
+  }, [search, approvalDetails]);
 
   const columns = [
     {
@@ -37,7 +36,7 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
       sortable: true,
       selector: (row) => row.type,
     },
-   
+
     {
       name: 'Description',
       selector: (row) => row.description,
@@ -57,7 +56,6 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
       sortable: true,
       selector: (row) => row.category,
     },
-
 
     {
       name: 'More Details',
@@ -88,11 +86,13 @@ const [filteredVideoDetails, setFilteredVideoDetails] = useState([]);
         highlightOnHover
         subHeader
         subHeaderComponent={
-          <input type='text' 
-          value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-          placeholder="Search" 
-          className='block w-25 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500'/>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+            className="block w-25 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+          />
         }
       />
     </div>

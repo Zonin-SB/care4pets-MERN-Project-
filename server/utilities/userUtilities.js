@@ -213,8 +213,6 @@ module.exports = {
     });
   },
 
-  
-
   selectExpert: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -230,8 +228,6 @@ module.exports = {
       }
     });
   },
-
- 
 
   selectPlan: (userId, planId) => {
     return new Promise(async (resolve, reject) => {
@@ -279,10 +275,7 @@ module.exports = {
           success_url: `${process.env.CLIENT_URL}/buyPlanSuccess?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${process.env.CLIENT_URL}/userBuyPlan`,
         });
-        // console.log(response,'check res');
-        // console.log(session);
         resolve(session);
-        // res.send({url:session.url});
       } catch (error) {
         console.log(error);
       }
@@ -290,16 +283,14 @@ module.exports = {
   },
 
   postPlanOrderValues: (data) => {
-
     return new Promise(async (resolve, reject) => {
       try {
         const orderDetails = {};
-        let valid=parseInt(data.planOrderValues.planValidity)
+        let valid = parseInt(data.planOrderValues.planValidity);
         let validFrom = new Date();
         let validTill = new Date();
-        validTill.setMonth(
-          validFrom.getMonth() + valid)
-       
+        validTill.setMonth(validFrom.getMonth() + valid);
+
         // get current date
         // adjust 0 before single digit date
         let date = ('0' + validFrom.getDate()).slice(-2);
@@ -364,12 +355,11 @@ module.exports = {
           ':' +
           validTillSeconds;
 
-
         orderDetails.planId = ObjectId(data.planOrderValues.planId);
-          orderDetails.expertId = ObjectId(data.planOrderValues.expertId);
+        orderDetails.expertId = ObjectId(data.planOrderValues.expertId);
         orderDetails.userId = ObjectId(data.planOrderValues.userId);
-          orderDetails.validFrom = validFrom;
-        
+        orderDetails.validFrom = validFrom;
+
         orderDetails.validTill = validTill;
         orderDetails.plan = data.planOrderValues.planName;
         orderDetails.pet = data.planOrderValues.pet;
@@ -380,7 +370,6 @@ module.exports = {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         // console.log(session.status,'session status'); // "complete" or "canceled"
         if (session.status === 'complete') {
-  
           const planFound = await db
             .get()
             .collection(collection.PURCHASE_COLLECTION)
@@ -390,27 +379,32 @@ module.exports = {
                 { pet: data.planOrderValues.pet },
               ],
             });
-     
-          if(planFound===null){
+
+          if (planFound === null) {
             db.get()
-            .collection(collection.PURCHASE_COLLECTION)
-            .insertOne(orderDetails)
-            .then(() => {
-              resolve();
-            })
-            .catch((error) => {
-              reject(error);
-            });
-          }else{
-            db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:planFound._id},{
-              $set:{
-                planId:ObjectId(data.planOrderValues.planId),
-                expertId:ObjectId(data.planOrderValues.expertId),
-                validTill:validTill,
-                validFrom:validFrom,
-                plan:data.planOrderValues.planName,
-              }
-            })
+              .collection(collection.PURCHASE_COLLECTION)
+              .insertOne(orderDetails)
+              .then(() => {
+                resolve();
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          } else {
+            db.get()
+              .collection(collection.PURCHASE_COLLECTION)
+              .updateOne(
+                { _id: planFound._id },
+                {
+                  $set: {
+                    planId: ObjectId(data.planOrderValues.planId),
+                    expertId: ObjectId(data.planOrderValues.expertId),
+                    validTill: validTill,
+                    validFrom: validFrom,
+                    plan: data.planOrderValues.planName,
+                  },
+                }
+              );
           }
         } else {
           console.log('payment failed');
@@ -507,13 +501,13 @@ module.exports = {
     });
   },
 
-  findPlanById: (id,pet) => {
+  findPlanById: (id, pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
-          .findOne({ $and:[{userId: ObjectId(id)},{pet:pet}] });
+          .findOne({ $and: [{ userId: ObjectId(id) }, { pet: pet }] });
         resolve(details);
       } catch (error) {
         console.log(error);
@@ -521,7 +515,7 @@ module.exports = {
     });
   },
 
-  getExpertChangeRejected:(id,pet)=>{
+  getExpertChangeRejected: (id, pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -529,18 +523,19 @@ module.exports = {
           .collection(collection.PURCHASE_COLLECTION)
           .aggregate([
             {
-              $match:{
-                $and:[{userId: ObjectId(id)},{pet:pet}] 
-              }
-            },{
-              $project:{
+              $match: {
+                $and: [{ userId: ObjectId(id) }, { pet: pet }],
+              },
+            },
+            {
+              $project: {
                 expertChangeRejected: {
                   $arrayElemAt: ['$expertChangeRejected', 0],
                 },
-              }
-            }
-          ]).toArray()
-          // console.log(details);
+              },
+            },
+          ])
+          .toArray();
         resolve(details);
       } catch (error) {
         console.log(error);
@@ -548,7 +543,7 @@ module.exports = {
     });
   },
 
-  getExpertChangeApproved:(id,pet)=>{
+  getExpertChangeApproved: (id, pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -556,17 +551,19 @@ module.exports = {
           .collection(collection.PURCHASE_COLLECTION)
           .aggregate([
             {
-              $match:{
-                $and:[{userId: ObjectId(id)},{pet:pet}] 
-              }
-            },{
-              $project:{
+              $match: {
+                $and: [{ userId: ObjectId(id) }, { pet: pet }],
+              },
+            },
+            {
+              $project: {
                 expertChangeAccepted: {
                   $arrayElemAt: ['$expertChangeAccepted', 0],
                 },
-              }
-            }
-          ]).toArray()
+              },
+            },
+          ])
+          .toArray();
         resolve(details);
       } catch (error) {
         console.log(error);
@@ -589,7 +586,7 @@ module.exports = {
     });
   },
 
-  findPurchaseById:(id)=>{
+  findPurchaseById: (id) => {
     return new Promise(async (resolve, reject) => {
       try {
         const details = await db
@@ -598,15 +595,16 @@ module.exports = {
           .findOne({ _id: ObjectId(id) });
         resolve(details);
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
 
-  userExpertRejectionAccepted:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  userExpertRejectionAccepted: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       await db.get()
+        await db
+          .get()
           .collection(collection.PURCHASE_COLLECTION)
           .updateOne(
             { _id: ObjectId(id) },
@@ -620,15 +618,16 @@ module.exports = {
             resolve(response);
           });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   },
 
-  userExpertChangeAccepted:(id)=>{
-    return new Promise(async(resolve,reject)=>{
+  userExpertChangeAccepted: (id) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       await db.get()
+        await db
+          .get()
           .collection(collection.PURCHASE_COLLECTION)
           .updateOne(
             { _id: ObjectId(id) },
@@ -642,9 +641,9 @@ module.exports = {
             resolve(response);
           });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   },
 
   getUserPlanDetails: (id) => {
@@ -797,13 +796,13 @@ module.exports = {
     });
   },
 
-  checkUserPlan: (id,pet) => {
+  checkUserPlan: (id, pet) => {
     return new Promise(async (resolve, reject) => {
       try {
         const user = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
-          .findOne({ $and:[{userId: ObjectId(id)},{pet,pet}] });
+          .findOne({ $and: [{ userId: ObjectId(id) }, { pet, pet }] });
         if (user) {
           resolve({ status: true });
         } else {
@@ -834,36 +833,58 @@ module.exports = {
     });
   },
 
-  userChangeExpert:(data)=>{
-    return new Promise(async(resolve,reject)=>{
+  userChangeExpert: (data) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const plan=await db.get().collection(collection.PURCHASE_COLLECTION).findOne({$and:[{userId:ObjectId(data.userId)},{pet:data.pet}]})
-        if(plan.expertChanged){
-          resolve({expertAlreadyChanged:true})
-        }else{
-          if(plan.expertChangeRequest){
-           await db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$set:{
-              "expertChangeRequest.$[].reason":data.reason,
-              "expertChangeRequest.$[].expertId":data.expertId,
-              "expertChangeRequest.$[].userId":data.userId,
-              "expertChangeRequest.$[].pet":data.pet,
-            }}).then((response)=>{
-              resolve(response)
-            }).catch(()=>{
-              reject()
-            })
-          }else{
-           await db.get().collection(collection.PURCHASE_COLLECTION).updateOne({_id:plan._id},{$push:{expertChangeRequest:data}}).then((response)=>{
-              resolve(response)
-            }).catch(()=>{
-              reject()
-            })
+        const plan = await db
+          .get()
+          .collection(collection.PURCHASE_COLLECTION)
+          .findOne({
+            $and: [{ userId: ObjectId(data.userId) }, { pet: data.pet }],
+          });
+        if (plan.expertChanged) {
+          resolve({ expertAlreadyChanged: true });
+        } else {
+          if (plan.expertChangeRequest) {
+            await db
+              .get()
+              .collection(collection.PURCHASE_COLLECTION)
+              .updateOne(
+                { _id: plan._id },
+                {
+                  $set: {
+                    'expertChangeRequest.$[].reason': data.reason,
+                    'expertChangeRequest.$[].expertId': data.expertId,
+                    'expertChangeRequest.$[].userId': data.userId,
+                    'expertChangeRequest.$[].pet': data.pet,
+                  },
+                }
+              )
+              .then((response) => {
+                resolve(response);
+              })
+              .catch(() => {
+                reject();
+              });
+          } else {
+            await db
+              .get()
+              .collection(collection.PURCHASE_COLLECTION)
+              .updateOne(
+                { _id: plan._id },
+                { $push: { expertChangeRequest: data } }
+              )
+              .then((response) => {
+                resolve(response);
+              })
+              .catch(() => {
+                reject();
+              });
           }
-          
         }
       } catch (error) {
         console.log(error);
       }
-    })
-  }
+    });
+  },
 };

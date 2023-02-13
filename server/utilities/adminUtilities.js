@@ -25,7 +25,6 @@ module.exports = {
     });
   },
   findAdminById: (userId) => {
-    // console.log(userId,'adminid');
     return new Promise(async (resolve, reject) => {
       try {
         const user = await db
@@ -478,7 +477,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(details);
         resolve(details);
       } catch (error) {
         reject();
@@ -635,7 +633,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(details);
         resolve(details);
       } catch (error) {
         reject();
@@ -816,7 +813,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(data);
         resolve(data);
       } catch (error) {
         reject();
@@ -907,7 +903,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(data);
         resolve(data);
       } catch (error) {
         reject();
@@ -1112,7 +1107,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(data);
         resolve(data);
       } catch (error) {
         reject();
@@ -1187,7 +1181,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(data);
         resolve(data);
       } catch (error) {
         reject();
@@ -1221,7 +1214,6 @@ module.exports = {
             },
           ])
           .toArray();
-        // console.log(data);
         resolve(data);
       } catch (error) {
         reject();
@@ -1289,14 +1281,12 @@ module.exports = {
   },
 
   adminApproveExpertChange: (id, data) => {
-    //  console.log(data);
     return new Promise(async (resolve, reject) => {
       try {
         const purchase = await db
           .get()
           .collection(collection.PURCHASE_COLLECTION)
           .findOne({ _id: ObjectId(id) });
-        // console.log(purchase);
         if (purchase) {
           await db
             .get()
@@ -1311,7 +1301,7 @@ module.exports = {
                 },
                 $push: {
                   expertChangeAccepted: {
-                    id:id,
+                    id: id,
                     reason: data.reason,
                     message: data.message,
                   },
@@ -1325,7 +1315,7 @@ module.exports = {
               resolve(response);
             });
         } else {
-          resolve({purchaseNotFound:true})
+          resolve({ purchaseNotFound: true });
         }
       } catch (error) {
         reject();

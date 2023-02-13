@@ -64,112 +64,19 @@ module.exports = {
     });
   },
 
-  // getAllMessages: (to, from) => {
-  //    new Promise(async (resolve, reject) => {
-  //     try {
-  //       const response = {};
-  //       const messageFrom = await db
-  //         .get()
-  //         .collection(collection.CHAT_COLLECTION)
-  //         .aggregate([
-  //           {
-  //             $match: {
-  //               $and: [{ to: ObjectId(to) }, { from: from }],
-  //             },
-  //           },
-  //           {
-  //             $unwind: '$messages',
-  //           },
-  //           {
-  //             $project: {
-  //               _id: 1,
-  //               messages: 1,
-  //               // from:1,
-  //             },
-  //           },
-  //         ])
-  //         .toArray();
-  //       console.log(messageFrom,'msgs from');
-       
-
-  //       const messageTo = await db
-  //         .get()
-  //         .collection(collection.CHAT_COLLECTION)
-  //         .aggregate([
-  //           {
-  //             $match: {
-  //               $and: [{ to: from }, { from: ObjectId(to) }],
-  //             },
-  //           },
-  //           {
-  //             $unwind: '$messages',
-  //           },
-  //           {
-  //             $project: {
-  //               _id: 1,
-  //               messages: 1,
-  //               // from:1,
-  //             },
-  //           },
-  //         ])
-  //         .toArray();
-  //       // console.log(messageTo,'msg to');
-        
-
-  //       if (messageFrom.length === 0) {
-  //         messageFrom = false;
-  //       } else {
-  //         // const id=messageFrom[0].from.toString()
-  //         response.from = messageFrom[0]._id;
-  //         // response.sender=id;
-  //       }
-  //       if (messageTo.length === 0) {
-  //         messageTo = false;
-  //       } else {
-  //         // const id=messageTo[0].from.toString()
-  //         // response.from = messageTo[0]._id;
-  //         // response.reciever=id;
-  //         response.to = messageTo[0]._id;
-  //       }
-
-        
-
-  //       if (messageFrom && messageTo) {
-  //         let mergedArray = messageFrom.concat(messageTo);
-  //         mergedArray.sort(
-  //           (a, b) =>
-  //             new Date(a.messages.realtime) - new Date(b.messages.realtime)
-  //         );
-  //         response.message = mergedArray;
-  //       } else if (messageFrom) {
-  //         response.message = messageFrom;
-         
-  //       } else if (messageTo) {
-  //         response.message = messageTo;
-  //       } else {
-  //         response.message = false;
-  //       }
-        
-
-       
-  //       console.log('response is');
-  //       console.log(response, 'merg res');
-  //       resolve(response);
-  //     } catch (error) {
-  //       reject(error);
-  //     }
-  //   });
-  // },
-
-  getHomeFeedback:()=>{
-    return new Promise(async(resolve,reject)=>{
+  getHomeFeedback: () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const data=await db.get().collection(collection.FEEDBACK_COLLECTION).find({approved:true}).toArray();
-        resolve(data)
+        const data = await db
+          .get()
+          .collection(collection.FEEDBACK_COLLECTION)
+          .find({ approved: true })
+          .toArray();
+        resolve(data);
       } catch (error) {
         reject(error);
       }
-    })
+    });
   },
 
   getAllMessages: (to, from) =>
@@ -181,7 +88,7 @@ module.exports = {
           .collection(collection.CHAT_COLLECTION)
           .aggregate([
             { $match: { to: ObjectId(to), from: from } },
- 
+
             { $unwind: '$messages' },
             { $project: { _id: 1, messages: 1 } },
           ])
@@ -196,8 +103,6 @@ module.exports = {
             { $project: { _id: 1, messages: 1 } },
           ])
           .toArray();
-        // console.log(fromMessage,'from msg');
-        // console.log(toMessage,'to msg');
         if (fromMessage.length === 0) {
           fromMessage = false;
         } else {
@@ -224,7 +129,6 @@ module.exports = {
           response.message = false;
         }
 
-        // console.log(response,'resp');
         resolve(response);
       } catch (error) {
         reject(error);

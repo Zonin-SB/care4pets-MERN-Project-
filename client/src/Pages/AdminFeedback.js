@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminFeedbackPage, AdminHomeNavPage } from '../Components'
+import React from 'react';
+import { AdminFeedbackPage, AdminHomeNavPage } from '../Components';
 
 function AdminFeedback() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminFeedbackPage/>
+      <AdminHomeNavPage />
+      <AdminFeedbackPage />
     </div>
-  )
+  );
 }
 
-export default AdminFeedback
+export default AdminFeedback;

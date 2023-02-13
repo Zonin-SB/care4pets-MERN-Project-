@@ -8,42 +8,39 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 function UserEditProfilePage() {
-  const navigate=useNavigate()
-  const [error,setError]=useState('')
- 
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+
   const { userAllDetails } = useSelector((state) => state.admin);
   // const token = useSelector((state) => state.admin.userToken);
 
   const initialValues = {
-    id:userAllDetails._id,
+    id: userAllDetails._id,
     name: userAllDetails.name,
     email: userAllDetails.email,
     mobile: userAllDetails.mobile,
-    pet:userAllDetails.pet,
+    pet: userAllDetails.pet,
   };
 
-
-
   const onSubmit = async (values, action) => {
-    const token=localStorage.getItem('userToken')
+    const token = localStorage.getItem('userToken');
     const data = await updateUserProfile(token, values);
-   if(data.status==='ok'){
-    Swal.fire({         
-      icon: 'success',
-      title: 'Your profile has been updated',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    navigate('/userProfile')
-   }else{
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-    })
-    setError('Update Failed,try again after some time.')
-   }
-   
+    if (data.status === 'ok') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Your profile has been updated',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate('/userProfile');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      setError('Update Failed,try again after some time.');
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -52,7 +49,6 @@ function UserEditProfilePage() {
       validationSchema: userEditProfileSchema,
       onSubmit,
     });
- 
 
   return (
     <div>
@@ -67,7 +63,13 @@ function UserEditProfilePage() {
               <p className="text-sm font-normal text-gray-600 mb-7">
                 Welcome Back
               </p>
-              {error?<p style={{color:'red'}} className="text-center">{error}</p> : ''}
+              {error ? (
+                <p style={{ color: 'red' }} className="text-center">
+                  {error}
+                </p>
+              ) : (
+                ''
+              )}
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -156,23 +158,24 @@ function UserEditProfilePage() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                ></svg>
+                <select
+                  name="pet"
+                  id="pet"
+                  value={values.pet}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
-                </svg>
-                <select name='pet' id='pet' value={values.pet} onChange={handleChange} onBlur={handleBlur}  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                
-                    <option  value='Dog' >Dog</option>
-                    <option value='Cat'>Cat</option>
-                    <option value='Exotic-birds'>Exotic birds</option>
-                   
+                  <option value="Dog">Dog</option>
+                  <option value="Cat">Cat</option>
+                  <option value="Exotic-birds">Exotic birds</option>
                 </select>
               </div>
               {errors.pet && touched.pet && (
                 <p className="red-error">{errors.pet}</p>
               )}
 
-
-             
               <button
                 type="submit"
                 className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"

@@ -1,13 +1,13 @@
-import React from 'react'
-import { AdminHomeNavPage, AdminRejectExpertChangePage } from '../Components'
+import React from 'react';
+import { AdminHomeNavPage, AdminRejectExpertChangePage } from '../Components';
 
 function AdminRejectExpertChange() {
   return (
     <div>
-        <AdminHomeNavPage/>
-        <AdminRejectExpertChangePage/>
+      <AdminHomeNavPage />
+      <AdminRejectExpertChangePage />
     </div>
-  )
+  );
 }
 
-export default AdminRejectExpertChange
+export default AdminRejectExpertChange;

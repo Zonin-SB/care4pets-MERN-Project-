@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
-import { adminEditVideo, getEditVideoDetails } from '../../Axios/Services/AdminServices';
+import {
+  adminEditVideo,
+  getEditVideoDetails,
+} from '../../Axios/Services/AdminServices';
 import { videoUploadSchema } from '../../Validation/Validation';
 import Swal from 'sweetalert2';
 
@@ -9,7 +12,7 @@ function AdminEditVideoPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
-  const [video,setVideo]=useState([])
+  const [video, setVideo] = useState([]);
 
   useEffect(() => {
     fetchVideo();
@@ -22,43 +25,42 @@ function AdminEditVideoPage() {
   }, [id]);
 
   const initialValues = {
-    title:video.title,
-    type:video.type,
-    link:video.link,
-    category:video.category,
-    description:video.description,
-    videoId:id,
+    title: video.title,
+    type: video.type,
+    link: video.link,
+    category: video.category,
+    description: video.description,
+    videoId: id,
   };
 
   const onSubmit = async (values, action) => {
     const token = localStorage.getItem('adminToken');
-    const data=await adminEditVideo(token,values)
-    if(data.status==='ok'){
-      Swal.fire({         
+    const data = await adminEditVideo(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({
         icon: 'success',
         title: 'This video has been edited',
         showConfirmButton: false,
-        timer: 1500
-      })
-      navigate('/adminManageVideos')
-     }else{
+        timer: 1500,
+      });
+      navigate('/adminManageVideos');
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
-      setError('Update Failed,try again after some time.')
-     }
-   
+      });
+      setError('Update Failed,try again after some time.');
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-  useFormik({
-    initialValues: initialValues,
-    validationSchema: videoUploadSchema,
-    onSubmit,
-    enableReinitialize:true,
-  });
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: videoUploadSchema,
+      onSubmit,
+      enableReinitialize: true,
+    });
   return (
     <div>
       <>
@@ -124,7 +126,6 @@ function AdminEditVideoPage() {
                   value={values.category}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option>Select Pet Category</option>
                   <option value="Dog">Dog</option>
                   <option value="Cat">Cat</option>

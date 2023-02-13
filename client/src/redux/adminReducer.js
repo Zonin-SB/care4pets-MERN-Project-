@@ -4,10 +4,10 @@ const INITIAL_STATE = {
   userDetails: '',
   expertDetails: '',
   adminDetails: '',
-  userAllDetails:'',
-  userToken:'',
-  planDetails:'',
-  changeExpertId:'',
+  userAllDetails: '',
+  userToken: '',
+  planDetails: '',
+  changeExpertId: '',
 };
 
 const loginSlice = createSlice({
@@ -44,36 +44,34 @@ const loginSlice = createSlice({
       adminDetails = false;
       return { ...state, adminDetails };
     },
-    userAllDetails:(state,action)=>{
+    userAllDetails: (state, action) => {
       let { userAllDetails } = state;
-      userAllDetails=action.payload;
-      return {...state,userAllDetails}
+      userAllDetails = action.payload;
+      return { ...state, userAllDetails };
     },
     clearUserAllDetails: (state, action) => {
       let { userAllDetails } = state;
       userAllDetails = false;
       return { ...state, userAllDetails };
     },
-    userToken:(state,action)=>{
-      let {userToken}=state;
-      userToken=action.payload
-      return {...state,userToken}
+    userToken: (state, action) => {
+      let { userToken } = state;
+      userToken = action.payload;
+      return { ...state, userToken };
     },
-    clearUserToken:(state,action)=>{
-      let{userToken}=state;
-      userToken=false;
-      return{...state,userToken}
+    clearUserToken: (state, action) => {
+      let { userToken } = state;
+      userToken = false;
+      return { ...state, userToken };
     },
-    planData:(state,action)=>{ 
-    const  planDetails=action.payload
-      return{...state,planDetails}
+    planData: (state, action) => {
+      const planDetails = action.payload;
+      return { ...state, planDetails };
     },
-    expertChangeDetails:(state,action)=>{
-      const changeExpertId=action.payload;
-      return{...state,changeExpertId}
-    }
-    
-    
+    expertChangeDetails: (state, action) => {
+      const changeExpertId = action.payload;
+      return { ...state, changeExpertId };
+    },
   },
 });
 

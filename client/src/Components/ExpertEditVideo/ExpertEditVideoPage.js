@@ -1,68 +1,68 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
-import { expertEditVideo, getVideoDetails } from '../../Axios/Services/ExpertServices';
+import {
+  expertEditVideo,
+  getVideoDetails,
+} from '../../Axios/Services/ExpertServices';
 import { videoUploadSchema } from '../../Validation/Validation';
 import Swal from 'sweetalert2';
 
-
 function ExpertEditVideoPage() {
-    const [error,setError]=useState('')
-    const navigate=useNavigate();
-    const [video,setVideo]=useState([])
-    const { id } = useParams();
-    useEffect(() => {
-     fetchVideo()
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [video, setVideo] = useState([]);
+  const { id } = useParams();
+  useEffect(() => {
+    fetchVideo();
 
-     async function fetchVideo(){
-        const token=localStorage.getItem('expertToken')
-        const data=await getVideoDetails(token,id)
-        setVideo(data.videoDetails[0])
-     }
-    }, [id])
-    
+    async function fetchVideo() {
+      const token = localStorage.getItem('expertToken');
+      const data = await getVideoDetails(token, id);
+      setVideo(data.videoDetails[0]);
+    }
+  }, [id]);
 
-    const initialValues = {
-        title:video.title,
-        type:video.type,
-        link:video.link,
-        category:video.category,
-        description:video.description,
-        videoId:id,
-      };
+  const initialValues = {
+    title: video.title,
+    type: video.type,
+    link: video.link,
+    category: video.category,
+    description: video.description,
+    videoId: id,
+  };
 
-      const onSubmit = async (values, action) => {
-        const token = localStorage.getItem('expertToken');
-        const data=await expertEditVideo(token,values)
-        if(data.status==='ok'){
-          Swal.fire({         
-            icon: 'success',
-            title: 'This video has been edited',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          navigate('/expertVideos')
-         }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-          setError('Update Failed,try again after some time.')
-         }
-       
-      };
+  const onSubmit = async (values, action) => {
+    const token = localStorage.getItem('expertToken');
+    const data = await expertEditVideo(token, values);
+    if (data.status === 'ok') {
+      Swal.fire({
+        icon: 'success',
+        title: 'This video has been edited',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate('/expertVideos');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      setError('Update Failed,try again after some time.');
+    }
+  };
 
-      const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
       validationSchema: videoUploadSchema,
       onSubmit,
-      enableReinitialize:true,
+      enableReinitialize: true,
     });
   return (
     <div>
-         <>
+      <>
         {/* component */}
         <section className="max-w-2xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 mt-16 mb-10">
           <h1 className="text-xl font-bold text-white capitalize dark:text-white">
@@ -102,7 +102,6 @@ function ExpertEditVideoPage() {
                   value={values.type}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option value="Free">Free</option>
                   <option value="Classic">Classic</option>
                   <option value="Super">Super</option>
@@ -126,7 +125,6 @@ function ExpertEditVideoPage() {
                   value={values.category}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 >
-                  
                   <option>Select Pet Category</option>
                   <option value="Dog">Dog</option>
                   <option value="Cat">Cat</option>
@@ -182,7 +180,7 @@ function ExpertEditVideoPage() {
         </section>
       </>
     </div>
-  )
+  );
 }
 
-export default ExpertEditVideoPage
+export default ExpertEditVideoPage;

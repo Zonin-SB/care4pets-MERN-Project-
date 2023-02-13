@@ -77,22 +77,20 @@ function ExpertRejectedVideoDetailedViewPage() {
                   ''
                 )}
                 <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
-                <div>
-                 
-                  <iframe
-                  className="responsive-iframe"
+                  <div>
+                    <iframe
+                      className="responsive-iframe"
                       src={video.link}
                       title="YouTube video"
                       allowFullScreen
                     ></iframe>
-                 
+                  </div>
+                  <div></div>
                 </div>
-                <div></div>
-              </div>
                 <h1 className="text-xl md:text-2xl font-bold leading-tight text-gray-900">
                   Hello {message.expert}
                 </h1>
-                
+
                 <p className="text-base md:text-lg text-gray-700 mt-3 ">
                   It is to inform you that your video titled "{video.title}"
                   cannot be approved.

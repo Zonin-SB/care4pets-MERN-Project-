@@ -15,14 +15,13 @@ function UserPlanPage() {
       }
     }
   }, [userId]);
- 
 
   return (
     <div>
       <h1 className="font-semibold text-2xl p-4">Your Plan</h1>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-          {plan?plan.plan.planName:''}
+          {plan ? plan.plan.planName : ''}
         </h5>
         <div className="flex items-baseline text-gray-900 dark:text-white">
           <span className="text-3xl font-semibold">₹</span>
@@ -114,7 +113,7 @@ function UserPlanPage() {
               />
             </svg>
             <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">
-              Valid From : {plan ? plan.validFrom : ''} 
+              Valid From : {plan ? plan.validFrom : ''}
             </span>
           </li>
           <li className="flex space-x-3">

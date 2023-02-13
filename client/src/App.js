@@ -93,8 +93,14 @@ function App() {
           <Route path="/userViewExpert/:id" element={<UserViewExpert />} />
           <Route path="/userChat/:id" element={<UserChat />} />
           <Route path="/userChangeExpert/:id" element={<UserChangeExpert />} />
-          <Route path="/userAceptExpChangeApprove/:id" element={<UserAcceptExpChangeApprove />} />
-          <Route path="/userAceptExpChangeReject/:id" element={<UserAcceptExpChangeReject />} />
+          <Route
+            path="/userAceptExpChangeApprove/:id"
+            element={<UserAcceptExpChangeApprove />}
+          />
+          <Route
+            path="/userAceptExpChangeReject/:id"
+            element={<UserAcceptExpChangeReject />}
+          />
         </Route>
 
         <Route path="/admin" element={<AdminLogin />} />
@@ -108,13 +114,31 @@ function App() {
           <Route path="/adminEditPlan/:id" element={<AdminEditPlan />} />
           <Route path="/adminApprovalList" element={<AdminApprovalList />} />
           <Route path="/adminViewFeedback" element={<AdminFeedback />} />
-          <Route path="/adminFeedbackExpand/:id" element={<AdminFeedbackExpand />} />
-          <Route path="/adminExpertDetailedView/:id" element={<AdminExpertDetailedView/>} />
-          <Route path="/adminExpertChangeList" element={<AdminExpertChangeList/>} />
-          <Route path="/adminExpertChangeView/:id" element={<AdminExpertChangeView/>} />
-          <Route path="/adminRejectExpertChange/:id" element={<AdminRejectExpertChange/>} />
+          <Route
+            path="/adminFeedbackExpand/:id"
+            element={<AdminFeedbackExpand />}
+          />
+          <Route
+            path="/adminExpertDetailedView/:id"
+            element={<AdminExpertDetailedView />}
+          />
+          <Route
+            path="/adminExpertChangeList"
+            element={<AdminExpertChangeList />}
+          />
+          <Route
+            path="/adminExpertChangeView/:id"
+            element={<AdminExpertChangeView />}
+          />
+          <Route
+            path="/adminRejectExpertChange/:id"
+            element={<AdminRejectExpertChange />}
+          />
           {/* <Route path="/adminApproveExpertChange/:id/:id" element={<AdminApproveExpertChange/>} /> */}
-          <Route path="/adminApproveExpertChange" element={<AdminApproveExpertChange/>} />
+          <Route
+            path="/adminApproveExpertChange"
+            element={<AdminApproveExpertChange />}
+          />
           <Route
             path="/expertDetailedView/:id"
             element={<AdminApprovalDetailedView />}
@@ -139,7 +163,10 @@ function App() {
           <Route path="/adminEditVideo/:id" element={<AdminEditVideo />} />
           <Route path="/adminRejectVideo/:id" element={<AdminRejectVideo />} />
           <Route path="/adminViewPayment" element={<AdminViewPayment />} />
-          <Route path="/adminViewPaymentDetails/:id" element={<AdminViewPaymentDetails />} />
+          <Route
+            path="/adminViewPaymentDetails/:id"
+            element={<AdminViewPaymentDetails />}
+          />
         </Route>
 
         <Route path="/expertLogin" element={<ExpertLogin />} />
@@ -163,7 +190,10 @@ function App() {
           <Route path="/expertEditVideo/:id" element={<ExpertEditVideo />} />
           <Route path="/expertClientView" element={<ExpertClientView />} />
           <Route path="/expertChat/:id" element={<ExpertChat />} />
-          <Route path="/expertEditProfile/:id" element={<ExpertEditProfile />} />
+          <Route
+            path="/expertEditProfile/:id"
+            element={<ExpertEditProfile />}
+          />
           <Route
             path="/expertRejectedVideos"
             element={<ExpertRejectedVideoList />}

@@ -1,46 +1,48 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt from 'jwt-decode';
-import { sendverificationOTP, verifyOTP } from '../../Axios/Services/ExpertServices';
+import {
+  sendverificationOTP,
+  verifyOTP,
+} from '../../Axios/Services/ExpertServices';
 
 function ExpertOTPLoginPage() {
-    const [email, setEmail] = useState('');
-    const [OTP, setOTP] = useState('');
-    const [otpSend, setOtpSend] = useState('');
-    const [error, setError] = useState('');
-    const navigate=useNavigate();
+  const [email, setEmail] = useState('');
+  const [OTP, setOTP] = useState('');
+  const [otpSend, setOtpSend] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    async function sendOTP(event) {
-        event.preventDefault();
-        const values = { Email: email };
-        const data = await sendverificationOTP(values);
-       
-        if (data.status) {
-          setOtpSend('OTP send successfully. Please check your Email.');
-        } else {
-          setError(data.message);
-        }
-      }
-    
-      async function Login(event){
-        event.preventDefault();
-        const values = { Email: email , OTP: OTP };
-        const response=await verifyOTP(values)
-        if(response.status){
-            localStorage.setItem('expertToken', response.expert);
-            const expert = jwt(response.expert);
-    
-            localStorage.setItem('expertDetails', expert.name);
-            navigate('/expertHome');
-        }else{
-          setError('Please enter valid OTP..');
-        }
-      }
+  async function sendOTP(event) {
+    event.preventDefault();
+    const values = { Email: email };
+    const data = await sendverificationOTP(values);
 
+    if (data.status) {
+      setOtpSend('OTP send successfully. Please check your Email.');
+    } else {
+      setError(data.message);
+    }
+  }
+
+  async function Login(event) {
+    event.preventDefault();
+    const values = { Email: email, OTP: OTP };
+    const response = await verifyOTP(values);
+    if (response.status) {
+      localStorage.setItem('expertToken', response.expert);
+      const expert = jwt(response.expert);
+
+      localStorage.setItem('expertDetails', expert.name);
+      navigate('/expertHome');
+    } else {
+      setError('Please enter valid OTP..');
+    }
+  }
 
   return (
     <div>
-         <>
+      <>
         {/* component */}
         <div className="h-screen flex justify-center">
           <div className="flex justify-center items-center bg-white">
@@ -49,7 +51,7 @@ function ExpertOTPLoginPage() {
                 Hello Expert!
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-7">
-              {otpSend ? <p>{otpSend}</p> : ''}
+                {otpSend ? <p>{otpSend}</p> : ''}
               </p>
               {error ? (
                 <p style={{ color: 'red' }} className="red-error">
@@ -58,7 +60,6 @@ function ExpertOTPLoginPage() {
               ) : (
                 ' '
               )}
-              
 
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
@@ -83,7 +84,6 @@ function ExpertOTPLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
-                 
                 />
               </div>
 
@@ -109,7 +109,6 @@ function ExpertOTPLoginPage() {
                     value={OTP}
                     onChange={(e) => setOTP(e.target.value)}
                     placeholder="Enter OTP"
-                   
                   />
                 </div>
               ) : (
@@ -118,7 +117,7 @@ function ExpertOTPLoginPage() {
 
               {otpSend ? (
                 <button
-                onClick={Login}
+                  onClick={Login}
                   type="submit"
                   className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
                 >
@@ -130,7 +129,7 @@ function ExpertOTPLoginPage() {
                   type="submit"
                   className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
                 >
-                 Send OTP
+                  Send OTP
                 </button>
               )}
               {/* <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
@@ -141,7 +140,7 @@ function ExpertOTPLoginPage() {
         </div>
       </>
     </div>
-  )
+  );
 }
 
-export default ExpertOTPLoginPage
+export default ExpertOTPLoginPage;

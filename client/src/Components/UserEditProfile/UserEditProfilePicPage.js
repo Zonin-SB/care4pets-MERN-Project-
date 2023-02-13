@@ -14,7 +14,7 @@ function UserEditProfilePicPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const userId = useSelector((state) => state.admin.userDetails.userId);
- 
+
   let values = {};
 
   const handleFileInputChange = (e) => {
@@ -39,30 +39,28 @@ function UserEditProfilePicPage() {
 
   const uploadImage = async (base64EncodedImage) => {
     const { imageData } = await uploadProfilePic(base64EncodedImage);
-    console.log(imageData, 'in prof');
 
     if (imageData.url) {
       const imageLink = imageData.url;
       values.profileImage = imageLink;
       values.id = userId;
-      console.log(values, 'values in edit pro');
       const token = localStorage.getItem('userToken');
       const response = await userProfilePicUpdate(token, values);
 
       if (response.status === 'ok') {
-        Swal.fire({         
+        Swal.fire({
           icon: 'success',
           title: 'Your profile picture has been updated',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
         navigate('/userProfile');
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
-        })
+        });
         setError('Image upload failed');
       }
     }
