@@ -41,7 +41,7 @@ function AdminHomePage() {
   }
 
   return (
-    <div className="m-12">
+    <div className="m-12 max-w-screen-2xl mx-auto">
       <div className="flex  justify-around  flex-wrap ">
         <div className=" h-24 flex items-center justify-center bg-sky-500/75 w-72 rounded-xl mt-6 px-4 shadow-lg">
           <div className="flex-row">

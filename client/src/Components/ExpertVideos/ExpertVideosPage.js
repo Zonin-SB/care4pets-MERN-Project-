@@ -146,7 +146,7 @@ function ExpertVideosPage() {
   ];
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       {details ? (
         <div className="container mx-auto mt-9">
           <div className="flex justify-between p-4">

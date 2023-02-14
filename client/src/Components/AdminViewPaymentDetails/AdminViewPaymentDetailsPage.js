@@ -16,7 +16,7 @@ function AdminViewPaymentDetailsPage() {
   }, [id]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <>
         {/* component */}
         {details

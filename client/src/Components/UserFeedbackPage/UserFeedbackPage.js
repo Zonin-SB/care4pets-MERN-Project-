@@ -50,7 +50,7 @@ function UserFeedbackPage() {
     });
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <section className="p-6 text-gray-800">
         <form
           onSubmit={handleSubmit}

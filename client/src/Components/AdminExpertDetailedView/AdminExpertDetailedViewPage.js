@@ -18,7 +18,7 @@ function AdminExpertDetailedViewPage() {
   }, [id]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       {/* component */}
       <section className="py-40 bg-gray-100  bg-opacity-50 ">
         <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md">

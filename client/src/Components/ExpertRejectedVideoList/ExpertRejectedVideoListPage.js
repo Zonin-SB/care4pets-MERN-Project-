@@ -19,7 +19,7 @@ function ExpertRejectedVideoListPage() {
 
   return (
     <div>
-      <div className="container mx-auto px-4 sm:px-8">
+      <div className="container mx-auto px-4 sm:px-8 max-w-screen-2xl">
         <div className="py-8">
           <div>
             <h2 className="text-2xl font-semibold leading-tight">

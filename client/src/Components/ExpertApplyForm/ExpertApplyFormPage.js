@@ -101,7 +101,7 @@ function ExpertApplyFormPage() {
 
   return (
     <div>
-      <div className="w-3/5 mx-auto mt-9">
+      <div className="w-3/5 mx-auto mt-9 max-w-screen-2xl">
         {/* Component Start */}
 
         <form

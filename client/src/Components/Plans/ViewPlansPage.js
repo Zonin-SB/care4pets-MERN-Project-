@@ -98,7 +98,7 @@ function ViewPlansPage() {
 
   return (
     <div>
-      <div className="container mx-auto mt-9">
+      <div className="container mx-auto mt-9 max-w-screen-2xl">
         <Link to="/adminAddPlans">
           <button
             type="button"

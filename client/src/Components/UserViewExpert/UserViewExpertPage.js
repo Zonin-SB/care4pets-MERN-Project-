@@ -28,7 +28,7 @@ function UserViewExpertPage() {
   }, [id]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <section className="py-28 bg-gray-100  bg-opacity-50 h-max">
         <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md">
           <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 border-indigo-400 rounded-t ">

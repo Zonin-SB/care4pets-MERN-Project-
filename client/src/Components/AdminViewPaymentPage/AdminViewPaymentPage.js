@@ -79,7 +79,7 @@ function AdminViewPaymentPage() {
   ];
 
   return (
-    <div className="container mx-auto mt-9">
+    <div className="container mx-auto mt-9 max-w-screen-2xl">
       <DataTable
         title="All Payments"
         columns={columns}

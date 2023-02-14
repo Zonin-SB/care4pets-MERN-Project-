@@ -176,7 +176,7 @@ function UserSelectExpertPage() {
     },
   ];
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       {yourExpertDetails ? (
         <div>
           <h1 className="text-center font-semibold text-2xl mt-9">

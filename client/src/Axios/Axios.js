@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 export const axiosUserInstance = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: '/api',
 });
 
 export const axiosExpertInstance = axios.create({
-  baseURL: 'http://localhost:3001/expert/api',
+  baseURL: '/expert/api',
 });
 
 export const axiosAdminInstance = axios.create({
-  baseURL: 'http://localhost:3001/admin/api',
+  baseURL: '/admin/api',
 });

@@ -87,7 +87,7 @@ function ExpertChatPage() {
   }, [chat]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <>
         {/* component */}
         <div className="flex h-screen antialiased text-gray-800">

@@ -32,7 +32,7 @@ function UserAcceptExpChangeApproved() {
   }
 
   return (
-    <div className="mt-9">
+    <div className="mt-9 max-w-screen-2xl mx-auto">
       <>
         {/* component */}
         <link

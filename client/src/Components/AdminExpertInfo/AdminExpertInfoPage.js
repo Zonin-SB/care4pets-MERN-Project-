@@ -164,7 +164,7 @@ function AdminExpertInfoPage() {
   ];
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <div className="flex justify-between p-4  mt-9 flex-wrap">
         <h1 className="text-2xl font-bold">All Experts</h1>
         <Link to={'/adminExpertChangeList'}>

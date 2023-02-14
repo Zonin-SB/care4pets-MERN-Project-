@@ -43,7 +43,7 @@ function BuyPlanSuccessPage() {
   }, [planOrderValues, dispatch]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       <>
         <div className=" h-screen">
           <div className="bg-white p-6  md:mx-auto">

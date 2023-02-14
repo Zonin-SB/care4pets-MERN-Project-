@@ -122,7 +122,7 @@ function AdminUserInfoPage() {
 
   return (
     <div>
-      <div className="container mx-auto mt-9">
+      <div className="container mt-9 max-w-screen-2xl mx-auto">
         <DataTable
           title="All Users"
           columns={columns}

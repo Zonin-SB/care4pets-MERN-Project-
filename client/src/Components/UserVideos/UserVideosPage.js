@@ -42,7 +42,7 @@ function UserVideosPage() {
   }, [userId]);
 
   return (
-    <div>
+    <div className='max-w-screen-2xl mx-auto'>
       {plan ? (
         <div>
           <h1 className="font-semibold text-2xl p-6 mt-4">Videos</h1>

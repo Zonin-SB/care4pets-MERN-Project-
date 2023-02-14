@@ -44,7 +44,7 @@ function AdminRejectExpertChangePage() {
       enableReinitialize: true,
     });
   return (
-    <div className="mt-9">
+    <div className="mt-9 max-w-screen-2xl mx-auto">
       <section className="p-6 text-gray-800">
         <form
           onSubmit={handleSubmit}
