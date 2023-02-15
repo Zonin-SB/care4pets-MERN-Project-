@@ -36,7 +36,7 @@ const server = http.createServer(app);
 //socket.io
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://care4pets.life',
     methods: ['GET', 'POST'],
   },
 });
@@ -82,6 +82,6 @@ db.connect((err) => {
   else console.log('Database Connected to port 27017');
 });
 
-server.listen(3001, () => {
-  console.log('Server started on 3001');
+server.listen(3000, () => {
+  console.log('Server started on 3000');
 });

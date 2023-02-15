@@ -34,7 +34,8 @@ function ExpertChatPage() {
   }, [id]);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:3001');
+    // socket.current = io('ws://localhost:3001');
+    socket.current = io('/');
     socket.current.on('getMessage', (data) => {
       setArrivalMessage({
         _id: data.from,

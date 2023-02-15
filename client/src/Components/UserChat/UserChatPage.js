@@ -22,7 +22,8 @@ function UserChatPage() {
   const userId = useSelector((state) => state.admin.userDetails.userId);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:3001');
+    // socket.current = io('ws://localhost:3001');
+    socket.current = io('/');
     socket.current.on('getMessage', (data) => {
       // setArrivalMessage(data)
       setArrivalMessage({
