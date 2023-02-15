@@ -9,6 +9,7 @@ import {
 } from '../../redux/userReducer';
 
 function BuyPlanSuccessPage() {
+  
   const { planOrderValues } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [error, setError] = useState('');
@@ -25,6 +26,7 @@ function BuyPlanSuccessPage() {
           planOrderValues,
         });
         if (data.status === 'ok') {
+
         } else {
           setError(
             'Something went wrong...please try again after sometimes...'

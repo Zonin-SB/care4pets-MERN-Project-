@@ -199,9 +199,12 @@ function UserNav() {
                     </button>{' '}
                   </Link>
 
-                  {/* <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Chat
-                  </button> */}
+                  <Link to={'/userViewPlan'}>
+                    {' '}
+                    <button className="text-black-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                      Plan
+                    </button>{' '}
+                  </Link>
 
                   <Link to="/userProfile">
                     {' '}

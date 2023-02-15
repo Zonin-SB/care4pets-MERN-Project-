@@ -408,6 +408,7 @@ module.exports = {
           }
         } else {
           console.log('payment failed');
+          res.json({ msg: "an error occured please try again" });
         }
       } catch (error) {
         console.log(error);

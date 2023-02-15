@@ -187,7 +187,7 @@ function AdminFeedbackPage() {
   return (
     <div className="container mt-9 max-w-screen-2xl mx-auto">
       <DataTable
-        title="All Videos"
+        title="All Feedbacks"
         columns={columns}
         data={feedback}
         pagination
