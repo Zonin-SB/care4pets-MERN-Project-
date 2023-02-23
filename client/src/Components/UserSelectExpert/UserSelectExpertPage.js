@@ -176,14 +176,14 @@ function UserSelectExpertPage() {
     },
   ];
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className="max-w-screen-2xl mx-auto">
       {yourExpertDetails ? (
         <div>
           <h1 className="text-center font-semibold text-2xl mt-9">
             Your Expert
           </h1>
-          <div>
-            {accepted.expertChangeAccepted ? (
+          {accepted.expertChangeAccepted ? (
+            <div>
               <button
                 onClick={() =>
                   navigate(
@@ -208,13 +208,13 @@ function UserSelectExpertPage() {
                   {/* {count ? count : 0} */}1
                 </div>
               </button>
-            ) : (
-              ''
-            )}
-          </div>
+            </div>
+          ) : (
+            ''
+          )}
 
-          <div>
-            {rejected.expertChangeRejected ? (
+          {rejected.expertChangeRejected ? (
+            <div>
               <button
                 onClick={() =>
                   navigate(
@@ -239,10 +239,10 @@ function UserSelectExpertPage() {
                   {/* {count ? count : 0} */}1
                 </div>
               </button>
-            ) : (
-              ''
-            )}
-          </div>
+            </div>
+          ) : (
+            ''
+          )}
 
           <button
             onClick={() => navigate(`/userChangeExpert/${id}`)}
