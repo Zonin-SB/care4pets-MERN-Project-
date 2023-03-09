@@ -82,6 +82,6 @@ db.connect((err) => {
   else console.log('Database Connected to port 27017');
 });
 
-server.listen(3000, () => {
-  console.log('Server started on 3000');
+server.listen(3001, () => {
+  console.log('Server started on 3001');
 });
