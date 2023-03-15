@@ -34,7 +34,7 @@ function UserSelectExpertPage() {
       const token = localStorage.getItem('userToken');
       const response = await getExpertChangeRejected(token, id);
       if (response.status === 'ok') {
-        setRejected(response.details[0]);
+        setRejected(response?.details[0]);
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
@@ -45,7 +45,7 @@ function UserSelectExpertPage() {
       const response = await getExpertChangeApproved(token, id);
 
       if (response.status === 'ok') {
-        setAccepted(response.details[0]);
+        setAccepted(response?.details[0]);
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
@@ -55,8 +55,8 @@ function UserSelectExpertPage() {
       const token = localStorage.getItem('userToken');
       const response = await getUsersExpert(token, id);
       if (response.status === 'ok') {
-        setExpertDetails(response.expertDetails);
-        setFilteredExpertDetails(response.expertDetails);
+        setExpertDetails(response?.expertDetails);
+        setFilteredExpertDetails(response?.expertDetails);
       } else {
         setError('Something went wrong...please try again after sometimes...');
       }
@@ -65,7 +65,7 @@ function UserSelectExpertPage() {
     async function fetchYourExpert() {
       const token = localStorage.getItem('userToken');
       const response = await getYourExpertDetails(token, id);
-      setYourExpertDetails(response.expert[0]);
+      setYourExpertDetails(response?.expert[0]);
     }
   }, [id]);
 
@@ -96,7 +96,7 @@ function UserSelectExpertPage() {
             showConfirmButton: false,
             timer: 1500,
           });
-          dispatch(getSelectedExpertDetails(data.expertDetails[0]));
+          dispatch(getSelectedExpertDetails(data?.expertDetails[0]));
           navigate('/userBuyPlan');
         } else {
           Swal.fire({
@@ -182,12 +182,12 @@ function UserSelectExpertPage() {
           <h1 className="text-center font-semibold text-2xl mt-9">
             Your Expert
           </h1>
-          {accepted.expertChangeAccepted ? (
+          {accepted?.expertChangeAccepted ? (
             <div>
               <button
                 onClick={() =>
                   navigate(
-                    `/userAceptExpChangeApprove/${accepted.expertChangeAccepted.id}`
+                    `/userAceptExpChangeApprove/${accepted?.expertChangeAccepted?.id}`
                   )
                 }
                 type="button"
@@ -213,12 +213,12 @@ function UserSelectExpertPage() {
             ''
           )}
 
-          {rejected.expertChangeRejected ? (
+          {rejected?.expertChangeRejected ? (
             <div>
               <button
                 onClick={() =>
                   navigate(
-                    `/userAceptExpChangeReject/${rejected.expertChangeRejected.id}`
+                    `/userAceptExpChangeReject/${rejected?.expertChangeRejected?.id}`
                   )
                 }
                 type="button"
@@ -258,7 +258,7 @@ function UserSelectExpertPage() {
             <div className="bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl text-white p-8 text-center h-72 max-w-sm mx-auto">
               <button
                 onClick={() =>
-                  navigate(`/userViewExpert/${yourExpertDetails._id}`)
+                  navigate(`/userViewExpert/${yourExpertDetails?._id}`)
                 }
                 className="text-2xl mb-3 border border-white rounded-xl"
               >
@@ -273,18 +273,18 @@ function UserSelectExpertPage() {
               <h2 className="font-semibold text-2xl mb-6">Start chatting</h2>
               <img
                 className="w-20 h-20 object-cover rounded-full mx-auto shadow-lg"
-                src={yourExpertDetails.profilePic}
+                src={yourExpertDetails?.profilePic}
                 alt="User avatar"
               />
               <p className="capitalize text-xl mt-1">
-                {yourExpertDetails.name}
+                {yourExpertDetails?.name}
               </p>
               <span className="flex items-center border rounded-full w-24 pr-2 justify-center mx-auto mt-2 mb-12">
                 <div className="bg-green-400 rounded-full w-2.5 h-2.5 block mr-2" />
                 Active
               </span>
               <button
-                onClick={() => navigate(`/userChat/${yourExpertDetails._id}`)}
+                onClick={() => navigate(`/userChat/${yourExpertDetails?._id}`)}
                 className="rounded-md bg-gradient-to-r from-blue-400 to-indigo-500 text-xl text-white pt-3 pb-4 px-8 inline"
               >
                 Send a message
